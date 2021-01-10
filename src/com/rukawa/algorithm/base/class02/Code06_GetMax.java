@@ -9,10 +9,15 @@ package com.rukawa.algorithm.base.class02;
  */
 public class Code06_GetMax {
 
+    /**
+     * 求arr中的最大值，递归实现
+     */
+
     public static int getMax(int[] arr) {
         return process(arr, 0, arr.length - 1);
     }
 
+    // arr[L...R] 范围上求最大值 L...R N
     public static int process(int[] arr, int L, int R) {
         if (L == R) {
             return arr[L];

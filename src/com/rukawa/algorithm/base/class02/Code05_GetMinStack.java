@@ -11,6 +11,13 @@ import java.util.Stack;
  */
 public class Code05_GetMinStack {
 
+    /**
+     * 实现一个特殊的栈，在基本功能的基础上，在实现返回栈中最小元素的功能
+     *
+     * 1、pop、push、getMin操作的时间复杂度都是O(1)
+     * 2、设计的栈类型可以使用现成的栈结构
+     */
+
     public static class MyStack01 {
         private Stack<Integer> stackData;
         private Stack<Integer> stackMin;

@@ -9,10 +9,12 @@ package com.rukawa.algorithm.base.class02;
  */
 public class Code04_RingArray {
 
+    // 数组实现队列
+
     public static class MyQueue {
         private int[] arr;
-        private int push_i;
-        private int poll_i;
+        private int push_i; // 进入的数放哪 end
+        private int poll_i; // 弹出的数从哪拿  begin
         private int size;
         private final int limit;
 
@@ -26,7 +28,7 @@ public class Code04_RingArray {
 
         public void push(int data) {
             if (size == limit) {
-                throw new RuntimeException("栈满了，不能再添加了！");
+                throw new RuntimeException("队列满了，不能再添加了！");
             }
             size++;
             arr[push_i] = data;
@@ -35,7 +37,7 @@ public class Code04_RingArray {
 
         public int pop() {
             if (size == 0) {
-                throw new RuntimeException("栈空了，不能再拿了！");
+                throw new RuntimeException("队列空了，不能再拿了！");
             }
             size--;
             int ans = arr[poll_i];

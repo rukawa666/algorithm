@@ -9,6 +9,11 @@ package com.rukawa.algorithm.base.class01;
  */
 public class Code06_BSAwesome {
 
+    /**
+     * 局部最小值问题，一个数左边比它大，右边也比它大，找到一个就返回
+     * @param arr
+     * @return
+     */
     public static int getLessIndex(int[] arr) {
         if (arr == null || arr.length == 0) {
             return -1;

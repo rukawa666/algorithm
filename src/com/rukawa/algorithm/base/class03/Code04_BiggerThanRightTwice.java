@@ -4,85 +4,82 @@ package com.rukawa.algorithm.base.class03;
  * Created with Intellij IDEA
  *
  * @Author：SuperHai
- * @Date：2020-07-13 0:16
+ * @Date：2021-01-11 0:41
  * @Version：1.0
  */
-public class Code01_MergeSort {
+public class Code04_BiggerThanRightTwice {
 
-    // 递归方式实现归并排序
-    public static void mergeSort1(int[] arr) {
+    /**
+     * 数组中右边的数*2小于左边数的个数
+     */
+    public static int biggerTwice(int[] arr) {
         if (arr == null || arr.length < 2) {
-            return;
+            return 0;
         }
-        process(arr, 0, arr.length - 1);
+        return process(arr, 0, arr.length - 1);
     }
 
-    // arr[L ... R]范围上，变成有序的
-    public static void process(int[] arr, int L, int R) {
-        if (L == R) {   // base case
-            return;
+    public static int process(int[] arr, int L, int R) {
+        if (L == R) {
+            return 0;
         }
-        int mid = L + ((R - L) >>> 1);
-        process(arr, L , mid);
-        process(arr, mid + 1, R);
-        merge(arr, L, mid, R);
+
+        int M = L + ((R - L) >>> 1);
+        return process(arr, L, M) + process(arr, M + 1, R) + merge(arr, L, M, R);
     }
 
-    public static void merge(int[] arr, int L, int M, int R) {
+    public static int merge(int[] arr, int L, int M, int R) {
+        int res = 0;
+        // 目前囊括进来的数，是从[M + 1, start)  左闭右开的区间
+        int start = M + 1;
+        for (int i = L; i <= M; i++) {
+            while (start <= R && arr[i] > (arr[start] << 1)) {
+                start++;
+            }
+            res += start - (M + 1);
+        }
+
         int[] help = new int[R - L + 1];
-        int i = 0;
         int p1 = L;
         int p2 = M + 1;
+        int index = 0;
         while (p1 <= M && p2 <= R) {
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            help[index++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
-        // 要么p1越界，要么p2越界
+
         while (p1 <= M) {
-            help[i++] = arr[p1++];
+            help[index++] = arr[p1++];
         }
 
         while (p2 <= R) {
-            help[i++] = arr[p2++];
+            help[index++] = arr[p2++];
         }
 
-        for (i = 0; i < help.length; i++) {
-            arr[L + i] = help[i];
+        for (index = 0; index < help.length; index++) {
+            arr[L + index] = help[index];
         }
+        return res;
     }
 
-    // 非递归实现归并排序
-    public static void mergeSort2(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            return;
-        }
-        int N = arr.length;
-        int mergeSize = 1;  // 当前有序的，左组长度
-        while (mergeSize < N) {
-            int L = 0;
-            while (L < N) {
-                // L ... M 左组(mergeSize)
-                int M = L + mergeSize - 1;
-                if (M >= N) {
-                    break;
-                }
-                int R = Math.min(M + mergeSize, N - 1);
-                merge(arr, L, M, R);
-                L = R + 1;
-            }
-            // 防止mergeSize超过int的最大值，发生不可预估的错误
-            if (mergeSize > N / 2) {
-                break;
-            }
 
-            mergeSize <<= 1;
+    // for test
+    public static int comparator(int[] arr) {
+        int ans = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > (arr[j] << 1)) {
+                    ans++;
+                }
+            }
         }
+        return ans;
     }
 
     // for test
     public static int[] generateRandomArray(int maxSize, int maxValue) {
         int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
+            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) ((maxValue + 1) * Math.random());
         }
         return arr;
     }
@@ -118,7 +115,6 @@ public class Code01_MergeSort {
         return true;
     }
 
-
     // for test
     public static void printArray(int[] arr) {
         if (arr == null) {
@@ -139,10 +135,8 @@ public class Code01_MergeSort {
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            mergeSort1(arr1);
-            mergeSort2(arr2);
-            if (!isEqual(arr1, arr2)) {
-                System.out.println("出错了！");
+            if (biggerTwice(arr1) != comparator(arr2)) {
+                System.out.println("Oops!");
                 printArray(arr1);
                 printArray(arr2);
                 break;

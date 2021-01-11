@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date：2020-07-13 22:23
  * @Version：1.0
  */
-public class Code03_PartitionAndQuickSort {
+public class Code05_PartitionAndQuickSort {
 
     public static void swap(int[] arr, int i, int j) {
         int tmp = arr[i];

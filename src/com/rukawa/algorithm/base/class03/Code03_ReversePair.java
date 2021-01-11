@@ -4,78 +4,67 @@ package com.rukawa.algorithm.base.class03;
  * Created with Intellij IDEA
  *
  * @Author：SuperHai
- * @Date：2020-07-13 0:16
+ * @Date：2021-01-11 0:41
  * @Version：1.0
  */
-public class Code01_MergeSort {
+public class Code03_ReversePair {
+    /**
+     * 数组中的逆序对
+     * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数
+     */
 
-    // 递归方式实现归并排序
-    public static void mergeSort1(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            return;
+    public static int reversePairs(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return 0;
         }
-        process(arr, 0, arr.length - 1);
+        return process(nums, 0, nums.length - 1);
     }
 
-    // arr[L ... R]范围上，变成有序的
-    public static void process(int[] arr, int L, int R) {
-        if (L == R) {   // base case
-            return;
+    public static int process(int[] arr, int L, int R) {
+        if (L == R) {
+            return 0;
         }
-        int mid = L + ((R - L) >>> 1);
-        process(arr, L , mid);
-        process(arr, mid + 1, R);
-        merge(arr, L, mid, R);
+        int M = L + ((R - L) >>> 1);
+        return process(arr, L, M) + process(arr,M + 1, R) + merge(arr, L, M , R);
     }
 
-    public static void merge(int[] arr, int L, int M, int R) {
+    public static int merge(int[] arr, int L, int M, int R) {
         int[] help = new int[R - L + 1];
-        int i = 0;
-        int p1 = L;
-        int p2 = M + 1;
-        while (p1 <= M && p2 <= R) {
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
-        }
-        // 要么p1越界，要么p2越界
-        while (p1 <= M) {
-            help[i++] = arr[p1++];
+        int index = help.length - 1;
+        int p1 = M;
+        int p2 = R;
+        int res = 0;
+        while (p1 >= L && p2 > M) {
+            res += arr[p1] > arr[p2] ? (p2 - M) : 0;
+            help[index--] = arr[p1] > arr[p2] ? arr[p1--] : arr[p2--];
         }
 
-        while (p2 <= R) {
-            help[i++] = arr[p2++];
+        while (p1 >= L) {
+            help[index--] = arr[p1--];
         }
 
-        for (i = 0; i < help.length; i++) {
-            arr[L + i] = help[i];
+        while (p2 > M) {
+            help[index--] = arr[p2--];
         }
+
+        for (index = 0; index < help.length; index++) {
+            arr[L + index] = help[index];
+        }
+        return res;
     }
 
-    // 非递归实现归并排序
-    public static void mergeSort2(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            return;
-        }
-        int N = arr.length;
-        int mergeSize = 1;  // 当前有序的，左组长度
-        while (mergeSize < N) {
-            int L = 0;
-            while (L < N) {
-                // L ... M 左组(mergeSize)
-                int M = L + mergeSize - 1;
-                if (M >= N) {
-                    break;
-                }
-                int R = Math.min(M + mergeSize, N - 1);
-                merge(arr, L, M, R);
-                L = R + 1;
-            }
-            // 防止mergeSize超过int的最大值，发生不可预估的错误
-            if (mergeSize > N / 2) {
-                break;
-            }
 
-            mergeSize <<= 1;
+    // for test
+    public static int comparator(int[] arr) {
+        int ans = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    ans++;
+                }
+            }
         }
+        return ans;
     }
 
     // for test
@@ -118,7 +107,6 @@ public class Code01_MergeSort {
         return true;
     }
 
-
     // for test
     public static void printArray(int[] arr) {
         if (arr == null) {
@@ -139,10 +127,8 @@ public class Code01_MergeSort {
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            mergeSort1(arr1);
-            mergeSort2(arr2);
-            if (!isEqual(arr1, arr2)) {
-                System.out.println("出错了！");
+            if (reversePairs(arr1) != comparator(arr2)) {
+                System.out.println("Oops!");
                 printArray(arr1);
                 printArray(arr2);
                 break;

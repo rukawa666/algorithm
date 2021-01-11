@@ -4,78 +4,68 @@ package com.rukawa.algorithm.base.class03;
  * Created with Intellij IDEA
  *
  * @Author：SuperHai
- * @Date：2020-07-13 0:16
+ * @Date：2021-01-11 0:40
  * @Version：1.0
  */
-public class Code01_MergeSort {
+public class Code02_SmallSum {
 
-    // 递归方式实现归并排序
-    public static void mergeSort1(int[] arr) {
+    /**
+     * 小和问题：在一个数组中，每一个数左边比当前数小的数累加起来，叫做这个数组的小和。求一个数组的小和
+     */
+
+    public static int smallSum(int[] arr) {
         if (arr == null || arr.length < 2) {
-            return;
+            return 0;
         }
-        process(arr, 0, arr.length - 1);
+        return process(arr, 0, arr.length - 1);
     }
 
-    // arr[L ... R]范围上，变成有序的
-    public static void process(int[] arr, int L, int R) {
-        if (L == R) {   // base case
-            return;
+    public static int process(int[] arr, int L, int R) {
+        if (L == R) {
+            return 0;
         }
-        int mid = L + ((R - L) >>> 1);
-        process(arr, L , mid);
-        process(arr, mid + 1, R);
-        merge(arr, L, mid, R);
+        int M = L + ((R - L) >>> 1);
+        return process(arr, L, M) + process(arr, M + 1, R) + merge(arr, L, M, R);
     }
 
-    public static void merge(int[] arr, int L, int M, int R) {
+    public static int merge(int[] arr, int L, int M, int R) {
         int[] help = new int[R - L + 1];
-        int i = 0;
+        int index = 0;
         int p1 = L;
         int p2 = M + 1;
+        int res = 0;
         while (p1 <= M && p2 <= R) {
-            help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            res += arr[p1] < arr[p2] ? (R - p2 + 1) * arr[p1] : 0;
+            help[index++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
         }
-        // 要么p1越界，要么p2越界
+
         while (p1 <= M) {
-            help[i++] = arr[p1++];
+            help[index++] = arr[p1++];
         }
 
         while (p2 <= R) {
-            help[i++] = arr[p2++];
+            help[index++] = arr[p2++];
         }
 
-        for (i = 0; i < help.length; i++) {
-            arr[L + i] = help[i];
+        for (index = 0; index < help.length; index++) {
+            arr[L + index] = help[index];
         }
+
+        return res;
     }
 
-    // 非递归实现归并排序
-    public static void mergeSort2(int[] arr) {
+    // for test
+    public static int comparator(int[] arr) {
         if (arr == null || arr.length < 2) {
-            return;
+            return 0;
         }
-        int N = arr.length;
-        int mergeSize = 1;  // 当前有序的，左组长度
-        while (mergeSize < N) {
-            int L = 0;
-            while (L < N) {
-                // L ... M 左组(mergeSize)
-                int M = L + mergeSize - 1;
-                if (M >= N) {
-                    break;
-                }
-                int R = Math.min(M + mergeSize, N - 1);
-                merge(arr, L, M, R);
-                L = R + 1;
+        int res = 0;
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+                res += arr[j] < arr[i] ? arr[j] : 0;
             }
-            // 防止mergeSize超过int的最大值，发生不可预估的错误
-            if (mergeSize > N / 2) {
-                break;
-            }
-
-            mergeSize <<= 1;
         }
+        return res;
     }
 
     // for test
@@ -118,7 +108,6 @@ public class Code01_MergeSort {
         return true;
     }
 
-
     // for test
     public static void printArray(int[] arr) {
         if (arr == null) {
@@ -135,19 +124,17 @@ public class Code01_MergeSort {
         int testTime = 500000;
         int maxSize = 100;
         int maxValue = 100;
-        System.out.println("测试开始");
+        boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            mergeSort1(arr1);
-            mergeSort2(arr2);
-            if (!isEqual(arr1, arr2)) {
-                System.out.println("出错了！");
+            if (smallSum(arr1) != comparator(arr2)) {
+                succeed = false;
                 printArray(arr1);
                 printArray(arr2);
                 break;
             }
         }
-        System.out.println("测试结束");
+        System.out.println(succeed ? "Nice!" : "Fucking fucked!");
     }
 }

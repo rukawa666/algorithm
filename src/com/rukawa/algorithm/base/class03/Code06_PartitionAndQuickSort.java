@@ -9,7 +9,9 @@ import java.util.Arrays;
  * @Date：2020-07-13 22:23
  * @Version：1.0
  */
-public class Code05_PartitionAndQuickSort {
+public class Code06_PartitionAndQuickSort {
+
+    // 快排
 
     public static void swap(int[] arr, int i, int j) {
         int tmp = arr[i];
@@ -36,15 +38,10 @@ public class Code05_PartitionAndQuickSort {
         swap(arr, ++lessEqual, R);
         return lessEqual;
     }
-    // 在arr[L ... R]范围玩荷兰国旗问题的划分，以arr[R]为划分值
 
-    /**
-     * <arr[R]  ==arr[R]  >arr[R]
-     * @param arr
-     * @param L
-     * @param R
-     * @return
-     */
+
+    // 在arr[L ... R]范围玩荷兰国旗问题的划分，以arr[R]为划分值
+    // <arr[R]  ==arr[R]  >arr[R]
     public static int[] netherlandsFlag(int[] arr, int L, int R) {
         if (L > R) {
             return new int[]{-1, -1};
@@ -76,6 +73,9 @@ public class Code05_PartitionAndQuickSort {
         process01(arr, 0, arr.length - 1);
     }
 
+    // 随机快排
+    // 在arr[L...R]上，以arr[R]位置的数做划分值
+    // <=arr[R]放左边  >arr[R]放右边
     public static void process01(int[] arr, int L, int R) {
         if (L >= R) {
             return;

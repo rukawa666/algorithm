@@ -1,13 +1,14 @@
-package com.rukawa.algorithm.trainingcamp.top100likedquestions;
+package com.rukawa.algorithm.base.class03;
 
 /**
  * Created with Intellij IDEA
  *
  * @Author：SuperHai
- * @Date：2021-01-11 9:17
+ * @Date：2021-01-12 23:23
  * @Version：1.0
  */
-public class Problem_0327_CountOfRangeSum {
+public class Code05_CountOfRangeSum {
+
     /**
      * 区间和的个数
      * 给定一个整数数组 nums，返回区间和在 [lower, upper] 之间的个数，包含 lower 和 upper。
@@ -21,6 +22,7 @@ public class Problem_0327_CountOfRangeSum {
      * 输出: 3
      * 解释: 3个区间分别是: [0,0], [2,2], [0,2]，它们表示的和分别为: -2, -1, 2。
      */
+    // O(N*logN)
     public int countRangeSum(int[] nums, int lower, int upper) {
         if (nums == null || nums.length == 0) {
             return 0;

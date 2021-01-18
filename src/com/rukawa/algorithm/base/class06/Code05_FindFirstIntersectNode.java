@@ -88,24 +88,24 @@ public class Code05_FindFirstIntersectNode {
             return null;
         }
         // n1 慢  n2 快
-        ListNode n1 = head.next;    // n1 -> slow
-        ListNode n2 = head.next.next;   // n2 -> fast
+        ListNode slow = head.next;    // n1 -> slow
+        ListNode fast = head.next.next;   // n2 -> fast
 
-        while (n1 != n2) {
-            if (n2.next == null || n2.next.next == null) {
+        while (slow != fast) {
+            if (fast.next == null || fast.next.next == null) {
                 return null;
             }
 
-            n1 = n1.next;
-            n2 = n2.next.next;
+            slow = slow.next;
+            fast = fast.next.next;
         }
-
-        n2 = head;  // n2 -> walk again from head
-        while (n1 != n2) {
-            n1 = n1.next;
-            n2 = n2.next;
+        // slow fast相遇则找到入环节点
+        fast = head;  // n2 -> walk again from head
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
         }
-        return n1;
+        return slow;
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date：2020-07-14 22:24
  * @Version：1.0
  */
-public class Code04_HeapSort {
+public class Code02_HeapSort {
 
     public static void main(String[] args) {
         int[] arr = {0,9,10,8,7,1,3,4,2};
@@ -29,6 +29,7 @@ public class Code04_HeapSort {
 //        }
 
         // 全部给你，只要求大根堆的优化，不要求有序  O(N)
+        // 从下往上建立大根堆
         for (int i = arr.length - 1; i >= 0; i--) {
             heapify(arr, i , arr.length);
         }

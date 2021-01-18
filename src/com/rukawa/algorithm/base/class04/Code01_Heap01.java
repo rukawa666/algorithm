@@ -7,7 +7,7 @@ package com.rukawa.algorithm.base.class04;
  * @Date：2020-07-14 20:17
  * @Version：1.0
  */
-public class Code02_Heap01 {
+public class Code01_Heap01 {
 
     public static class MyMaxHeap {
 

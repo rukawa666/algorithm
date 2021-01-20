@@ -9,6 +9,8 @@ import java.util.List;
  * Created with Intellij IDEA
  * T 类型不要是基础类型，HashMap的key如果是整型会被覆盖
  * 基础类型可以对T包一层，转换为一个对象
+ *
+ * 解决类型：动态调整，实时出现的字符串topK，程序员堆和pm堆问题
  * @Author：SuperHai
  * @Date：2021-01-20 20:32
  * @Version：1.0

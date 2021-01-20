@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,50 @@ public class Problem0051_NQueens {
      * 皇后彼此不能相互攻击，也就是说：任何两个皇后都不能处于同一条横行、纵行或斜线上。、
      */
     public List<List<String>> solveNQueens(int n) {
-        return null;
+        if (n < 1 || n > 32) {
+            return null;
+        }
+        int limit =  n == 32 ? -1 : (1 << n) - 1;
+        List<List<String>> res = new ArrayList<>();
+        int[] record = new int[n];
+        for (int i = 0; i < n; i++) {
+            record[i] = -1;
+        }
+        process(res, record, n, 0, limit, 0, 0, 0);
+        return res;
+    }
+
+    public static void process(List<List<String>> res, int[] record, int n, int row, int limit, int colLim, int leftDiaLim, int rightDiaLim) {
+        if (row == n) {
+            List<String> ans = generateBoard(record, n);
+            res.add(ans);
+        }
+        int pos = limit & (~(colLim | leftDiaLim | rightDiaLim));
+        int mosRight = 0;
+        while (pos != 0) {
+            // 最低位的1
+            mosRight = pos & (~pos + 1);
+            // 最低位的1置为0
+            pos = pos - mosRight;
+            // mosRight - 1的补码，有疑惑
+            int column = Integer.bitCount(mosRight - 1);
+            record[row] = column;
+            process(res, record, n, row + 1, limit, colLim | mosRight, (leftDiaLim | mosRight) << 1, (rightDiaLim | mosRight) >> 1);
+            // 恢复现场
+            record[row] = -1;
+        }
+    }
+
+    public static List<String> generateBoard(int[] record, int n) {
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            char[] position = new char[n];
+            for (int j = 0; j < n; j++) {
+                position[j] = '.';
+            }
+            position[record[i]] = 'Q';
+            res.add(new String(position));
+        }
+        return res;
     }
 }

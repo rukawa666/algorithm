@@ -10,7 +10,7 @@ import java.util.List;
  * @Date：2020-09-21 19:55
  * @Version：1.0
  */
-public class Problem_0144_BinaryTreePreorderTraversal {
+public class Problem_0144_BinaryTreePreOrderTraversal {
     /**
      * 二叉树的前序遍历
      * 给定一个二叉树，返回它的 前序 遍历。

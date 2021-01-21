@@ -10,7 +10,7 @@ import java.util.List;
  * @Date：2020-09-21 8:41
  * @Version：1.0
  */
-public class Problem_0094_BinaryTreeInorderTraversal {
+public class Problem_0094_BinaryTreeInOrderTraversal {
     /**
      * 二叉树的中序遍历
      * 给定一个二叉树，返回它的中序 遍历。

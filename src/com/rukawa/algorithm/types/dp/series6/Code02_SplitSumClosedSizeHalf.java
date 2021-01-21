@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.dp.series6;
+package com.rukawa.algorithm.types.dp.series6;
 
 /**
  * Created with Intellij IDEA

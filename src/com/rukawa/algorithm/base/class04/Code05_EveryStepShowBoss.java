@@ -200,7 +200,7 @@ public class Code05_EveryStepShowBoss {
             int id = arr[i];
             boolean buyOrRefund = op[i];
             // 规则1：退货行为 且 购买商品为0(没有这个用户)，认为无效事件
-            if (!buyOrRefund && map.containsKey(id)) {
+            if (!buyOrRefund && !map.containsKey(id)) {
                 res.add(getCurRes(awarded));
                 continue;
             }

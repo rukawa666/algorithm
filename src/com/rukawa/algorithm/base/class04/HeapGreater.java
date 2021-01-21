@@ -93,14 +93,14 @@ public class HeapGreater<T> {
     }
 
     private void heapInsert(int index) {
-        while (com.compare(heap.get(index), heap.get(((index - 1) >> 1))) < 0) {
-            swap(index, (index - 1) >> 1);
-            index = (index - 1) >> 1;
+        while (com.compare(heap.get(index), heap.get(((index - 1) / 2))) < 0) {
+            swap(index, (index - 1) / 2);
+            index = (index - 1) / 2;
         }
     }
 
     private void heapify(int index) {
-        int left = index << 1 + 1;
+        int left = (index << 1) + 1;
         while (left < heapSize) {
             int best = left + 1 < heapSize && com.compare(heap.get(left + 1), heap.get(left)) < 0 ? left + 1 : left;
             best = com.compare(heap.get(best), heap.get(index)) < 0 ? best : index;
@@ -109,7 +109,7 @@ public class HeapGreater<T> {
             }
             swap(index, best);
             index = best;
-            left = index << 1 + 1;
+            left = (index << 1) + 1;
         }
     }
 

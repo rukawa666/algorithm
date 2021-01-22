@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,8 @@ public class Problem_0102_BinaryTreeLevelOrderTraversal {
     }
 
     public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+
         return null;
     }
 }

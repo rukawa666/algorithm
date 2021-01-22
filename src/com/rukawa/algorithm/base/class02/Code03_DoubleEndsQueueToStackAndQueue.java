@@ -18,6 +18,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
             this.value = data;
         }
     }
+
     // 双向链表实现栈和队列
 
     public static class DoubleEndsQueue<T> {

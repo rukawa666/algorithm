@@ -11,6 +11,10 @@ import java.util.Stack;
  */
 public class Code02_IsPalindromeList {
 
+    /**
+     * 是否是回文链表
+     */
+
     public static boolean isPalindrome01(ListNode head) {
 
         Stack<ListNode> stack = new Stack<>();

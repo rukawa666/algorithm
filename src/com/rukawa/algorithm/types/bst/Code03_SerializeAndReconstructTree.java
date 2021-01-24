@@ -169,4 +169,37 @@ public class Code03_SerializeAndReconstructTree {
         return res;
     }
 
+
+    // 二叉树按层反序列化
+    public static Node buildByLevelQueue(Queue<String> levelList) {
+        if (levelList == null || levelList.size() == 0) {
+            return null;
+        }
+        Node head = generateNode(levelList.poll());
+        Queue<Node> queue = new LinkedList<>();
+        if (head != null) {
+            queue.add(head);
+        }
+        Node node = null;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            node.left = generateNode(levelList.poll());
+            node.right = generateNode(levelList.poll());
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        return head;
+    }
+
+    public static Node generateNode(String val) {
+        if (val == null) {
+            return null;
+        }
+        return new Node(Integer.valueOf(val));
+    }
+
 }

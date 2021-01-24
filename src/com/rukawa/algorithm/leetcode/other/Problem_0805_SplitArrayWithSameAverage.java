@@ -7,7 +7,7 @@ package com.rukawa.algorithm.leetcode.other;
  * @Date：2021-01-19 20:58
  * @Version：1.0
  */
-public class Problem0805_SplitArrayWithSameAverage {
+public class Problem_0805_SplitArrayWithSameAverage {
     /**
      * 数组的均值分割
      * 给定的整数数组 A ，我们要将 A数组 中的每个元素移动到 B数组 或者 C数组中。（B数组和C数组在开始的时候都为空）

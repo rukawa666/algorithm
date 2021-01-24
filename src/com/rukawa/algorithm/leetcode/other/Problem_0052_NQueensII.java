@@ -7,7 +7,7 @@ package com.rukawa.algorithm.leetcode.other;
  * @Date：2021-01-20 0:28
  * @Version：1.0
  */
-public class Problem0052_NQueensII {
+public class Problem_0052_NQueensII {
     /**
      * N皇后 II
      * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。

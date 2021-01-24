@@ -1,7 +1,9 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created with Intellij IDEA
@@ -41,7 +43,27 @@ public class Problem_0102_BinaryTreeLevelOrderTraversal {
 
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
-
-        return null;
+        if (root == null) {
+            return res;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int size = 0;
+        while (!queue.isEmpty()) {
+            size = queue.size();
+            List<Integer> levelRes = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                levelRes.add(cur.val);
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+            res.add(levelRes);
+        }
+        return res;
     }
 }

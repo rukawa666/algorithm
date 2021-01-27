@@ -31,7 +31,40 @@ public class Problem_0236_LowestCommonAncestorOfBinaryTree {
      * p、q 为不同节点且均存在于给定的二叉树中。
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return null;
+        return process(root, p, q).res;
+    }
+
+    public static class Info {
+        public boolean findP;
+        public boolean findQ;
+        public TreeNode res;
+
+        public Info(boolean findP, boolean findQ, TreeNode res) {
+            this.findP = findP;
+            this.findQ = findQ;
+            this.res = res;
+        }
+    }
+
+    public static Info process(TreeNode x, TreeNode p, TreeNode q) {
+        if (x == null) {
+            return new Info(false, false, null);
+        }
+        Info leftInfo = process(x.left, p, q);
+        Info rightInfo = process(x.right, p, q);
+        boolean findP = x == p || leftInfo.findP || rightInfo.findP;
+        boolean findQ = x == q || leftInfo.findQ || rightInfo.findQ;
+        TreeNode res = null;
+        if (leftInfo.res != null) {
+            res = leftInfo.res;
+        } else if (rightInfo.res != null) {
+            res = rightInfo.res;
+        } else {
+            if (findP && findQ) {
+                res = x;
+            }
+        }
+        return new Info(findP, findQ, res);
     }
 
     public class TreeNode {

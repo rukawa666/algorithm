@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @Date：2021-01-25 8:32
  * @Version：1.0
  */
-public class Code_002_BST {
+public class Code_002_IsBST {
     /**
      * 判断二叉树是否是搜索二叉树
      *

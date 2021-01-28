@@ -35,6 +35,8 @@ public class Problem_0200_NumberOfIslands {
      * 输出: 3
      * 解释: 每座岛屿只能由水平和/或竖直方向上相邻的陆地连接而成。
      */
+
+    // O(N * M)
     public int numIslands(char[][] grid) {
         int lands = 0;
         // 遍历所有位置

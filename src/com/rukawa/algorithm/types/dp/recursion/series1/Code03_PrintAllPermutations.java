@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.dp.recursion;
+package com.rukawa.algorithm.types.dp.recursion.series1;
 
 import java.util.ArrayList;
 import java.util.List;

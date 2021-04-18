@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.dp.series6;
+package com.rukawa.algorithm.types.dp.recursion.series6;
 
 /**
  * Created with Intellij IDEA
@@ -73,10 +73,11 @@ public class Code03_NQueens {
         }
 
         /**
+         * limit:       0...0 0 0 1 1 1 1
          * colLim:      0...0 0 0 1 0 0 0
          * leftDiaLim:  0...0 0 1 0 0 0 0
          * rightDiaLim: 0...0 0 0 0 1 0 0
-         * (colLim | leftDiaLim | rightDiaLim) ：0...0 0 1 1 1 0 0
+         * (colLim | leftDiaLim | rightDiaLim) ：  0...0 0 1 1 1 0 0
          * ~(colLim | leftDiaLim | rightDiaLim) ： 1...1 1 0 0 0 1 1
          * limit & (~(colLim | leftDiaLim | rightDiaLim)) ： 1...1 1 0 0 0 1 1  此时是可以放皇后的位置
          */

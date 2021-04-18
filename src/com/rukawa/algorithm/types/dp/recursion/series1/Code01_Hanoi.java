@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.dp.recursion;
+package com.rukawa.algorithm.types.dp.recursion.series1;
 
 /**
  * Created with Intellij IDEA

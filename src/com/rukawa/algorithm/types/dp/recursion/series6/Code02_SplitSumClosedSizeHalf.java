@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.dp.series6;
+package com.rukawa.algorithm.types.dp.recursion.series6;
 
 /**
  * Created with Intellij IDEA
@@ -9,6 +9,7 @@ package com.rukawa.algorithm.types.dp.series6;
  */
 public class Code02_SplitSumClosedSizeHalf {
     /**
+     * 字节跳动2020-07原题
      * 给定一个正序数组arr，请把arr中所有的数分成两个集合
      * 如果arr长度为偶数，两个集合包含数的个数要一样多
      * 如果arr长度为奇数，两个集合包含数的个数必须只差一个

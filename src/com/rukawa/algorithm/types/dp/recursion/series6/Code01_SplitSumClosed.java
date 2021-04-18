@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.dp.series6;
+package com.rukawa.algorithm.types.dp.recursion.series6;
 
 /**
  * Created with Intellij IDEA
@@ -24,7 +24,9 @@ public class Code01_SplitSumClosed {
         for (int num : arr) {
             sum += num;
         }
-        return process(arr, 0, sum >> 1);
+        // 如果是-1>>1,结果是-1，注意此点
+//        return process(arr, 0, sum >> 1);
+        return process(arr, 0, sum / 2);
 
     }
 
@@ -32,7 +34,8 @@ public class Code01_SplitSumClosed {
     public static int process(int[] arr, int i, int rest) {
         if (i == arr.length) {
             return 0;
-        } else {
+        } else { // 还有数
+            // 不使用arr[i]
             int p1 = process(arr, i + 1, rest);
             int p2 = 0;
             if (arr[i] <= rest) {
@@ -53,15 +56,13 @@ public class Code01_SplitSumClosed {
         }
         sum >>= 1;
         int[][] dp = new int[N + 1][sum + 1];
-
-        for (int row = N - 1; row >= 0; row--) {
+//        dp[N][...] = 0
+        for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= sum; rest++) {
-                int p1 = dp[row + 1][rest];
-                int p2 = 0;
-                if (arr[row] <= rest) {
-                    p2 = arr[row] + dp[row + 1][rest - arr[row]];
+                dp[index][rest] = dp[index + 1][rest];
+                if (arr[index] <= rest) {
+                    dp[index][rest] = Math.max(dp[index][rest], arr[index] + dp[index + 1][rest - arr[index]]);
                 }
-                dp[row][rest] = Math.max(p1, p2);
             }
         }
         return dp[0][sum];

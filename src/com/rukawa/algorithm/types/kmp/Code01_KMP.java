@@ -17,7 +17,6 @@ public class Code01_KMP {
         char[] match = m.toCharArray();
         int x = 0;
         int y = 0;
-        int max = 0;
         int[] nextArr = getNextArray(match);
         while (x < str.length && y < nextArr.length) {
             if (str[x] == match[y]) {

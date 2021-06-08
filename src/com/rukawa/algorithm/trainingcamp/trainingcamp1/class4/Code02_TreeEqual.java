@@ -10,6 +10,9 @@ import java.util.ArrayList;
  * @Version：1.0
  */
 public class Code02_TreeEqual {
+    /**
+     * 两棵树，分别为T1和T2，T1中从头结点出发的整个树都要的某个子树，和T2，是不是同一个子树
+     */
 
     public static class Node {
         public int value;

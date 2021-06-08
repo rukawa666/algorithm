@@ -11,5 +11,8 @@ public class Code02_AddShortestEnd {
     /**
      * 在一个字符串中，在它后面添加字符，使之整体变成回文串，至少需要添加几个字符
      */
+    public static String shortestEnd(String s) {
+        return "";
+    }
 
 }

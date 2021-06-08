@@ -34,7 +34,7 @@ public class Code01_Manacher {
             }
             max = Math.max(max, pRadius[i]);
         }
-        return max;
+        return max - 1;
     }
 
     public static char[] manacherString(String s) {

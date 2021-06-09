@@ -17,11 +17,15 @@ public class Code01_FindMinKth {
     // arr[L...R] 如果排序的话，位于index位置的数，是什么直接返回
     public static int bfprt(int[] arr, int L, int R, int index) {
         if (L == R) {
-            return L;
+            return arr[L];
         }
+        // L...R  每五个数一组
+        // 每一个小组内部排好序
+        // 小组的中位数组成新数组
+        // 这个新数组的中位数返回
         int pivot = medianOfMedians(arr, L, R);
-        int[] range = netherlandsFlag(arr, L, R, pivot);
-        if (index >= range[0] && range[1] >= index) {
+        int[] range = partition(arr, L, R, pivot);
+        if (index >= range[0] && index <= range[1]) {
             return arr[index];
         } else if (index < range[0]) {
             return bfprt(arr, L, range[0] - 1, index);
@@ -34,10 +38,10 @@ public class Code01_FindMinKth {
     // 取出每个小组内的中位数，组成mArr
     // 然后再取mArr中的中位数返回
     public static int medianOfMedians(int[] arr, int L, int R) {
-        int size = arr.length;
+        int size = R - L + 1;
         int offset = size % 5 == 0 ? 0 : 1;
         int[] mArr = new int[size / 5 + offset];
-        for (int team = 0; team < size; team++) {
+        for (int team = 0; team < mArr.length; team++) {
             int teamFirst = L + team * 5;
             // L ... L + 4
             // L + 5 ... L + 9
@@ -45,7 +49,7 @@ public class Code01_FindMinKth {
             mArr[team] = getMedian(arr, teamFirst, Math.min(R, teamFirst + 4));
         }
         // mArr中，找到中位数
-        return bfprt(arr, 0, mArr.length - 1, mArr.length / 2);
+        return bfprt(mArr, 0, mArr.length - 1, mArr.length / 2);
     }
 
     public static int getMedian(int[] arr, int L, int R) {
@@ -54,11 +58,34 @@ public class Code01_FindMinKth {
     }
 
     public static void insertionSort(int[] arr, int L, int R) {
-        for (int i = L + 1; i < R; i++) {
-            for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+        for (int i = L + 1; i <= R; i++) {
+            for (int j = i - 1; j >= L && arr[j] > arr[j + 1]; j--) {
                 swap(arr, j, j + 1);
             }
         }
+    }
+
+    /**
+     * 改写快排找第K小的数，迭代方式
+     * 时间复杂度O(N)
+     */
+    public static int minKth1(int[] arr, int index) {
+        int L = 0;
+        int R = arr.length - 1;
+        int pivot = 0;
+        int[] range = null;
+        while (L < R) {
+            pivot = arr[L + (int) (Math.random() * (R - L + 1))];
+            range = partition(arr, L, R, pivot);
+            if (index < range[0]) {
+                R = range[0] - 1;
+            } else if (index > range[1]) {
+                L = range[1] + 1;
+            } else {
+                return pivot;
+            }
+        }
+        return arr[L];
     }
 
     // 改写快排，时间复杂度O(N)
@@ -91,8 +118,8 @@ public class Code01_FindMinKth {
         if (L == R) {
             return arr[L];
         }
-        int pivot = arr[L + (int)(Math.random() * (R - L + 1))];
-        int[] range = netherlandsFlag(arr, L, R, pivot);
+        int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
+        int[] range = partition(arr, L, R, pivot);
         if (index >= range[0] && index <= range[1]) {
             return arr[index];
         } else if (index < range[0]) {
@@ -102,20 +129,20 @@ public class Code01_FindMinKth {
         }
     }
 
-    public static int[] netherlandsFlag(int[] arr, int L, int R, int pivot) {
+    public static int[] partition(int[] arr, int L, int R, int pivot) {
         int less = L - 1;
         int more = R + 1;
         int index = L;
         while (index < more) {
-            if (arr[index] == pivot) {
-                index++;
-            } else if (arr[index] < pivot) {
-                swap(arr, index++, ++less);
-            } else {
+            if (arr[index] < pivot) {
+                swap(arr, ++less, index++);
+            } else if (arr[index] > pivot) {
                 swap(arr, index, --more);
+            } else {
+                index++;
             }
         }
-        return new int[]{less + 1, more - 1};
+        return new int[] { less + 1, more - 1 };
     }
 
     public static void swap(int[] arr, int a, int b) {
@@ -141,13 +168,13 @@ public class Code01_FindMinKth {
         for (int i = 0; i < testTime; i++) {
             int[] arr = generateRandomArray(maxSize, maxValue);
             int k = (int) (Math.random() * arr.length) + 1;
-//            int ans1 = minKth1(arr, k);
+            int ans1 = minKth1(arr, k);
             int ans2 = minKth2(arr, k);
-            System.out.println(ans2);
-//            int ans3 = minKth3(arr, k);
-//            if (ans1 != ans2 || ans2 != ans3) {
-//                System.out.println("Oops!");
-//            }
+//            System.out.println(ans2);
+            int ans3 = minKth3(arr, k);
+            if (ans1 != ans2 || ans2 != ans3) {
+                System.out.println("Oops!");
+            }
         }
         System.out.println("test finish");
     }

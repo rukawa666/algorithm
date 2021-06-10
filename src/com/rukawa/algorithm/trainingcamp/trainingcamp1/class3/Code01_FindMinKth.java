@@ -1,5 +1,8 @@
 package com.rukawa.algorithm.trainingcamp.trainingcamp1.class3;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * Created with Intellij IDEA
  *
@@ -65,28 +68,30 @@ public class Code01_FindMinKth {
         }
     }
 
-    /**
-     * 改写快排找第K小的数，迭代方式
-     * 时间复杂度O(N)
-     */
-    public static int minKth1(int[] arr, int index) {
-        int L = 0;
-        int R = arr.length - 1;
-        int pivot = 0;
-        int[] range = null;
-        while (L < R) {
-            pivot = arr[L + (int) (Math.random() * (R - L + 1))];
-            range = partition(arr, L, R, pivot);
-            if (index < range[0]) {
-                R = range[0] - 1;
-            } else if (index > range[1]) {
-                L = range[1] + 1;
-            } else {
-                return pivot;
+    public static class MaxHeapComparator implements Comparator<Integer> {
+
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o2 - o1;
+        }
+
+    }
+
+    // 利用大根堆，时间复杂度O(N*logK)
+    public static int minKth1(int[] arr, int k) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new MaxHeapComparator());
+        for (int i = 0; i < k; i++) {
+            maxHeap.add(arr[i]);
+        }
+        for (int i = k; i < arr.length; i++) {
+            if (arr[i] < maxHeap.peek()) {
+                maxHeap.poll();
+                maxHeap.add(arr[i]);
             }
         }
-        return arr[L];
+        return maxHeap.peek();
     }
+
 
     // 改写快排，时间复杂度O(N)
     public static int minKth2(int[] array, int k) {
@@ -170,7 +175,6 @@ public class Code01_FindMinKth {
             int k = (int) (Math.random() * arr.length) + 1;
             int ans1 = minKth1(arr, k);
             int ans2 = minKth2(arr, k);
-//            System.out.println(ans2);
             int ans3 = minKth3(arr, k);
             if (ans1 != ans2 || ans2 != ans3) {
                 System.out.println("Oops!");

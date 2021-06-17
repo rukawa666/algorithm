@@ -67,7 +67,7 @@ public class Code02_FallingSquares {
             }
 
             if (R > mid) {
-                update(L, R, C, mid, r, rt << 1 | 1);
+                update(L, R, C, mid + 1, r, rt << 1 | 1);
             }
             pushOn(rt);
         }
@@ -86,7 +86,7 @@ public class Code02_FallingSquares {
             }
 
             if (R > mid) {
-                right = query(L, R, mid, r, rt << 1 | 1);
+                right = query(L, R, mid + 1, r, rt << 1 | 1);
             }
             return Math.max(left, right);
         }
@@ -98,6 +98,8 @@ public class Code02_FallingSquares {
     // [2,7] -> 2,8
     // [3,10] -> 3,12
     public HashMap<Integer, Integer> index(int[][] positions) {
+        // 有序表
+        // 离散化
         TreeSet<Integer> pos = new TreeSet<>();
         for (int[] arr : positions) {
             // 左边界
@@ -109,7 +111,8 @@ public class Code02_FallingSquares {
             // 所以规定[3,2] 从x在3位置开始，能覆盖到4
             pos.add(arr[0] + arr[1] - 1);
         }
-
+        // 每一个位置，在线段树中的对应的标号标好
+        // 100 -> 0, 105 -> 1, 108 -> 2
         HashMap<Integer, Integer> map = new HashMap<>();
         int count = 0;
         // 从小到大遍历，第一个位置的index从1开始，后续++
@@ -121,8 +124,9 @@ public class Code02_FallingSquares {
 
     public List<Integer> fallingSquares(int[][] positions) {
         HashMap<Integer, Integer> map = index(positions);
-        // 100 -> 1 306 -> 2  403 -> 3
-        // [100,403] 1~3
+        // 100 -> 1, 306 -> 2, 403 -> 3
+        // [100,403]  请你在1~3的范围上进行修改
+        // 不拿原数组的值去做线段树的修改，用编好的号去做修改
         int N = map.size(); // 1~N
         SegmentTree segmentTree = new SegmentTree(N);
         int max = 0;

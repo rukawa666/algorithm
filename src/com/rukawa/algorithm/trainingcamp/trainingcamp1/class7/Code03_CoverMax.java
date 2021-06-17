@@ -14,7 +14,9 @@ import java.util.PriorityQueue;
 public class Code03_CoverMax {
 
     /**
-     * 线段被覆盖最多的高度
+     * 线段最大重合问题，可以选择用线段树做，但是比较重
+     * 线段被覆盖最多的高度，给一些线段，哪一段线段被覆盖最多
+     * 给线段[1,3], [2,6], [4,9],哪一段是覆盖最多？最多的线段有几段？
      * @param lines
      * @return
      */
@@ -50,6 +52,7 @@ public class Code03_CoverMax {
         PriorityQueue<Line> heap = new PriorityQueue<>(new EndComparator());
         int max = 0;
         for (int i = 0; i < lines.length; i++) {
+            // 弹出<=R 的数
             while (!heap.isEmpty() && heap.peek().end <= lines[i].start) {
                 heap.poll();
             }

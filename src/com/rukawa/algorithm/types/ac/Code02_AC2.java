@@ -153,7 +153,6 @@ public class Code02_AC2 {
         ac.insert("mno");
 
         ac.build();
-
         List<String> ans = ac.containWords("dadasdaabchdhsahdasjhjashjhjanjdbhajbhjdsavhjxyz");
         for (String an : ans) {
             System.out.println(an);

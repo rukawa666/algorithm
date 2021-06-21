@@ -21,7 +21,7 @@ public class Problem_0131_PalindromePartitioning {
      * 输入: "aab"
      * 输出:
      * [
-     *   ["aa","b"],
+     *   ["summary","b"],
      *   ["a","a","b"]
      * ]
      */

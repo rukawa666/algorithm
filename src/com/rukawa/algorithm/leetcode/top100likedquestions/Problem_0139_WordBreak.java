@@ -37,6 +37,9 @@ public class Problem_0139_WordBreak {
     public boolean wordBreak2(String s, List<String> wordDict) {
         return process(s, 0, wordDict) != 0;
     }
+
+    // s[0...index-1]这一段，已经分解过了，不用在操心
+    // s[index...]这一段字符串，能够被分解的方法数，返回
     public static int process(String s, int index, List<String> wordDict) {
         if (index == s.length()) {
             return 1;
@@ -66,8 +69,12 @@ public class Problem_0139_WordBreak {
         for (int index = N - 1; index >= 0; index--) {
             int ways = 0;
             for (int end = index; end < N; end++) {
+                // s[index...end]
                 String pre = s.substring(index, end + 1);
-                if (set.contains(pre)) {
+                // 如果set存整形，O(1)没问题
+                // 如果set存短字符串，O(1)没问题
+                // 如果set中存大文本，首先对这个文本遍历一遍求hashcode，然后在去查
+                if (set.contains(pre)) {    // O(N)
                     ways += dp[end + 1];
                 }
             }
@@ -77,10 +84,11 @@ public class Problem_0139_WordBreak {
         return dp[0] != 0;
     }
 
-    public boolean wordBreak4(String s, List<String> wordDict) {
+    public boolean wordBreak(String s, List<String> wordDict) {
         Node root = new Node();
-        for (String word : wordDict) {
-            char[] chs = word.toCharArray();
+        // 字典建立前缀树
+        for (String str : wordDict) {
+            char[] chs = str.toCharArray();
             Node node = root;
             int index = 0;
             for (int i = 0; i < chs.length; i++) {
@@ -93,18 +101,27 @@ public class Problem_0139_WordBreak {
             node.end = true;
         }
 
-        char[] chs = s.toCharArray();
-        int N = chs.length;
+        char[] str = s.toCharArray();
+        int N = str.length;
         int[] dp = new int[N + 1];
-        for (int i = N - 1; i >= 0; i--) {
+        dp[N] = 1;
+        for (int index = N - 1; index >= 0; index--) {
             Node cur = root;
-            for (int end = i; end < N; end++) {
-                cur = cur.nextS[chs[end] - 'a'];
+            // 假设出a出发的这一段 a a a b
+            // a a a b
+            // i
+            // end 从i出发，当前节点从root出发
+            for (int end = index; end < N; end++) {
+                // 前缀串没路了
+                // 前缀树：abc
+                // "abcdef" 到d没路了，后面都不用验证，直接跳过
+                cur = cur.nextS[str[end] - 'a'];
                 if (cur == null) {
                     break;
                 }
+
                 if (cur.end) {
-                    dp[i] += dp[end + 1];
+                    dp[index] += dp[end + 1];
                 }
             }
         }

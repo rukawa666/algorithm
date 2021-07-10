@@ -86,6 +86,7 @@ public class Code02_SizeBalancedTreeMap {
             return cur;
         }
 
+        // 找到key节点的位置
         private SBTNode<K, V> findLastIndex(K key) {
             SBTNode<K, V> pre = root;
             SBTNode<K, V> cur = root;
@@ -171,7 +172,14 @@ public class Code02_SizeBalancedTreeMap {
                         des = des.l;
                         des.size--;
                     }
-
+                    /**
+                     * des没有左孩子节点，但是有右孩子节点，des的右孩子直接替换des节点
+                     *      pre
+                     *     /
+                     *    des
+                     *     \
+                     *      des.r
+                     */
                     if (pre != null) {
                         pre.l = des.r;
                         des.r = cur.r;
@@ -186,6 +194,7 @@ public class Code02_SizeBalancedTreeMap {
             return cur;
         }
 
+        // 在有序表中找到第kth的节点
         private SBTNode<K, V> getIndex(SBTNode<K, V> cur, int kth) {
             if (kth == (cur.l != null ? cur.l.size : 0) + 1) {
                 return cur;

@@ -9,6 +9,16 @@ package com.rukawa.algorithm.types.orderTable;
  */
 public class Code02_SizeBalancedTreeMap {
 
+    /**
+     * SizeBalancedTree
+     * 	规定：任何叔叔节点的子树节点个数不小于任何侄子节点的子树节点个数
+     *
+     * 	LL型违规：左孩子的左孩子的节点个数大于右孩子的节点个数
+     * 	RR型违规：右孩子的右孩子的节点个数大于左孩子的节点个数
+     * 	LR型违规：左孩子的右孩子的节点个数大于右孩子的节点个数
+     * 	RL型违规：右孩子的左孩子的节点个数大于左孩子的节点个数
+     */
+
     public static class SBTNode<K extends Comparable<K>, V> {
         public K k;
         public V v;

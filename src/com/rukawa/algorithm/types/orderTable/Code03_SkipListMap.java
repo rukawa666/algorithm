@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.types.orderTable;
 
-import com.rukawa.algorithm.types.graph.Node;
-
 import java.util.ArrayList;
 
 /**

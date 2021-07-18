@@ -16,8 +16,6 @@ public class Code01_LongestSumSubArrayLengthInPositiveArray {
      * 实际上就是更新某一个位置开头的窗口累加和是多少？
      * [3 1 1 2 1 3 1 1 1 2 1]      k=6
      *  0 1 2 3 4 5 6 7 8 9 10
-     *
-     *
      */
     public static int maxLength(int[] arr, int K) {
         if (arr == null || arr.length == 0 || K <= 0) {

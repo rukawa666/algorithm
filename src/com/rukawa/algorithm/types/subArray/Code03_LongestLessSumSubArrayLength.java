@@ -26,6 +26,8 @@ public class Code03_LongestLessSumSubArrayLength {
      *  任何以i开头的子数组后面的所有情况中，最优的最小的累加和存在minSum中，最优的最小的右边界存在minSumEnd
      *  i开头的信息要依赖i+1的信息，所以右边的要比左边的先算，所以从右往左算
      *  如果是i结尾的情况下，需要依赖i-1的信息，所以从左往右算
+     *
+     *  思路：淘汰可能性，还有一种方法是假设答案法
      */
 
     public static int maxLength(int[] arr, int k) {

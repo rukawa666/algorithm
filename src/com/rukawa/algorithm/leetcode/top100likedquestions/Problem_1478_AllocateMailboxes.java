@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Problem_1478_AllocateMailboxes {
     /**
      * 安排邮筒
-     * 给你一个房屋数组houses和一个整数k ，其中houses[i]是第i栋房子在一条街上的位置，现需要在这条街上安排k个邮筒。
+     * 给你一个房屋数组houses和一个整数k，其中houses[i]是第i栋房子在一条街上的位置，现需要在这条街上安排k个邮筒。
      * 请你返回每栋房子与离它最近的邮筒之间的距离的最小总和。
      * 答案保证在32位有符号整数范围以内。
      *
@@ -35,13 +35,13 @@ public class Problem_1478_AllocateMailboxes {
      * 示例 4：
      * 输入：houses = [3,6,14,10], k = 4
      * 输出：0
-     *  
+     * 
      * 提示：
      * n == houses.length
-     * 1 <= n <= 100
+     * 1 <= n<= 100
      * 1 <= houses[i] <= 10^4
      * 1 <= k <= n
-     * 数组 houses 中的整数互不相同。
+     * 数组houses中的整数互不相同。
      */
 
     public static int minDistance(int[] houses, int k) {
@@ -192,6 +192,7 @@ public class Problem_1478_AllocateMailboxes {
         }
         return dp[n - 1][k];
     }
+
     public static void main(String[] args) {
         int[] arr = {1, 4, 8, 10, 20};
         int num = 3;

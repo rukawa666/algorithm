@@ -24,6 +24,7 @@ public class Code06_ThrowChessPiecesProblem {
      * 若没碎，第一个棋子继续在99层扔，碎了则用仅存的一个棋子试 96~98。 若没碎，第一个棋子继续在102层扔，碎了则用仅存的一个棋子试100、101。
      * 若没碎，第一个棋子继续在104 层扔，碎了则用仅存的一个棋子试103。 若没碎，第一个棋子继续在105层扔，若到这一步还没碎，那么105便是结果。
      */
+
     public static int superEggDrop1(int kChess, int nLevel) {
         return 0;
     }

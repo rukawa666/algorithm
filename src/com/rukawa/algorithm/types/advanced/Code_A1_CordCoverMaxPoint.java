@@ -1,30 +1,28 @@
-package com.rukawa.algorithm.interview.series1;
+package com.rukawa.algorithm.types.advanced;
 
 import java.util.Arrays;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @Author: Administrator
- * @Date: 2021/4/20 0020 20:33
- */
-public class Code01_CordCoverMaxPoint {
-
+ * @className: Code_A1_CordCoverMaxPoint
+ * @description: TODO 类描述
+ * @author: 鎏川疯
+ * @date: 2021/7/31 0031 19:29
+ **/
+public class Code_A1_CordCoverMaxPoint {
     /**
-     * 给定一个有序数组arr，代表坐落在x轴上的点
+     * 给定一个有序数组arr，代表坐落在X轴上的点
      * 给定一个正数K，代表绳子的长度
      * 返回绳子最多压中几个点？
      * 即使绳子边缘处盖住点也算盖住
      */
-
+    // 二分  O(N*logN)
     public static int maxPoint1(int[] arr, int K) {
-        int res = 1;
+        int ans = 1;
         for (int i = 0; i < arr.length; i++) {
             int nearest = nearestIndex(arr, i, arr[i] - K);
-            res = Math.max(res, i - nearest + 1);
+            ans = Math.max(ans, i - nearest + 1);
         }
-        return res;
+        return ans;
     }
 
     public static int nearestIndex(int[] arr, int R, int value) {
@@ -42,17 +40,19 @@ public class Code01_CordCoverMaxPoint {
         return index;
     }
 
+    // 滑动窗口 O(N)
     public static int maxPoint2(int[] arr, int K) {
-        int l = 0;
-        int r = 0;
-        int res = 0;
-        while (l < arr.length) {
-            while (r < arr.length && arr[r] - arr[l] <= K) {
-                r++;
+        int left = 0;
+        int right = 0;
+        int N = arr.length;
+        int ans = 0;
+        while (left < N) {
+            while (right < N && arr[right] - arr[left] <= K) {
+                right++;
             }
-            res = Math.max(res, r - (l++));
+            ans = Math.max(ans, right - (left++));
         }
-        return res;
+        return ans;
     }
 
     // for test
@@ -94,7 +94,6 @@ public class Code01_CordCoverMaxPoint {
                 break;
             }
         }
-        System.out.println("测试结束");
 
     }
 }

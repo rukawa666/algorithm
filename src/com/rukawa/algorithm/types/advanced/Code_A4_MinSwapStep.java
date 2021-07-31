@@ -1,60 +1,56 @@
-package com.rukawa.algorithm.interview.series1;
+package com.rukawa.algorithm.types.advanced;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @Author: Administrator
- * @Date: 2021/4/20 0020 20:33
- */
-public class Code04_MinSwapStep {
-
+ * @className: Code_A4_MinSwapStep
+ * @description: TODO 类描述
+ * @author: 鎏川疯
+ * @date: 2021/7/31 0031 19:29
+ **/
+public class Code_A4_MinSwapStep {
     /**
-     * 一个数组中只有两种字符"G"和"B"
-     * 可以让所有的G都放在左边，所有的B都放在右边
-     * 或者可以让所有的G都放在右边，所有的B都放在左边
-     * 但是只能在相邻字符之间进行交换操作，
-     * 返回至少需要交换几次
+     * 一个数组中只有两种字符'G'和'B'
+     * 可以让所有的G都放在左侧，所有的B都放在右侧，
+     * 或者可以让所有的G都放在右侧，所有的B都放在左侧
+     * 但是只能在相邻字符之间进行交换的操作
+     * 返回至少要交换几次
      */
-    public static int minSteps1(String s) {
+    public static int minStep1(String s) {
         if (s == null || s.equals("")) {
             return 0;
         }
         char[] str = s.toCharArray();
         int step1 = 0;
-        int gi = 0;
+        int gIndex = 0;
         for (int i = 0; i < str.length; i++) {
             if (str[i] == 'G') {
-                step1 += i - (gi++);
+                step1 += i - (gIndex++);
             }
         }
 
         int step2 = 0;
-        int bi = 0;
+        int bIndex = 0;
         for (int i = 0; i < str.length; i++) {
             if (str[i] == 'B') {
-                step2 += i - (bi++);
+                step2 += i - (bIndex++);
             }
         }
         return Math.min(step1, step2);
     }
 
-    public static int minSteps2(String s) {
+    public static int minStep2(String s) {
         if (s == null || s.equals("")) {
             return 0;
         }
         char[] str = s.toCharArray();
         int step1 = 0;
+        int gIndex = 0;
         int step2 = 0;
-        int gi = 0;
-        int bi = 0;
+        int bIndex = 0;
         for (int i = 0; i < str.length; i++) {
             if (str[i] == 'G') {
-                // i位置的G要往开头不是G位置的地方跳几回
-                step1 += i - (gi++);
+                step1 += i - (gIndex++);
             } else {
-                // i位置的B要往开头不是B位置的地方跳几回
-                step2 += i - (bi++);
+                step2 += i - (bIndex++);
             }
         }
         return Math.min(step1, step2);
@@ -75,8 +71,8 @@ public class Code04_MinSwapStep {
         System.out.println("测试开始");
         for (int i = 0; i < testTime; i++) {
             String str = randomString(maxLen);
-            int ans1 = minSteps1(str);
-            int ans2 = minSteps2(str);
+            int ans1 = minStep1(str);
+            int ans2 = minStep2(str);
             if (ans1 != ans2) {
                 System.out.println("Oops!");
             }

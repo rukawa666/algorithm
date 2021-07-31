@@ -21,7 +21,7 @@ public class Problem_0329_LongestIncreasingPathInAMatrix {
      *   [2,1,1]
      * ]
      * 输出: 4
-     * 解释: 最长递增路径为 [1, 2, 6, 9]。
+     * 解释: 最长递增路径为[1, 2, 6, 9]。
      *
      * 示例 2:
      * 输入: nums =
@@ -31,7 +31,7 @@ public class Problem_0329_LongestIncreasingPathInAMatrix {
      *   [2,2,1]
      * ]
      * 输出: 4
-     * 解释: 最长递增路径是 [3, 4, 5, 6]。注意不允许在对角线方向上移动。
+     * 解释: 最长递增路径是[3, 4, 5, 6]。注意不允许在对角线方向上移动。
      */
     public int longestIncreasingPath(int[][] matrix) {
         return 0;

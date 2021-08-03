@@ -1,5 +1,8 @@
 package com.rukawa.algorithm.leetcode.other;
 
+import com.rukawa.algorithm.trainingcamp.trainingcamp1.class1.Test;
+import sun.net.www.protocol.http.ntlm.NTLMAuthentication;
+
 /**
  * @className: Problem_0464_CanIWin
  * @description: TODO 类描述
@@ -110,5 +113,51 @@ public class Problem_0464_CanIWin {
             }
         }
         return false;
+    }
+
+    // O(2^N * N)
+    public boolean canIWin2(int maxChooseAbleInteger, int desiredTotal) {
+        // 题目规定，刚开始遇到desiredTotal，返回true
+        if (desiredTotal == 0) {
+            return true;
+        }
+        // 1~maxChooseAbleInteger的累加和 < rest，怎么拿先手都输
+        // 先算>> 再*
+        if ((maxChooseAbleInteger * (maxChooseAbleInteger + 1) >> 1) < desiredTotal) {
+            return false;
+        }
+        // 记忆化搜索优化
+        // 1，2，3，4，5       rest=10
+        // 只要发现2，4没有  rest一定剩余4
+        // 只要发现3，5没有  rest一定剩余2
+        // 拿的数字的状态可以决定rest，两者不独立。所以一维动态表即可
+        // 0～11111可以存下该表的数据
+        // 0位置弃而不用，0～1000000
+        int[] dp = new int[1 << (maxChooseAbleInteger + 1)];
+        // dp[status] = 1 已经算过，true
+        // dp[status] = -1  已经算过 false
+        // dp[status] = 0 还么算过
+        return process2(maxChooseAbleInteger, 0, desiredTotal, dp);
+    }
+
+    // 为什么有status和rest两个可变参数，却只用status来代表状态（也就是状态）
+    // 因为选了一批数字之后，得到的和一定是一样的，所以rest由status决定，所以rest不参与记忆化搜索
+    public static boolean process2(int choose, int status, int rest, int[] dp) {
+        if (dp[status] != 0) {
+            return dp[status] == 1 ? true : false;
+        }
+        boolean ans = false;
+        if (rest > 0) {
+            for (int i = 1; i <= choose; i++) {
+                if (((1 << i) & status) == 0) {
+                    if (!process2(choose, (status | (1 << i)), rest - i, dp)) {
+                        ans = true;
+                        break;
+                    }
+                }
+            }
+        }
+        dp[status] = ans ? 1 : -1;
+        return ans;
     }
 }

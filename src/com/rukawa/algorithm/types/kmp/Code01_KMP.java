@@ -3,7 +3,6 @@ package com.rukawa.algorithm.types.kmp;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- *
  * @Author: Administrator
  * @Date: 2021/6/8 0008 22:05
  */

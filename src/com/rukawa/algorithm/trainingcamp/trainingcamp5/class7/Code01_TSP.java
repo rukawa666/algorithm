@@ -58,7 +58,7 @@ public class Code01_TSP {
 
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < set.size(); i++) {
-            if (set.get(i) != null && i != start) {
+            if (set.get(i) != null) {
                 // 从start跳到i这座城
                 // 剩下的集合中，从i这座城出发都联通，再回到start位置
                 int cur = matrix[start][i] + func1(matrix, set, i);
@@ -118,7 +118,7 @@ public class Code01_TSP {
             // 1<<0 检查0这个城市在不在
             // 1<<1 检查1这个城市在不在
             // 1<<move 检查move这个城市在不在
-            if (move != start && (cityStatus & (1 << move)) != 0) {
+            if ((cityStatus & (1 << move)) != 0) {
                 // 从start跳到move这座城
                 // 剩下的城市中，从move这座城出发都联通，再回到start位置
                 int cur = matrix[start][move] + func2(matrix, cityStatus, move);
@@ -183,7 +183,7 @@ public class Code01_TSP {
                 // 1<<0 检查0这个城市在不在
                 // 1<<1 检查1这个城市在不在
                 // 1<<move 检查move这个城市在不在
-                if (move != start && (cityStatus & (1 << move)) != 0) {
+                if ((cityStatus & (1 << move)) != 0) {
                     // 从start跳到move这座城
                     // 剩下的城市中，从move这座城出发都联通，再回到start位置
                     int cur = matrix[start][move] + func3(matrix, cityStatus, move, dp);

@@ -9,7 +9,6 @@ package com.rukawa.algorithm.types.advanced;
 public class Code_B4_Drive {
     /**
      * 司机调度 时间限制：3000MS 内存限制：589824KB
-     * 题目描述：
-     *
+     * 题目描述
      */
 }

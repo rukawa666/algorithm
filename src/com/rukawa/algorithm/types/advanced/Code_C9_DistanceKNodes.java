@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.types.advanced;
 
-import sun.security.krb5.internal.PAData;
-
 import java.util.*;
 
 /**
@@ -57,7 +55,7 @@ public class Code_C9_DistanceKNodes {
         List<Node> ans = new ArrayList<>();
         while (!queue.isEmpty()) {
             int size = queue.size();
-            while (size != 0) {
+            while (size-- != 0) {
                 Node cur = queue.poll();
                 if (curLevel == K) {
                     ans.add(cur);
@@ -98,4 +96,36 @@ public class Code_C9_DistanceKNodes {
             createParentMap(cur.right, parents);
         }
     }
+
+    public static void main(String[] args) {
+        Node n0 = new Node(0);
+        Node n1 = new Node(1);
+        Node n2 = new Node(2);
+        Node n3 = new Node(3);
+        Node n4 = new Node(4);
+        Node n5 = new Node(5);
+        Node n6 = new Node(6);
+        Node n7 = new Node(7);
+        Node n8 = new Node(8);
+
+        n3.left = n5;
+        n3.right = n1;
+        n5.left = n6;
+        n5.right = n2;
+        n1.left = n0;
+        n1.right = n8;
+        n2.left = n7;
+        n2.right = n4;
+
+        Node root = n3;
+        Node target = n5;
+        int K = 2;
+
+        List<Node> ans = distanceKNodes(root, target, K);
+        for (Node o1 : ans) {
+            System.out.println(o1.value);
+        }
+
+    }
+
 }

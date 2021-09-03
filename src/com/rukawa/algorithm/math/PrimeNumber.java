@@ -7,7 +7,6 @@ package com.rukawa.algorithm.math;
  * @auther: hanqinghai
  */
 public class PrimeNumber {
-
     /**
      * 质数：只有1和它本身两个因数的自然数
      * 1、小于1或者大于2的偶数，不是质数

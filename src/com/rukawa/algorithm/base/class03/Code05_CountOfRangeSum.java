@@ -57,20 +57,25 @@ public class Code05_CountOfRangeSum {
     /**
      * 假设0~i整体累加和是x，范围是[lower,upper], 求必须从i位置结尾的子数组，目标有多少个在[lower,upper]范围上
      * 等同于，求i之前的所有前缀和中有多少个前缀和在[x-upper, x-lower]上
+     * 转化：
+     * 求0～17范围有多少个累加和在(10，40)范围上，已知sum(0,17)=100
+     * 如果知道0～7范围上的累加和是70，那么8～17的累加和是30，刚好在10～40范围内，符合条件 -> 如果0～7的累加和在(100-60,100-10)范围内就是达标
+     *
+     * 求以i位置结尾的子数组，有多少个在[lower,upper]范围上 == i之前的所有前缀和中有多少前缀和在[x-upper, x-lower]
      */
-    public static int merge(long[] arr, int L, int M, int R, int lower, int upper) {
+    public static int merge(long[] sum, int L, int M, int R, int lower, int upper) {
         int ans = 0;
         int windowL = L;
         int windowR = L;
         // 窗口是不可回退的，时间复杂度O(N)
         for (int i = M + 1; i <= R; i++) {
-            long min = arr[i] - upper;
-            long max = arr[i] - lower;
-            while (windowR <= M && arr[windowR] <= max) {
+            long min = sum[i] - upper;
+            long max = sum[i] - lower;
+            while (windowR <= M && sum[windowR] <= max) {
                 windowR++;
             }
 
-            while (windowL <= M && arr[windowL] < min) {
+            while (windowL <= M && sum[windowL] < min) {
                 windowL++;
             }
             ans += Math.max(0, windowR - windowL);
@@ -81,16 +86,16 @@ public class Code05_CountOfRangeSum {
         int p1 = L;
         int p2 = M + 1;
         while (p1 <= M && p2 <= R) {
-            help[index++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
+            help[index++] = sum[p1] <= sum[p2] ? sum[p1++] : sum[p2++];
         }
         while (p1 <= M) {
-            help[index++] = arr[p1++];
+            help[index++] = sum[p1++];
         }
         while (p2 <= R) {
-            help[index++] = arr[p2++];
+            help[index++] = sum[p2++];
         }
         for (index = 0; index < help.length; index++) {
-            arr[L + index] = help[index];
+            sum[L + index] = help[index];
         }
         return ans;
     }

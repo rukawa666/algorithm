@@ -35,8 +35,9 @@ public class Code01_ReverseList {
      */
     public static Node reverseLinkedList(Node head) {
         Node pre = null;
+        Node next = null;
         while (head != null) {
-            Node next = head.next;
+            next = head.next;
             head.next = pre;
             pre = head;
             head = next;

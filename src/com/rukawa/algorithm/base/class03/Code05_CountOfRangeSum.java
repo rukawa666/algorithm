@@ -53,7 +53,6 @@ public class Code05_CountOfRangeSum {
         return process(sum, L, M, lower, upper) + process(sum, M + 1, R, lower, upper) + merge(sum, L, M, R, lower, upper);
     }
 
-
     /**
      * 假设0~i整体累加和是x，范围是[lower,upper], 求必须从i位置结尾的子数组，目标有多少个在[lower,upper]范围上
      * 等同于，求i之前的所有前缀和中有多少个前缀和在[x-upper, x-lower]上

@@ -67,6 +67,10 @@ public class Code05_CountOfRangeSum {
         int windowL = L;
         int windowR = L;
         // 窗口是不可回退的，时间复杂度O(N)
+        // 对于右组中的每个数，求在左组中有多少个数，位于[x-upper,x-lower]
+        /**
+         * 2,5,8,9,11,15      6,7,7,8,10,11      [-1,2]
+         */
         for (int i = M + 1; i <= R; i++) {
             long min = sum[i] - upper;
             long max = sum[i] - lower;
@@ -77,7 +81,8 @@ public class Code05_CountOfRangeSum {
             while (windowL <= M && sum[windowL] < min) {
                 windowL++;
             }
-            ans += Math.max(0, windowR - windowL);
+//            ans += Math.max(0, windowR - windowL);
+            ans += windowR - windowL;
         }
 
         long[] help = new long[R - L + 1];

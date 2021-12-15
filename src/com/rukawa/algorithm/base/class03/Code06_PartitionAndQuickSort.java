@@ -12,14 +12,31 @@ import java.util.Arrays;
 public class Code06_PartitionAndQuickSort {
 
     // 快排
+    public static void quickSort01(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return;
+        }
+        process01(arr, 0, arr.length - 1);
+    }
 
-    public static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
+    // 随机快排
+    // 在arr[L...R]上，以arr[R]位置的数做划分值
+    // <=arr[R]放左边  >arr[R]放右边
+    public static void process01(int[] arr, int L, int R) {
+        if (L >= R) {
+            return;
+        }
+        int M = partition(arr, L, R);
+        process01(arr, L, M - 1);
+        process01(arr, M + 1, R);
     }
 
     public static int partition(int[] arr, int L, int R) {
+        /**
+         * 设置一个<=区域，在-1位置
+         * 1.当前数<=目标，当前数和(<=区域)的在一个数交换，<=区域向下扩，当前数跳下一个
+         * 2.当前数>目标，当前数跳下一个
+         */
         if (L > R) {
             return -1;
         }
@@ -27,7 +44,7 @@ public class Code06_PartitionAndQuickSort {
             return L;
         }
 
-        int lessEqual = L - 1;  // <区的第一个位置
+        int lessEqual = L - 1;  // <=区的第一个位置
         int index = L;
         while (index < R) {
             if (arr[index] <= arr[R]) {
@@ -39,6 +56,21 @@ public class Code06_PartitionAndQuickSort {
         return lessEqual;
     }
 
+    public static void quickSort02(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return;
+        }
+        process02(arr, 0, arr.length - 1);
+    }
+
+    public static void process02(int[] arr, int L, int R) {
+        if (L >= R) {
+            return;
+        }
+        int[] equalArea = netherlandsFlag(arr, L, R);
+        process02(arr, L, equalArea[0] - 1);    // <区的最后一个数
+        process02(arr, equalArea[1] + 1, R);    // >区的第一个数
+    }
 
     // 在arr[L ... R]范围玩荷兰国旗问题的划分，以arr[R]为划分值
     // <arr[R]  ==arr[R]  >arr[R]
@@ -66,39 +98,10 @@ public class Code06_PartitionAndQuickSort {
         return new int[] {less + 1, more};
     }
 
-    public static void quickSort01(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            return;
-        }
-        process01(arr, 0, arr.length - 1);
-    }
-
-    // 随机快排
-    // 在arr[L...R]上，以arr[R]位置的数做划分值
-    // <=arr[R]放左边  >arr[R]放右边
-    public static void process01(int[] arr, int L, int R) {
-        if (L >= R) {
-            return;
-        }
-        int M = partition(arr, L, R);
-        process01(arr, L, M - 1);
-        process01(arr, M + 1, R);
-    }
-
-    public static void quickSort02(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            return;
-        }
-        process02(arr, 0, arr.length - 1);
-    }
-
-    public static void process02(int[] arr, int L, int R) {
-        if (L >= R) {
-            return;
-        }
-        int[] equalArea = netherlandsFlag(arr, L, R);
-        process02(arr, L, equalArea[0] - 1);    // <区的最后一个数
-        process02(arr, equalArea[1] + 1, R);    // >区的第一个数
+    public static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     public static void quickSort03(int[] arr) {

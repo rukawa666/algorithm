@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
-import com.rukawa.algorithm.types.orderTable.Code04_CountOfRangeSum;
-
 import java.util.HashSet;
 
 /**

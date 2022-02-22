@@ -31,30 +31,28 @@ public class Problem_0162_FindPeakElement {
      */
 
     public int findPeakElement(int[] nums) {
-        int N = nums.length;
-        if (N < 2) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        if (nums.length == 1 || nums[0] > nums[1]) {
             return 0;
         }
-        if (nums[0] > nums[1]) {
-            return 0;
+        if (nums[nums.length - 1] > nums[nums.length - 2]) {
+            return nums.length - 1;
         }
-        if (nums[N - 1] > nums[N - 2]) {
-            return N - 1;
-        }
-
-        int L = 1;
-        int R = N - 2;
-        int M = 0;
-        while (L < R) {
-            M = (L + R) / 2;
-            if (nums[M - 1] < nums[M] && nums[M] > nums[M + 1]) {
-                return M;
-            } else if (nums[M - 1] > nums[M]) {
-                R = M - 1;
+        int l = 1;
+        int r = nums.length - 2;
+        int m;
+        while (l <= r) {
+            m = l + ((r - l) >> 1);
+            if (nums[m] > nums[m - 1] && nums[m] > nums[m + 1]) {
+                return m;
+            } else if (nums[m] < nums[m - 1]) {
+                r = m - 1;
             } else {
-                L = M + 1;
+                l = m + 1;
             }
         }
-        return L;
+        return l;
     }
 }

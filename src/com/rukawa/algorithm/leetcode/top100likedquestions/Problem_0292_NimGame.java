@@ -7,7 +7,7 @@ package com.rukawa.algorithm.leetcode.top100likedquestions;
  * @Date：2020-10-11 0:50
  * @Version：1.0
  */
-public class Problem_0218_NimGame {
+public class Problem_0292_NimGame {
     /**
      * Nim 游戏
      *你和你的朋友，两个人一起玩 Nim 游戏：

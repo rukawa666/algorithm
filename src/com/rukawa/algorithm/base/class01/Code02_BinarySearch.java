@@ -38,8 +38,8 @@ public class Code02_BinarySearch {
         int target = 5;
         System.out.println(binarySearch0101(nums, target));
         System.out.println(binarySearch0102(nums, target));
-        System.out.println(binarySearch0201(nums, 0));
-        System.out.println(binarySearch0202(nums, 0));
+        System.out.println(binarySearch0201(nums, 2));
+        System.out.println(binarySearch0202(nums, 2));
         System.out.println(binarySearch0301(nums, 5));
         System.out.println(binarySearch0302(nums, 5));
         System.out.println(binarySearch0401(nums, 3));

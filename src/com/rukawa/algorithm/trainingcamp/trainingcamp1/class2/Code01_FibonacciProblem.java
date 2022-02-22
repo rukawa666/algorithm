@@ -99,6 +99,16 @@ public class Code01_FibonacciProblem {
      * 返回N年后牛的数量
      * @param n
      * @return
+     *
+     * 第一年：1(A) 1
+     * 第二年：1(A) + 11(B) 2
+     * 第三年：1(A) + 11(B) + 12(C) 3
+     * 第四年：1(A) + 11(B) + 12(C) + 13(D) + 111(E) 5
+     * 第五年：1(A) + 11(B) + 12(C) + 13(D) + 14(D) + 111(E) + 112(F) + 121(G) 8
+     *
+     * 1 2 3 5 8 13 21
+     * f3 = f2 + f1
+     * f4 = f3 + f2
      */
     public static int c3(int n) {
         if (n < 1) {

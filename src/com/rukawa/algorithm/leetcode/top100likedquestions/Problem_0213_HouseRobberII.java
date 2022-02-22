@@ -1,5 +1,7 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.Map;
+
 /**
  * Created with Intellij IDEA
  *
@@ -25,6 +27,15 @@ public class Problem_0213_HouseRobberII {
      *      偷窃到的最高金额 = 1 + 3 = 4 。
      */
     public int rob(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
         return 0;
     }
 }

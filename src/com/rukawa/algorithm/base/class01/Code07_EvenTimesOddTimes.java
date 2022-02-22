@@ -26,17 +26,18 @@ public class Code07_EvenTimesOddTimes {
         }
         // eor = a ^ b  a,b为两个奇数
         // eor != 0
-        // eor必然有一个位置为1
+        // eor必然有一个位置为1，随便获取一个位置的1，人为规定拿最右侧的1
         int rightOne = eor & (~eor + 1);    // 提取出最后侧的1
 
-        
+        // 挑选最右侧为1的数
         int onlyOne = 0; // eor'
         for (int i = 0; i < arr.length; i++) {
             if ((arr[i] & rightOne) != 0) {
                 onlyOne ^= arr[i];
             }
         }
-
+        // a = b ^ c
+        // c = a ^ b 满足交换律
         System.out.println(onlyOne + " " + (eor ^ onlyOne));
     }
 }

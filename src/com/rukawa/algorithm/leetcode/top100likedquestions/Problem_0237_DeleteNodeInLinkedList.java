@@ -31,7 +31,8 @@ public class Problem_0237_DeleteNodeInLinkedList {
      * 不要从你的函数中返回任何结果。
      */
     public void deleteNode(ListNode node) {
-
+        node.val = node.next.val;
+        node.next = node.next.next;
     }
 
     public class ListNode {

@@ -12,9 +12,30 @@ import java.util.HashSet;
  */
 public class Code08_KM {
 
+    // 请保证arr中只有一种数出现了k次，其他数都出现了m次
+    public static int onlyKTimes1(int[] arr, int k, int m) {
+        int[] times = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i < 32; i++) {
+                times[i] += (num >> i) & 1;
+            }
+        }
+
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            // 说明这个数在i位置没有1
+            if (times[i] % m == 0) {
+                continue;
+            }
+            // i位置的次数不是m的整数倍，说明time[i]一定有出现k次的数
+            res |= 1 << i;
+        }
+        return res;
+    }
+
     /**
      * 一个数组中有一种数出现K次，其他数都出现M次，M>1, K<M
-     * 找到出现了K次的数
+     * 找到出现了K次的数，如果没有找到出现K次的数，返回-1
      * 要求，额外空间复杂度O(1),时间复杂度O(N)
      * @param arr
      * @param k
@@ -33,11 +54,12 @@ public class Code08_KM {
 
         int res = 0;
         for (int i = 0; i < 32; i++) {
-
+            // 说明这个数在i位置没有1
             if (t[i] % m == 0) {
                 continue;
             }
             // 第i位置是1
+            // i位置的次数不是m的整数倍，说明time[i]一定有出现k次的数
             if (t[i] % m == k) {
                 res |= (1 << i);
             } else {
@@ -81,10 +103,12 @@ public class Code08_KM {
     }
 
     public static int[] randomArray(int kinds, int range, int k, int m) {
+        // 该出现k次的数
         int kTimeNum = randomNumber(range);
         // k 出现的次数
         int times = Math.random() < 0.5 ? k : ((int) (Math.random() * (m - 1)) + 1);
 
+        // m次数的数有几种
         int numKinds = (int) (Math.random() * kinds) + 2;
         // k * 1 + (numKinds - 1) * m
         int[] arr = new int[times + (numKinds - 1) * m];
@@ -93,11 +117,13 @@ public class Code08_KM {
         for (; index < times; index++) {
             arr[index] = kTimeNum;
         }
+        // 还剩余几种数需要去填写
         numKinds--;
         HashSet<Integer> set = new HashSet<>();
         set.add(kTimeNum);
         while (numKinds != 0) {
-            int curNum = 0;
+            int curNum;
+            // 保证数都是新的
             do {
                 curNum = randomNumber(range);
             } while (set.contains(curNum));

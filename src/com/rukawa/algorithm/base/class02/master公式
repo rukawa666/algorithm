@@ -7,4 +7,4 @@ Master公式
 
     如果log(b,a) < d,时间复杂度为O(N ^ d)
     如果log(b,a) > d,时间复杂度为O(N ^ log(b,a))
-    如果log(b,a) == d,时间复杂度为O(N ^ d * logN)
+    如果log(b,a) == d,时间复杂度为O((N ^ d) * logN)

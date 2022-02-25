@@ -34,7 +34,7 @@ public class Code06_PartitionAndQuickSort {
     public static int partition(int[] arr, int L, int R) {
         /**
          * 设置一个<=区域，在-1位置
-         * 1.当前数<=目标，当前数和(<=区域)的在一个数交换，<=区域向下扩，当前数跳下一个
+         * 1.当前数<=目标，当前数和(<=区域)的下一个数交换，<=区域向右扩，当前数跳下一个
          * 2.当前数>目标，当前数跳下一个
          */
         if (L > R) {

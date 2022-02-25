@@ -1,5 +1,7 @@
 package com.rukawa.algorithm.base.class03;
 
+import sun.security.provider.Sun;
+
 /**
  * Created with Intellij IDEA
  *
@@ -61,6 +63,11 @@ public class Code05_CountOfRangeSum {
      * 如果知道0～7范围上的累加和是70，那么8～17的累加和是30，刚好在10～40范围内，符合条件 -> 如果0～7的累加和在(100-60,100-10)范围内就是达标
      *
      * 求以i位置结尾的子数组，有多少个在[lower,upper]范围上 == i之前的所有前缀和中有多少前缀和在[x-upper, x-lower]
+     *
+     * 假设0～17的整体前缀和是100，求以17结尾的子数组中有多少个数在[10,40]范围内？
+     * 0～16范围上有多少前缀和在[60,90]范围上
+     *
+     * 假设0～17的整体前缀和是100，假设0～5的前缀和在70，可以推出6～17的前缀和是30，此时在[10, 40]
      */
     public static int merge(long[] sum, int L, int M, int R, int lower, int upper) {
         int ans = 0;
@@ -70,14 +77,21 @@ public class Code05_CountOfRangeSum {
         // 对于右组中的每个数，求在左组中有多少个数，位于[x-upper,x-lower]
         /**
          * 2,5,8,9,11,15      6,7,7,8,10,11      [-1,2]
+         * 此时：右边窗口的数是6，范围为[4, 7],窗口的右边界不能大于7，窗口的左边界不能超过4，此时只有5
+         *      右边窗口的数是7，范围为[5,8],窗口的右边界不能大于8，窗口的左边界不能超过5，此时有5，8
+         *      右边窗口的数是7，。。。                                             此时有5，8
+         *      右边窗口的数是8，范围是[6,9]，窗口的右边界不能大于9，窗口的左边界不能超过6，此时有8，9
+         *      右边窗口的数是10，范围是[8,11]，窗口的右边界不能大于11，窗口的左边界不能超过8，此时有8，9，11
+         *      右边窗口的数是11，范围是[9,12]，窗口的右边界不能大于12，窗口的左边界不能超过9，此时有9，11
          */
         for (int i = M + 1; i <= R; i++) {
             long min = sum[i] - upper;
             long max = sum[i] - lower;
+            // 窗口上限不能比max大
             while (windowR <= M && sum[windowR] <= max) {
                 windowR++;
             }
-
+            // 窗口下限不能比min大
             while (windowL <= M && sum[windowL] < min) {
                 windowL++;
             }

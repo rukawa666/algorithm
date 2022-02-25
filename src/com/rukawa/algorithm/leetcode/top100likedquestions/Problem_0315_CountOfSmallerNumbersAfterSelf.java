@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,66 @@ public class Problem_0315_CountOfSmallerNumbersAfterSelf {
      * -10^4 <= nums[i] <= 10^4
      */
 
-    public List<Integer> countSmaller(int[] nums) {
-        return null;
+    public static List<Integer> countSmaller(int[] nums) {
+        if (nums == null) {
+            return null;
+        }
+        int N = nums.length;
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            res.add(0);
+        }
+        // 索引数组，作用：归并回去的时候，方便知道是哪个下标的元素
+        int[] indexes = new int[N];
+        for (int i = 0; i < N; i++) {
+            indexes[i] = i;
+        }
+        int mergeSize = 1;
+        while (mergeSize < N) {
+            int L = 0;
+            while (L < N) {
+                int M = L + mergeSize - 1;
+                if (M >= N) {
+                    break;
+                }
+                int R = Math.min(mergeSize + M, N - 1);
+                merge(nums, L, M, R, res);
+                L = R + 1;
+            }
+            if (mergeSize > N / 2) {
+                break;
+            }
+            mergeSize <<= 1;
+        }
+        return res;
+    }
+
+    public static void merge(int[] nums, int L, int M, int R, List<Integer> res) {
+        int[] help = new int[R - L + 1];
+        int index = R - L;
+        int p1 = M;
+        int p2 = R;
+        while (p1 >= L && p2 > M) {
+            res.set(index, nums[p1] > nums[p2] ? (R - p2) : 0);
+            help[index--] = nums[p1] > nums[p2] ? nums[p1--] : nums[p2--];
+        }
+
+        while (p1 >= L) {
+            help[index--] = nums[p1--];
+        }
+
+        while (p2 > M) {
+            help[index--] = nums[p2--];
+        }
+
+        for (index = 0; index <= R - L; index++) {
+            nums[L + index] = help[index];
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {5, 2, 6, 1};
+        List<Integer> list = countSmaller(nums);
+        System.out.println(list);
     }
 }

@@ -127,7 +127,7 @@ public class Code03_ReversePair {
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            if (reversePairs(arr1) != comparator(arr2)) {
+            if (reversePairs(arr1) != reversePairs1(arr2)) {
                 System.out.println("Oops!");
                 printArray(arr1);
                 printArray(arr2);
@@ -136,4 +136,33 @@ public class Code03_ReversePair {
         }
         System.out.println("测试结束");
     }
+
+
+    public static int reversePairs1(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return 0;
+        }
+        int N = nums.length;
+        int mergeSize = 1;
+        int res = 0;
+        while (mergeSize < N) {
+            int L = 0;
+            while (L < N) {
+                int M = L + mergeSize - 1;
+                if (M >= N) {
+                    break;
+                }
+                int R = Math.min(M + mergeSize, N - 1);
+                res += merge(nums, L, M, R);
+                L = R + 1;
+            }
+
+            if (mergeSize > N / 2) {
+                break;
+            }
+            mergeSize <<= 1;
+        }
+        return res;
+    }
+
 }

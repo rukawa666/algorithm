@@ -1,5 +1,7 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.Arrays;
+
 /**
  * Created with Intellij IDEA
  *
@@ -22,7 +24,36 @@ public class Problem_0075_SortColors {
      * 首先，迭代计算出0、1 和 2 元素的个数，然后按照0、1、2的排序，重写当前数组。
      * 你能想出一个仅使用常数空间的一趟扫描算法吗？
      */
-    public void sortColors(int[] nums) {
-
+    public static void sortColors(int[] nums) {
+        partition(nums, 0, nums.length - 1);
     }
+
+    public static void partition(int[] nums, int l, int r) {
+        int zero = l - 1;
+        int two = r + 1;
+        int index = l;
+        while (index < two) {
+            if (nums[index] == 0) {
+                swap(nums, index++, ++zero);
+            } else if (nums[index] == 2) {
+                swap(nums, index, --two);
+            } else {
+                index++;
+            }
+        }
+    }
+
+    public static void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 0, 2, 1, 1, 0};
+        sortColors(nums);
+        System.out.println(Arrays.toString(nums));
+    }
+
+
 }

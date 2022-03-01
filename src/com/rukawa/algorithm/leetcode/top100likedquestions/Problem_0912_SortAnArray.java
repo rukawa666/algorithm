@@ -67,4 +67,53 @@ public class Problem_0912_SortAnArray {
             nums[L + index] = help[index];
         }
     }
+
+    public int[] sortArray1(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return nums;
+        }
+        process(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    public void process(int[] nums, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        swap(nums, l + (int) (Math.random() * (r - l + 1)), r);
+        int[] netherlandsFlag = netherlandsFlag(nums, l, r);
+        process(nums, l, netherlandsFlag[0] - 1);
+        process(nums, netherlandsFlag[1] + 1, r);
+    }
+
+    public int[] netherlandsFlag(int[] nums, int l, int r) {
+        if (l > r) {
+            return new int[] {-1, -1};
+        }
+        if (l == r) {
+            return new int[] {l, r};
+        }
+        int less = l - 1;
+        int more = r;
+        int index = l;
+        while (index < more) {
+            if (nums[index] == nums[r]) {
+                index++;
+            } else if (nums[index] < nums[r]) {
+                swap(nums, index++, ++less);
+            } else {
+                swap(nums, index, --more);
+            }
+        }
+        swap(nums, more, r);
+        return new int[] {less + 1, more};
+
+
+    }
+
+    public static void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
 }

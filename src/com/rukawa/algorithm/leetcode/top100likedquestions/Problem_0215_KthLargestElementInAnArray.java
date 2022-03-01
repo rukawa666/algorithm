@@ -24,6 +24,55 @@ public class Problem_0215_KthLargestElementInAnArray {
      * 你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
      */
     public int findKthLargest(int[] nums, int k) {
-        return 0;
+        // k的长度是>=1，转换第k个最小的元素
+        // length：7，k：6  第六大元素  => 第二小元素
+        return minKth(nums, nums.length + 1 - k);
+    }
+
+    public int minKth(int[] nums, int k) {
+        return process(nums, 0, nums.length - 1, k - 1);
+    }
+
+    public int process(int[] nums, int l, int r, int index) {
+        if (l == r) {
+            return nums[l];
+        }
+        int pivot = nums[l + (int)(Math.random() * (r - l + 1))];
+        int[] range = netherlandsFlag(nums, l, r, pivot);
+        if (index >= range[0] && index <= range[1]) {
+            return nums[index];
+        } else if (index < range[0]) {
+            return process(nums, l, range[0] - 1, index);
+        } else {
+            return process(nums, range[1] + 1, r, index);
+        }
+    }
+
+    public int[] netherlandsFlag(int[] nums, int l, int r, int pivot) {
+       if (l > r) {
+           return new int[] {-1, -1};
+       }
+       if (l == r) {
+           return new int[] {l, r};
+       }
+       int less = l - 1;
+       int more = r + 1;
+       int index = l;
+       while (index < more) {
+           if (nums[index] < pivot) {
+                swap(nums, index++, ++less);
+           } else if (nums[index] > pivot) {
+               swap(nums, index, --more);
+           } else {
+               index++;
+           }
+       }
+       return new int[] {less + 1, more - 1};
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }

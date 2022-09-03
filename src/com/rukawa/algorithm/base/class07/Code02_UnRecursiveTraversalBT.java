@@ -31,11 +31,17 @@ public class Code02_UnRecursiveTraversalBT {
         System.out.println();
     }
 
+    /**
+     * 1. 二叉树的整条左边界全部进入栈，直到遇到空
+     * 2. 栈中弹出节点打印，当前节点的右孩子成为cur回到第一步
+     *
+     * 整个二叉树可以被左边界分解掉
+     */
     public static void in(Node head) {
         System.out.print("in-order: ");
         if (head != null) {
             Stack<Node> stack = new Stack<>();
-            if (!stack.isEmpty() || head != null) {
+            while (!stack.isEmpty() || head != null) {
                 if (head != null) {
                     stack.push(head);
                     head = head.left;

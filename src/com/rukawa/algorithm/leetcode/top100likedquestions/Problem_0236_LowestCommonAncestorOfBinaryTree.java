@@ -31,19 +31,25 @@ public class Problem_0236_LowestCommonAncestorOfBinaryTree {
      * p、q 为不同节点且均存在于给定的二叉树中。
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        /**
+         *  x这棵树上，a和b汇聚在哪
+         *  x这棵树上是否发现a和b，如果发现则最低公共祖先在x这棵树上
+         *  情况分析：
+         *    x不是最低的汇聚点：
+         *      1.x的左树上有最低汇聚点
+         *      2.x的右树上有最低汇聚点
+         *      3.x的整棵树上a和b不全
+         *    x是最低的汇聚点：
+         *      1.左树发现一个，右树发现另外一个，在x这里汇聚
+         *      2.x本身就是a节点，左树或者右树发现了b
+         *      3.x本身就是b节点，左树或者右树发现了a
+         *
+         *  根据情况分析需要以下几个要素：
+         *      1.这棵树上有没有a节点
+         *      2.这棵树上有没有b节点
+         *      3.这棵树上有没有发现a和b的最低汇聚点
+         */
         return process(root, p, q).res;
-    }
-
-    public static class Info {
-        public boolean findP;
-        public boolean findQ;
-        public TreeNode res;
-
-        public Info(boolean findP, boolean findQ, TreeNode res) {
-            this.findP = findP;
-            this.findQ = findQ;
-            this.res = res;
-        }
     }
 
     public static Info process(TreeNode x, TreeNode p, TreeNode q) {
@@ -65,6 +71,18 @@ public class Problem_0236_LowestCommonAncestorOfBinaryTree {
             }
         }
         return new Info(findP, findQ, res);
+    }
+
+    public static class Info {
+        public boolean findP;
+        public boolean findQ;
+        public TreeNode res;
+
+        public Info(boolean findP, boolean findQ, TreeNode res) {
+            this.findP = findP;
+            this.findQ = findQ;
+            this.res = res;
+        }
     }
 
     public class TreeNode {

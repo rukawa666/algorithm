@@ -44,11 +44,11 @@ public class Code04_BestArrange {
      * 目前来到timeLine的时间点，已经安排了done多的会议，剩下的会议programs可以自由安排
      * 返回能安排的最多会议的数量
      */
+    // 暴力递归
     public static int process(Program[] programs, int done, int timeLine) {
         if (programs.length == 0) {
             return done;
         }
-
         int max = done;
         // 当前安排的会议是什么会，每一个都枚举
         for (int i = 0; i < programs.length; i++) {
@@ -72,6 +72,7 @@ public class Code04_BestArrange {
     }
 
 
+    // 贪心算法
     public static int bestArrange02(Program[] programs) {
         Arrays.sort(programs, new MyComparator());
 

@@ -19,9 +19,8 @@ public class Code01_LowestLexicography {
      * 给定一个由字符组成的数组strs
      * 必须把所有字符串拼接起来
      * 返回所有可能的拼接结果中、字典序最小的结果
-     * @param strS
-     * @return
      */
+    // 暴力方法
     public static String lowestString01(String[] strS) {
         if (strS == null || strS.length == 0) {
             return "";
@@ -62,6 +61,42 @@ public class Code01_LowestLexicography {
     }
 
 
+    /**
+     * 传递性
+     * 如果a.concat(b) <= b.concat(a), b.concat(c) <= c.concat(b)
+     * 能得出a.concat(c) <= c.concat(a) 则说明具有传递性
+     *
+     * *******证明传递性********
+     * 拼接是什么
+     * "123".concat("456")  => "123456"
+     * 如果是k进制的，则有如下转化
+     * 用数学代替，则是 "123" * k^3 + "456"
+     *
+     * 拼接得出的表达式：a * k^len(b) + b
+     * 如果k^len(x)用函数m(x)代替
+     *
+     * 则上面的表达式可以改写为：
+     * 表达式1：a * m(b) + b <= b * m(a) + a
+     * 表达式2：b * m(c) + c <= c * m(b) + b
+     *
+     * 表达式1等式两边先减b，在同时乘c，得到如下表达式3
+     * a * m(b) <= b * m(a) + a - b
+     * a * m(b) * c <= c * b * m(a) + ac - bc
+     *
+     * 表达式2等式两边先减b，在同时乘a，得到如下表达式4
+     * b * m(c) + c - b <= c * m(b)
+     * a * b * m(c) + ac - ba <= a * m(b) * c
+     *
+     * 此时比较两个等式3和4
+     * a * m(b) * c <= c * b * m(a) + ac - bc
+     * a * b * m(c) + ac - ba <= a * m(b) * c
+     *
+     * 得出a * b * m(c) + ac - ba <= c * b * m(a) + ac - bc
+     * a * m(c) - a <= c * m(a) - c
+     * a * m(c) + c <= c * m(a) + a
+     *
+     * 此时得出结论：a.concat(c) <= c.concat(a)
+     */
     public static class MyComparator implements Comparator<String> {
 
         @Override
@@ -71,6 +106,7 @@ public class Code01_LowestLexicography {
     }
 
 
+    // 贪心方法
     public static String lowestString02(String[] strS) {
         if (strS == null || strS.length == 0) {
             return "";

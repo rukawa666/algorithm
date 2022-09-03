@@ -10,6 +10,14 @@ import java.util.Arrays;
  * @Version：1.0
  */
 public class Code02_HeapSort {
+    /**
+     * 堆排序
+     * 1、先让整个数组都变成大根堆的结构，建立堆的过程
+     *   1.1 从上到下的过程，时间复杂度为O(N * logN)
+     *   1.2 从下到上的过程，时间复杂度为O(N)
+     * 2、把堆的最大值和堆末尾的值交换，然后减少堆的大小之后，再去调整堆，一直周而复始，时间复杂度为O(N * logN)
+     * 3、堆的大小减小成0之后，排序完成
+     */
 
     public static void main(String[] args) {
         int[] arr = {0,9,10,8,7,1,3,4,2};
@@ -30,6 +38,11 @@ public class Code02_HeapSort {
 
         // 全部给你，只要求大根堆的优化，不要求有序  O(N)
         // 从下往上建立大根堆
+
+        // 最下层的节点数量为2/N，倒数第二层的节点数量为4/N, ...
+        // 所有时间复杂度为T(N)=2/N*1 + 4/N*2 + 8/N*3 + ...
+        // 时间复杂度为等比数列，一定收敛于O(N)
+        // 最底层的子树已经是大根堆了，不需要调整，剩余的节点需要heapify
         for (int i = arr.length - 1; i >= 0; i--) {
             heapify(arr, i , arr.length);
         }

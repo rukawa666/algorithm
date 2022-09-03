@@ -71,7 +71,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
             Node<T> cur = tail;
             if (tail == null) {
                 head = null;
-                tail= null;
+                tail = null;
             } else {
                 tail = tail.last;
                 cur.last = null;

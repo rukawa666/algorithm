@@ -9,6 +9,10 @@ package com.rukawa.algorithm.base.class07;
  */
 public class Code07_SuccessorNode {
 
+    /**
+     * 给定如下二叉树的结构定义
+     * 给你二叉树的某个节点，返回该节点的后继节点
+     */
     public static class Node {
         public int value;
         public Node left;
@@ -20,17 +24,34 @@ public class Code07_SuccessorNode {
         }
     }
 
+    /**
+     * 什么是后继节点？
+     *  如果生成一个二叉树的中序遍历，x节点的在一个下一个节点是x节点的后继节点。如果中序遍历查后继节点，时间复杂度是O(N)
+     */
+
     // 中序遍历，获取一个节点的后继节点
+    // O(k) k的长度是x节点到后继节点的真实距离
     public static Node getSuccessorNode(Node node) {
         if (node == null) {
             return null;
         }
+        /**
+         *        a
+         *      /   \
+         *     b     c
+         *   / \    / \
+         * e   f   g   h
+         *
+         * 中序遍历：e, b, f, a, g, c, h
+         * a的后继节点是g，如果有右树，找到右树最左的节点
+         * f的后继节点是b，往上找，parent不为空且parent.right=node截止，此时的parent是后继节点
+         */
         // 如果有右子树，则该节点的后继节点是右树最左子树
         if (node.right != null) {
             return getLeftMost(node.right);
         } else {    // 如果该节点没有右树，则只要该节点是父节点的左孩子即可
             Node parent = node.parent;
-            while (parent != null && parent.left != node) {
+            while (parent != null && parent.right == node) {
                 node = parent;
                 parent = node.parent;
             }
@@ -48,7 +69,7 @@ public class Code07_SuccessorNode {
             return getRightMost(node.left);
         } else {
             Node parent = node.parent;      // 如果该节点没有左子树，则只要该节点是父节点的右孩子即可
-            while (parent != null && parent.right != node) {
+            while (parent != null && parent.left == node) {
                 node = parent;
                 parent = node.parent;
             }

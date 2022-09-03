@@ -94,6 +94,9 @@ public class Code05_EveryStepShowBoss {
 
 
         // O(N*(logN + logK + K))
+        // 得奖区的时间复杂度O(N*logK) 得奖区最多k个数
+        // 候选区的时间复杂度O(N*logN) 候选区最多N个数
+        // 每个事件到来的时候需要拽出k个数，O(N*k)
         public void operate(int time, int number, boolean burOrRefund) {
             if (!burOrRefund && !customers.containsKey(number)) {
                 return;

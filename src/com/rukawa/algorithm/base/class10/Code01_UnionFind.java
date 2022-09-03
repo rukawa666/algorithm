@@ -24,11 +24,17 @@ public class Code01_UnionFind {
     public static class UnionSet<V> {
         public HashMap<V, Node<V>> nodes;
 
+        // 代表节点
         public HashMap<Node<V>, Node<V>> parents;
 
+        // 因为要小挂大  比如1000大小的集合和2000大小的集合合并，小的挂大的肯定更优
+        // sizeMap 可以知道有多少个集合
         public HashMap<Node<V>, Integer> sizeMap;
 
         public UnionSet(List<V> values) {
+            nodes = new HashMap<>();
+            parents = new HashMap<>();
+            sizeMap = new HashMap<>();
             for (V value : values) {
                 Node<V> node = new Node<>(value);
                 nodes.put(value, node);
@@ -37,10 +43,20 @@ public class Code01_UnionFind {
             }
         }
 
+        // 时间复杂度O(1)
+
         /**
-         * 时间复杂度O(1)
-         * @param cur
-         * @return
+         * 优化：把沿途经过的节点挂到最终的父节点
+         *      a
+         *     /
+         *    b
+         *   /
+         *  c
+         *
+         *  从c往上找，经过b之后找到最终的父节点
+         *     a
+         *    / |
+         *   b  c
          */
         public Node<V> findFather(Node<V> cur) {
             Stack<Node<V>> path = new Stack<>();

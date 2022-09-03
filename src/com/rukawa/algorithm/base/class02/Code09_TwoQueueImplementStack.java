@@ -13,6 +13,12 @@ import java.util.Stack;
  */
 public class Code09_TwoQueueImplementStack {
 
+    /**
+     * 如果使用队列结构实现栈
+     *
+     * 问题：实现图的深度优先遍历，但是用队列实现
+     */
+
     public static class TwoQueueStack<T> {
         public Queue<T> queue;
         public Queue<T> help;
@@ -27,6 +33,7 @@ public class Code09_TwoQueueImplementStack {
         }
 
         public T poll() {
+            // 把queue的最后一个留下，其余全部进入help
             while (queue.size() > 1) {
                 help.offer(queue.poll());
             }

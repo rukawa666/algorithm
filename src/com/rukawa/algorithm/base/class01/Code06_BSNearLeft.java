@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date：2020-07-09 23:44
  * @Version：1.0
  */
-public class Code05_BSNearLeft {
+public class Code06_BSNearLeft {
 
     // 在arr上，找满足>=value的最左位置
     public static int nearestIndex(int[] arr, int value) {

@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.base.class03;
 
-import sun.security.provider.Sun;
-
 /**
  * Created with Intellij IDEA
  *

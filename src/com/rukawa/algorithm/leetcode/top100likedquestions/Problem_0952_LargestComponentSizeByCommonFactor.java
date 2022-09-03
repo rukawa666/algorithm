@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.leetcode.other;
+package com.rukawa.algorithm.leetcode.top100likedquestions;
 
 /**
  * Created with Intellij IDEA

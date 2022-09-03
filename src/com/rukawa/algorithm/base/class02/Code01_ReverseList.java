@@ -1,6 +1,5 @@
 package com.rukawa.algorithm.base.class02;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

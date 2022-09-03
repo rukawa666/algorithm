@@ -7,7 +7,7 @@ package com.rukawa.algorithm.base.class01;
  * @Date：2020-07-09 23:13
  * @Version：1.0
  */
-public class Code04_BSExist {
+public class Code05_BSExist {
 
     public static boolean exists(int[] sortedArr, int num) {
         if (sortedArr == null || sortedArr.length == 0) {
@@ -17,7 +17,7 @@ public class Code04_BSExist {
         int L = 0;
         int R = sortedArr.length - 1;
         int mid = 0;
-        while (L < R) {
+        while (L <= R) {
             /**
              * mid = (L + R) / 2;
              * L：10亿  R：18亿

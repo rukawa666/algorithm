@@ -7,7 +7,7 @@ package com.rukawa.algorithm.base.class01;
  * @Date：2020-07-10 0:17
  * @Version：1.0
  */
-public class Code06_BSAwesome {
+public class Code07_BSAwesome {
 
     /**
      * 局部最小值问题，一个数左边比它大，右边也比它大，找到一个就返回

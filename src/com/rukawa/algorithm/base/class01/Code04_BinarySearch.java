@@ -7,7 +7,7 @@ package com.rukawa.algorithm.base.class01;
  * @Date：2020-10-17 15:52
  * @Version：1.0
  */
-public class Code02_BinarySearch {
+public class Code04_BinarySearch {
     /**
      * lower_bound(x):查找第一个大于等于key元素的下标
      * while (l < r)

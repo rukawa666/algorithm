@@ -105,6 +105,7 @@ public class Code03_SmallerEqualBigger {
             cur = cur.next;
         }
         addPartition(nodeArr, pivot);
+        // 通过数组中的节点把链表重新串联起来
         for (i = 1; i != nodeArr.length; i++) {
             nodeArr[i - 1].next = nodeArr[i];
         }

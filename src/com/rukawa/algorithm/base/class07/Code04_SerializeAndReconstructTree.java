@@ -63,6 +63,20 @@ public class Code04_SerializeAndReconstructTree {
         }
     }
 
+    /**
+     * 中序没办法反序列化
+     *      1            2
+     *     / ｜         / ｜
+     *    2  null    null 1
+     *   / ｜            / ｜
+     * null null       null null
+     *
+     * 上面两棵树的中序序列化分别是
+     * [null,2,null,1,null]
+     * [null,2,null,1,null]
+     * 两个不同的二叉树序列化结果一样，不能序列化和反序列化
+     */
+
     // 后序序列化
     public static Queue<String> posSerial(Node head) {
         Queue<String> ans = new LinkedList<>();
@@ -80,7 +94,7 @@ public class Code04_SerializeAndReconstructTree {
         }
     }
 
-    // 前序反序列化
+    // 先序反序列化
     public static Node buildByPreQueue(Queue<String> preList) {
         if (preList == null || preList.size() == 0) {
             return null;

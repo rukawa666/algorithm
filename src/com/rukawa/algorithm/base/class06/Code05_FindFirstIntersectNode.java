@@ -150,10 +150,13 @@ public class Code05_FindFirstIntersectNode {
 
     /**
      * 如何判断两个有环链表是否相交，相交返回第一个相交节点，不相交则返回null
+     * 1.两个有环链表不相交
+     * 2.两个有环链表相交，入环节点是同一个
+     * 3.两个有环链表相交，入环节点不是同一个
      */
     public static ListNode bothLoop(ListNode head01, ListNode loop01, ListNode head02, ListNode loop02) {
-        ListNode cur01 = null;
-        ListNode cur02 = null;
+        ListNode cur01;
+        ListNode cur02;
         if (loop01 == loop02) {
             cur01 = head01;
             cur02 = head02;
@@ -182,6 +185,8 @@ public class Code05_FindFirstIntersectNode {
             }
             return cur01;
         } else {
+            // loop1走一圈，没有遇到loop2，说明两个链表没有相交
+            // 如果走一圈遇到loop2，则说明是情况三
             cur01 = loop01.next;
             while (cur01 != loop01) {
                 if (cur01 == loop02) {

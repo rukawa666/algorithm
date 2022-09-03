@@ -2,6 +2,7 @@ package com.rukawa.algorithm.leetcode.top100likedquestions;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -51,6 +52,35 @@ public class Problem_0347_TopKFrequentElements {
         int index = 0;
         while (!heap.isEmpty()) {
             res[index++] = heap.poll().num;
+        }
+        return res;
+    }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Node> map = new HashMap<>();
+        for (int num : nums) {
+            if (!map.containsKey(num)) {
+                map.put(num, new Node(num));
+            } else {
+                map.get(num).count++;
+            }
+        }
+
+        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.count));
+        for (Node node : map.values()) {
+            if (queue.size() < k || (queue.size() == k && node.count > queue.peek().count)) {
+                queue.add(node);
+            }
+
+            if (queue.size() > k) {
+                queue.poll();
+            }
+        }
+
+        int[] res = new int[k];
+        int index = 0;
+        while (!queue.isEmpty()) {
+            res[index++] = queue.poll().num;
         }
         return res;
     }

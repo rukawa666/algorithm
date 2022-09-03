@@ -20,8 +20,7 @@ public class Code03_LessMoneySplitGold {
      *
      * 输入一个数组，返回分割的最小代价
      */
-
-
+    // 暴力方法
     public static int lessMoney01(int[] arr) {
         if (arr == null || arr.length == 0) {
             return 0;
@@ -54,6 +53,35 @@ public class Code03_LessMoneySplitGold {
         ans[ansi] = arr[i] + arr[j];
         return ans;
     }
+
+    // 贪心算法
+    /**
+     * 哈夫曼编码问题
+     * Huffman编码的基本思想是用短的编码表示出现频率高的字符，用长的编码表示出现频率低的字符，这使得编码之后的字符串的平均长度、长度的期望值
+     * 降低，从而达到压缩的效果
+     *
+     * 哈夫曼的构建过程：比如对一个字符串的频率统计的结果如下
+     * character  frequency
+     *   a           5
+     *   b           9
+     *   c           12
+     *   d           13
+     *   e           16
+     *   f           45
+     * 将每个元素构建成一个节点，即只有一个元素的树，并构建小根堆，包含所有节点，该算法用了最小堆来作为优先队列
+     * 选取两个权重最小的节点，并添加一个权值为5+9=14的节点，作为它们的父节点，并更新最小堆。
+     *
+     *               100
+     *           /        ｜
+     *         45(f       55
+     *               /           ｜
+     *              25            30
+     *           /    ｜        /   |
+     *        12(c)  13(d)    14    16(e)
+     *                     /    |
+     *                   5(a)   9(b)
+     *
+     */
 
     public static int lessMoney02(int[] arr) {
         PriorityQueue<Integer> pQ = new PriorityQueue<>();

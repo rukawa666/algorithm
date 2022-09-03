@@ -10,6 +10,7 @@ package com.rukawa.algorithm.base.class03;
 public class Code01_MergeSort {
 
     // 递归方式实现归并排序
+    // O(N * logN)
     public static void mergeSort1(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
@@ -62,6 +63,7 @@ public class Code01_MergeSort {
             while (L < N) {
                 // L ... M 左组(mergeSize)
                 int M = L + mergeSize - 1;
+                // M位置不够左组直接结束
                 if (M >= N) {
                     break;
                 }

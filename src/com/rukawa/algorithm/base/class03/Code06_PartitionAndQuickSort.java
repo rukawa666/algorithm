@@ -90,10 +90,16 @@ public class Code06_PartitionAndQuickSort {
                 index++;
             } else if (arr[index] < arr[R]) {
                 swap(arr, index++, ++less);
+                // swap(arr, index, less + 1)
+                // less++
+                // index++
             } else {
                 swap(arr, index, --more);
+                // swap(arr, index, more - 1)
+                // more--
             }
         }
+        // 最后一个数是属于等于区域的，要和大于区域的第一个数做交换，完成整个区域的划分
         swap(arr, more, R);
         return new int[] {less + 1, more};
     }

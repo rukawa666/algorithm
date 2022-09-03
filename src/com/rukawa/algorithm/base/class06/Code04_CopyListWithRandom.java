@@ -78,6 +78,7 @@ public class Code04_CopyListWithRandom {
          * copy node and link to every node
          * 1 -> 2
          * 1 -> 1' -> 2
+         * 复制当前节点插入到当前节点之后
          */
         while (cur != null) {
             next = cur.next;

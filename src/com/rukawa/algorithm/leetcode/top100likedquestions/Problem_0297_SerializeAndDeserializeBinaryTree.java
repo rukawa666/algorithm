@@ -1,5 +1,8 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created with Intellij IDEA
  *
@@ -29,7 +32,7 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
      * 序列化为 "[1,2,3,null,null,4,5]"
      */
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -37,12 +40,77 @@ public class Problem_0297_SerializeAndDeserializeBinaryTree {
     }
 
     // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        return null;
+    public static String serialize(TreeNode root) {
+        Queue<String> res = new LinkedList<>();
+        if (root == null) {
+            res.add("null");
+        } else {
+            res.add(String.valueOf(root.val));
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                root = queue.poll();
+                if (root.left != null) {
+                    res.add(String.valueOf(root.left.val));
+                    queue.add(root.left);
+                } else {
+                    res.add("null");
+                }
+
+                if (root.right != null) {
+                    res.add(String.valueOf(root.right.val));
+                    queue.add(root.right);
+                } else {
+                    res.add("null");
+                }
+            }
+        }
+        return res.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        return null;
+        Queue<String> originQueue = new LinkedList<>();
+        if (originQueue == null || originQueue.size() == 0) {
+            return null;
+        }
+        TreeNode root = generateTreeNode(originQueue.poll());
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {
+            queue.add(root);
+        }
+        TreeNode node = null;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            node.left = generateTreeNode(originQueue.poll());
+            node.right = generateTreeNode(originQueue.poll());
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        return root;
+    }
+
+    public TreeNode generateTreeNode(String val) {
+        if (val == null) {
+            return null;
+        }
+        return new TreeNode(Integer.valueOf(val));
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(5);
+
+        String serialize = serialize(root);
+
+
     }
 }

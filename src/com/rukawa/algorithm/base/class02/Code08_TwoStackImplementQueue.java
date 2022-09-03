@@ -11,6 +11,12 @@ import java.util.Stack;
  */
 public class Code08_TwoStackImplementQueue {
 
+    /**
+     * 如何使用栈结构实现队列结构
+     *
+     * 问题：实现图的宽度优先遍历，但是用栈实现
+     */
+
     public static class TwoStackQueue {
         public Stack<Integer> stackPush;
         public Stack<Integer> stackPop;

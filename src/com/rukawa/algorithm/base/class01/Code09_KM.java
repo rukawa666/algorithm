@@ -10,16 +10,26 @@ import java.util.HashSet;
  * @Date：2021-01-10 15:27
  * @Version：1.0
  */
-public class Code08_KM {
+public class Code09_KM {
 
-    // 请保证arr中只有一种数出现了k次，其他数都出现了m次
+    // 请保证arr中只有一种数出现了k次，其他数都出现了m次,找到这个出现了k次的数，k < m
     public static int onlyKTimes1(int[] arr, int k, int m) {
         int[] times = new int[32];
         for (int num : arr) {
             for (int i = 0; i < 32; i++) {
+                // num 向右移动i位，是否是1，如果是1，该位置数量+1
                 times[i] += (num >> i) & 1;
             }
         }
+
+        /**
+         * 假设：1（0001）出现了7次，3（0011）出现了7次，5（0101）出现了4次
+         * 0位置的总共出现了17次，此时17%7 != 0 代表0位置有出现k次的这个数
+         *
+         *      1（0001）出现了7次，3（0011）出现了7次，4（010）出现了4次
+         * 0位置的数总共出现了14次，此时14%7 == 0 代表0位置没有出现k次的这个数
+         *
+         */
 
         int res = 0;
         for (int i = 0; i < 32; i++) {
@@ -28,6 +38,8 @@ public class Code08_KM {
                 continue;
             }
             // i位置的次数不是m的整数倍，说明time[i]一定有出现k次的数
+            // i向左移动i位置，添加1
+            // time[i] % m != 0,肯定是出现m次的当前数在当前位置有值，所以每个位置"｜"进去就是当前值
             res |= 1 << i;
         }
         return res;
@@ -67,7 +79,9 @@ public class Code08_KM {
             }
         }
 
+        // 如果0这个数出现的次数不是k
         if (res == 0) {
+            // 检查0真实出现的次数
             int count = 0;
             for (int num : arr) {
                 if (num == 0) {

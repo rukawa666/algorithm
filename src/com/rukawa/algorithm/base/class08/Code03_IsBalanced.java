@@ -3,14 +3,14 @@ package com.rukawa.algorithm.base.class08;
 import com.rukawa.algorithm.base.class07.Node;
 
 /**
- * Created with Intellij IDEA
- *
- * @Author：SuperHai
- * @Date：2020-07-21 6:53
- * @Version：1.0
+ * create by hqh on 2022/9/1
  */
-public class Code01_IsBalanced {
+public class Code03_IsBalanced {
 
+    /**
+     * 给定一个二叉树的头节点head，返回这颗二叉树是不是平衡二叉树
+     * 平衡二叉树：每一个子树的左树的高度和右树的高度相差的绝对值相差不超过1
+     */
 
     public static boolean isBalances(Node head) {
         return process02(head).isBalanced;

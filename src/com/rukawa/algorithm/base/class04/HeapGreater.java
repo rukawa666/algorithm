@@ -10,6 +10,7 @@ import java.util.List;
  * T 类型不要是基础类型，HashMap的key如果是整型会被覆盖
  * 基础类型可以对T包一层，转换为一个对象
  *
+ * 解决的问题：堆的底层是数组，数组中的对象要调整，需要反向索引表
  * 解决类型：动态调整，实时出现的字符串topK，程序员堆和pm堆问题
  * @Author：SuperHai
  * @Date：2021-01-20 20:32
@@ -18,7 +19,7 @@ import java.util.List;
 public class HeapGreater<T> {
 
     private ArrayList<T> heap;
-    // 反向索引表
+    // 反向索引表，记录在数组中出现在哪个位置
     private HashMap<T, Integer> indexMap;
     // 堆的大小
     private int heapSize;
@@ -71,6 +72,7 @@ public class HeapGreater<T> {
         int position = indexMap.get(obj);
         indexMap.remove(obj);
         heap.remove(--heapSize);
+        // 如果不是最后一个元素，需要调整位置
         if (obj != replace) {
             heap.set(position, replace);
             indexMap.put(replace, position);
@@ -79,6 +81,7 @@ public class HeapGreater<T> {
     }
 
     // 调整为有序
+    // 只能向上移动或者向下移动，只能有一边
     public void resign(T obj) {
         heapInsert(indexMap.get(obj));
         heapify(indexMap.get(obj));

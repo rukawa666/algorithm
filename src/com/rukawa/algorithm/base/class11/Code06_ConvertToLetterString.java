@@ -79,7 +79,7 @@ public class Code06_ConvertToLetterString {
 
             // i没有到终止位置，1-'A',0是没有办法转化
             if (chs[index] == '0') {
-                dp[index] = 0;
+                continue;
             }
 
             if (chs[index] == '1') {

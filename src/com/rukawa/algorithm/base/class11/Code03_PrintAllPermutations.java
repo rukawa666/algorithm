@@ -44,7 +44,7 @@ public class Code03_PrintAllPermutations {
         for (int j = i; j < chs.length; j++) {  // j在尝试i后面的所有字符都有机会
             swap(chs, i, j);
             // 保留上面的结果，到i+1位置开始执行
-            process01(chs, i+ 1, res);
+            process01(chs, i + 1, res);
             // 恢复现场
             swap(chs, i, j);
         }

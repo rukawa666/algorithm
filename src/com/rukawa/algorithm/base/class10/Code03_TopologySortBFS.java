@@ -12,7 +12,7 @@ import java.util.*;
  * 拓扑排序：图没有环，有环的图没有拓扑排序的概念
  * 拓扑排序必须是有向无环图
  */
-public class Code03_TopologySort {
+public class Code03_TopologySortBFS {
 
     // directed graph and no loop
     public static List<Node> sortedTopology(Graph graph) {

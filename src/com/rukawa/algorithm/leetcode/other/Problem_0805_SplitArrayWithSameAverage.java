@@ -24,23 +24,23 @@ public class Problem_0805_SplitArrayWithSameAverage {
      * A 数组的长度范围为 [1, 30].
      * A[i] 的数据范围为 [0, 10000].
      */
-    public static boolean splitArraySameAverage(int[] A) {
-        if (A == null || A.length < 2) {
+    public static boolean splitArraySameAverage(int[] nums) {
+        if (nums == null || nums.length < 2) {
             return false;
         }
         int sum = 0;
-        for (int num : A) {
+        for (int num : nums) {
             sum += num;
         }
         sum >>= 1;
-        int N = A.length;
+        int N = nums.length;
         int[][] dp = new int[N + 1][sum + 1];
         for (int i = N - 1; i >= 0; i--) {
             for (int rest = 0; rest <= sum; rest++) {
                 int p1 = dp[i + 1][rest];
                 int p2 = 0;
-                if (A[i] <= rest) {
-                    p2 = dp[i + 1][rest - A[i]] + A[i];
+                if (nums[i] <= rest) {
+                    p2 = dp[i + 1][rest - nums[i]] + nums[i];
                 }
                 dp[i][rest] = Math.max(p1, p2);
             }

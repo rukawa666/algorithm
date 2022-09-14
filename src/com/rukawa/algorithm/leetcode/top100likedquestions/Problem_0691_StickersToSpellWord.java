@@ -114,6 +114,64 @@ public class Problem_0691_StickersToSpellWord {
         return dp.get(rest);
     }
 
+    // 优化版本
+    public static int minStickers2(String[] stickers, String target) {
+        int N = stickers.length;
+        int[][] count = new int[N][26];
+        for (int i = 0; i < N; i++) {
+            char[] chs = stickers[i].toCharArray();
+            for (char ch : chs) {
+                count[i][ch - 'a']++;
+            }
+        }
+        int res = process2(count, target);
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    // stickers 代表所有贴纸
+    // 每一种贴纸无穷张
+    // 搞定target的最小张数
+    public static int process2(int[][] stickers, String t) {
+        if (t.length() == 0) {
+            return 0;
+        }
+        // target 做出词频统计
+        // "aabbc"  2 2 1
+        //          0 1 2
+        char[] target = t.toCharArray();
+        int[] counts = new int[26];
+        for (char chs : target) {
+            counts[chs - 'a']++;
+        }
+        int N = stickers.length;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < N; i++) {
+            // 尝试贴纸
+            int[] sticker = stickers[i];
+            // 最关键的优化（重要的剪枝，这一步也是贪心）
+            // target：aaabbbck
+            // stickers：bbc cck kkb bab
+            // target - 'a' 找到target中的第一个字符
+            // 找到贴纸中包含target第一个字符的贴纸进行尝试
+            // 让包含target第一个字符的贴纸先试，不会影响答案
+            // 原来的最优答案可能出现好几次，但是当前把最优答案直接拿到
+            if (sticker[target[0] - 'a'] > 0) {
+                StringBuilder builder = new StringBuilder();
+                for (int j = 0; j < 26; j++) {
+                    if (counts[j] > 0) {
+                        int nums = counts[j] - sticker[j];
+                        for (int k = 0; k < nums; k++) {
+                            builder.append((char) (j + 'a'));
+                        }
+                    }
+                }
+                String rest = builder.toString();
+                min = Math.min(min, process2(stickers, rest));
+            }
+        }
+        return min + (min == Integer.MAX_VALUE ? 0 : 1);
+    }
+
     public static void main(String[] args) {
         String[] arr = {"aaaa","bbaa","ccddd"};
         String str = "abcccccdddddbbbaaaaa";

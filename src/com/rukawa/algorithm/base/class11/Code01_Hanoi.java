@@ -1,5 +1,8 @@
 package com.rukawa.algorithm.base.class11;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with Intellij IDEA
  *
@@ -95,7 +98,7 @@ public class Code01_Hanoi {
             System.out.println("Move 1 from " + from + " to " + to);
             return;
         } else {
-            func(N- 1, from, other, to);
+            func(N - 1, from, other, to);
             System.out.println("Move " + N + " from " + from + " to " + to);
             func(N - 1, other, to, from);
         }
@@ -115,6 +118,4 @@ public class Code01_Hanoi {
         hanoi02(n);
         System.out.println("---------------------");
     }
-
-
 }

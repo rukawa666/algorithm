@@ -12,6 +12,18 @@ import java.util.Stack;
  */
 public class Code02_DFS {
 
+    /**
+     *        a
+     *    /  |  \
+     *   b - c   d
+     *   |  /
+     *   e
+     *
+     *   压入a：a
+     *   压入b：b，a
+     *   压入e：e，b，a
+     *   压入c：c，e，b，a
+     */
     public static void dfs(Node node) {
         if (node == null) {
             return;

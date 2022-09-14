@@ -15,11 +15,30 @@ public class Code07_Knapsack {
      * 给定一个正数bag，表示一个载重bag的袋子
      * 你装的物品不能超过这个重量。
      * 返回你能装下最多的价值是多少？
-     * @param w
-     * @param v
-     * @param bag
-     * @return
      */
+    // 暴力递归
+    public static int getMaxValue2(int[] w, int[] v, int bag) {
+        return process2(w, v, 0, bag);
+    }
+
+    public static int process2(int[] w, int[] v, int index, int bag) {
+        if (bag < 0) {
+            return -1;
+        }
+        if (index == w.length) {
+            return 0;
+        }
+        int p1 = process2(w, v, index, bag);
+        int p2 = 0;
+        // bag - w[index] < 0 是无效解，所以上面base case返回-1
+        int next = process2(w, v, index + 1, bag - w[index]);
+        if (next != -1) {
+            p2 = v[index] + next;
+        }
+        return Math.max(p1, p2);
+    }
+
+    // 暴力递归
     public static int getMaxValue(int[] w, int[] v, int bag) {
         return process(w, v, 0, 0, bag);
     }
@@ -96,9 +115,12 @@ public class Code07_Knapsack {
         return Math.max(p1, p2);
     }
 
+    // 傻缓存
     public static int dpWay(int[] w, int[] v, int bag) {
         int N = w.length;
-        int[][] dp = new int[N+1][bag+1];
+        int[][] dp = new int[N + 1][bag + 1];
+        // 暴力递归需要依赖下面的行的值和左边列的值
+        // dp[index][rest] 依赖dp[index+1][rest] dp[index+1][rest-w[index]]
         // 最后一行为0，dp[n][...] = 0
         for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= bag; rest++) {   // rest < 0，为无效解，不需要管

@@ -27,6 +27,7 @@ public class Code06_Dijkstra {
     public static class NodeHeap {
         private Node[] nodes;   // 实际的堆结构
         // key 某一个node，value 上面堆中的位置
+        // heapIndexMap value=-1 曾经进来过，但是出去了
         private HashMap<Node, Integer> heapIndexMap;
         // key 某一个node，value 从源节点出发到该节点的的目前最小距离
         private HashMap<Node, Integer> distanceMap;
@@ -47,17 +48,20 @@ public class Code06_Dijkstra {
          * @param distance
          */
         public void addOrUpdateOrIgnore(Node node, int distance) {
+            // 节点在小根堆，修改
             if (inHeap(node)) {
                 distanceMap.put(node, Math.min(distanceMap.get(node), distance));
+                // 向上调整
                 insertHeapify(node, heapIndexMap.get(node));
             }
 
+            // 不在小根堆，属于新增
             if (!isEntered(node)) {
                 nodes[size] = node;
                 heapIndexMap.put(node, size);
                 distanceMap.put(node, distance);
+                // 往上做调整
                 insertHeapify(node, size++);
-
             }
         }
 
@@ -122,6 +126,8 @@ public class Code06_Dijkstra {
     /**
      * 改进后的dijkstra算法
      * 从head出发，所有head能到达的节点，生成到达每个节点的最小路径记录并返回
+     *
+     * 慢：每一次都要遍历找到最小值，然后去更新
      * @param from
      * @return
      */
@@ -158,6 +164,7 @@ public class Code06_Dijkstra {
         // fromNode 0
         Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
         while (minNode != null) {
+            // 原始点到minNode的最小距离
             int distance = distanceMap.get(minNode);
             for (Edge edge : minNode.edges) {
                 Node toNode = edge.to;

@@ -26,7 +26,10 @@ public class Problem_0215_KthLargestElementInAnArray {
     public int findKthLargest(int[] nums, int k) {
         // k的长度是>=1，转换第k个最小的元素
         // length：7，k：6  第六大元素  => 第二小元素
-        return minKth(nums, nums.length + 1 - k);
+        // 递归版本
+//        return minKth(nums, nums.length + 1 - k);
+        // 迭代版本
+        return minKth2(nums, nums.length - k);
     }
 
     public int minKth(int[] nums, int k) {
@@ -48,13 +51,27 @@ public class Problem_0215_KthLargestElementInAnArray {
         }
     }
 
+    // 递归改成迭代
+    public  int minKth2(int[] nums, int k) {
+        int l = 0;
+        int r = nums.length - 1;
+        int[] range = null;
+        int pivot = 0;
+        while (l < r) {
+            pivot = nums[l + (int) (Math.random() * (r - l + 1))];
+            range = netherlandsFlag(nums, l, r, pivot);
+            if (k < range[0]) {
+                r = range[0] - 1;
+            } else if (k > range[1]) {
+                l = range[1] + 1;
+            } else {
+                return pivot;
+            }
+        }
+        return nums[l];
+    }
+
     public int[] netherlandsFlag(int[] nums, int l, int r, int pivot) {
-       if (l > r) {
-           return new int[] {-1, -1};
-       }
-       if (l == r) {
-           return new int[] {l, r};
-       }
        int less = l - 1;
        int more = r + 1;
        int index = l;

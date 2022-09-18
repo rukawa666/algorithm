@@ -13,6 +13,7 @@ public class Code03_LargestRectangleInHistogram {
     /**
      * 给定一个非负数组arr，代表直方图
      * 返回直方图的最大长方形面积
+     *  height[3,2,4,2,5]
      */
 
     public static int largestRectangleArea1(int[] heights) {
@@ -64,5 +65,10 @@ public class Code03_LargestRectangleInHistogram {
             maxArea = Math.max(maxArea, curArea);
         }
         return maxArea;
+    }
+
+    public static void main(String[] args) {
+        int[] heights = {3,2,4,2,5};
+        System.out.println(largestRectangleArea1(heights));
     }
 }

@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.leetcode.top100likedquestions;
+package com.rukawa.algorithm.leetcode.highfrequency;
 
 /**
  * create by hqh on 2022/3/10
@@ -29,6 +29,7 @@ public class Problem_0009_PalindromeNumber {
      * -231 <= x <= 231 - 1
      */
     public static boolean isPalindrome(int x) {
+        // 负数，或者数字不是0，但是以0结尾的数，都不是回文数
         if (x < 0 || (x % 10 == 0 && x != 0)) {
             return false;
         }

@@ -1,6 +1,9 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created with Intellij IDEA
@@ -26,6 +29,68 @@ public class Problem_0056_MergeIntervals {
      * 注意：输入类型已于2019年4月15日更改。 请重置默认代码定义以获取新方法签名。
      */
 
+    public int[][] merge(int[][] intervals) {
+        if (intervals.length == 0) {
+            return new int[0][0];
+        }
+        Range[] arr = new Range[intervals.length];
+        for (int i = 0; i < intervals.length; i++) {
+            arr[i] = new Range(intervals[i][0], intervals[i][1]);
+        }
+        Arrays.sort(arr, Comparator.comparingInt(x -> x.start));
+
+        List<Range> res = new ArrayList<>();
+        int start = arr[0].start;
+        int end = arr[0].end;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i].start > end) {
+                res.add(new Range(start, end));
+                start = arr[i].start;
+                end = arr[i].end;
+            } else {
+                end = Math.max(end, arr[i].end);
+            }
+        }
+        res.add(new Range(start, end));
+
+        return generateMatrix(res);
+    }
+
+    public int[][] generateMatrix(List<Range> list) {
+        int[][] res = new int[list.size()][2];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = new int[]{list.get(i).start, list.get(i).end};
+        }
+        return res;
+    }
+
+    public int[][] merge2(int[][] intervals) {
+        if (intervals.length == 0) {
+            return new int[0][0];
+        }
+        Arrays.sort(intervals, Comparator.comparingInt(x -> x[0]));
+
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        int size = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] > end) {
+                intervals[size][0] = start;
+                intervals[size][1] = end;
+                size++;
+                start = intervals[i][0];
+                end = intervals[i][1];
+
+            } else {
+                end = Math.max(end, intervals[i][1]);
+            }
+        }
+        intervals[size][0] = start;
+        intervals[size][1] = end;
+        size++;
+        return Arrays.copyOf(intervals, size);
+    }
+
     public static class Range {
         public int start;
         public int end;
@@ -34,21 +99,5 @@ public class Problem_0056_MergeIntervals {
             this.start = start;
             this.end = end;
         }
-    }
-
-    public static class RangeComparator implements Comparator<Range> {
-
-        @Override
-        public int compare(Range o1, Range o2) {
-            return o1.start - o2.start;
-        }
-    }
-
-    public static int[][] merge(int[][] intervals) {
-        if (intervals.length == 0) {
-            return new int[0][0];
-        }
-        Range[] arr = new Range[intervals.length];
-        return null;
     }
 }

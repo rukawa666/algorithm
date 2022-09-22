@@ -1,5 +1,7 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.sql.SQLOutput;
+
 /**
  * Created with Intellij IDEA
  *
@@ -45,5 +47,31 @@ public class Problem_0007_ReverseInteger {
             res = res * 10 + digit;
         }
         return res;
+    }
+
+    public static int reverse1(int x) {
+        boolean neg = ((x >>> 31) & 1) == 1;
+        // 如果x是负数不处理，正数则转化为负数
+        x = neg ? x : -x;
+        int m = Integer.MIN_VALUE / 10;
+        int o = Integer.MIN_VALUE % 10;
+        int res = 0;
+        while (x != 0) {
+            // res是负数，比m小，如果*10，必然小于MIN_VALUE
+            // res是负数和m相等，*10刚好是MIN_VALUE,但是res加一个负数，肯定小于MIN_VALUE
+            // MIN_VALUE=-2147483648  MIN_VALUE/10*10=-2147483640
+            if (res < m || (res == m && x % 10 < o)) {
+                return 0;
+            }
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+
+        return neg ? res : Math.abs(res);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Integer.MIN_VALUE / 10 * 10);
     }
 }

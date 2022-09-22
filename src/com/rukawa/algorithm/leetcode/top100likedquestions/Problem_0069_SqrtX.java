@@ -24,26 +24,27 @@ public class Problem_0069_SqrtX {
      *      由于返回类型是整数，小数部分将被舍去。
      */
 
+    // x开根号向下取整返回
     public int mySqrt(int x) {
-        if (x == 0) {
-            return 0;
-        }
-        if (x < 3) {
-            return 1;
-        }
-        long ans = 1;
-        long L = 1;
-        long R = x;
-        long M = 0;
-        while (L <= R) {
-            M = ((L + R) >> 1);
-            if (M * M <= x) {
-                ans = M;
-                L = M + 1;
-            } else {
-                R = M - 1;
-            }
-        }
-        return (int) ans;
+       if (x == 0) {
+           return 0;
+       }
+       if (x < 3) {
+           return 1;
+       }
+       long res = 1;
+       long l = 1;
+       long r = x;
+       long m = 0;
+       while (l <= r) {
+           m = l + ((r - l) >> 1);
+           if (m * m <= x) {
+               res = m;
+               l = m + 1;
+           } else {
+               r = m - 1;
+           }
+       }
+       return (int) res;
     }
 }

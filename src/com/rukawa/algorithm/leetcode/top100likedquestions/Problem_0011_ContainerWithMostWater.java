@@ -30,6 +30,10 @@ public class Problem_0011_ContainerWithMostWater {
      * 0 <= height[i] <= 104
      */
     public int maxArea(int[] height) {
+        /**
+         * 流程：
+         *   左边和右边比较大小，哪边的高度小就结算
+         */
         int l = 0, r = height.length - 1;
         int res = 0;
         while (l < r) {

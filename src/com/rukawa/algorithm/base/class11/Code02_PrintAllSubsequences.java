@@ -78,13 +78,8 @@ public class Code02_PrintAllSubsequences {
     }
 
     public static void main(String[] args) {
-        String test = "aacc";
-        List<String> ans1 = subs(test);
+        String test = "123";
         List<String> ans2 = subsNoRepeat(test);
-
-        for (String str : ans1) {
-            System.out.println(str);
-        }
         System.out.println("=================");
         for (String str : ans2) {
             System.out.println(str);

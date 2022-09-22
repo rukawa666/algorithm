@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.leetcode.top100likedquestions;
+package com.rukawa.algorithm.leetcode.highfrequency;
 
 /**
  * create by hqh on 2022/3/3

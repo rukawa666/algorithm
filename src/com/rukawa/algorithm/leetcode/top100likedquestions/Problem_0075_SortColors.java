@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.nio.file.Watchable;
 import java.util.Arrays;
 
 /**
@@ -48,12 +49,4 @@ public class Problem_0075_SortColors {
         nums[i] = nums[j];
         nums[j] = tmp;
     }
-
-    public static void main(String[] args) {
-        int[] nums = {2, 0, 2, 1, 1, 0};
-        sortColors(nums);
-        System.out.println(Arrays.toString(nums));
-    }
-
-
 }

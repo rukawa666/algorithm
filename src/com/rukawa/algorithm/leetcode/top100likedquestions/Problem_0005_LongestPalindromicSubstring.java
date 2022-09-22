@@ -40,19 +40,37 @@ public class Problem_0005_LongestPalindromicSubstring {
         if (s == null || s.length() == 0) {
             return "";
         }
-        char[] chs = manacherString(s);
+        char[] str = manacherString(s);
         // 回文半径
-        int[] pArr = new int[chs.length];
+        int[] pArr = new int[str.length];
         int C = -1;
         // 最右扩成功的位置，在下一个位置
         int R = -1;
         int max = Integer.MIN_VALUE;
+        int index = 0;
+        for (int i = 0; i < str.length; i++) {
+            pArr[i] = i < R ? Math.min(R - i, pArr[2 * C - i]) : 1;
+            while (i + pArr[i] < str.length && i - pArr[i] > -1) {
+                if (str[i + pArr[i]] == str[i - pArr[i]]) {
+                    pArr[i]++;
+                } else {
+                    break;
+                }
+            }
 
-        for (int i = 0; i < chs.length; i++) {
+            if (i + pArr[i] > R) {
+                R = i + pArr[i];
+                C = i;
+            }
 
+            if (max < pArr[i]) {
+                max = pArr[i];
+                index = i;
+            }
         }
-        return "";
-
+        max = max - 1;
+        index = (index - 1) / 2;
+        return s.substring((max & 1) == 0 ? index - (max / 2) + 1 : index - (max / 2), index + (max / 2) + 1);
     }
 
     public static char[] manacherString(String str) {

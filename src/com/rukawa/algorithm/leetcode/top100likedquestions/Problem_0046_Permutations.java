@@ -37,18 +37,16 @@ public class Problem_0046_Permutations {
      * nums 中的所有整数 互不相同
      */
 
-    public static List<List<Integer>> permute(int[] nums) {
+    public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
         func(nums, 0, list, res);
         return res;
     }
 
-    public static void func(int[] nums, int index, List<Integer> list, List<List<Integer>> res) {
+    public void func(int[] nums, int index, List<Integer> list, List<List<Integer>> res) {
         if (index == nums.length) {
-            System.out.println(Arrays.toString(nums));
             list = Arrays.stream(nums).boxed().collect(Collectors.toList());
-            System.out.println(list.toString());
             res.add(list);
         } else {
             for (int i = index; i < nums.length; i++) {
@@ -57,23 +55,11 @@ public class Problem_0046_Permutations {
                 swap(nums, i, index);
             }
         }
-
     }
 
-    public static void swap(int[] nums, int i, int j) {
-        nums[i] = nums[i] ^ nums[j];
-        nums[j] = nums[i] ^ nums[j];
-        nums[i] = nums[i] ^ nums[j];
-    }
-
-    public static void main(String[] args) {
-        int[] nums = {1,2,3};
-        List<List<Integer>> permute = permute(nums);
-        for (List<Integer> list : permute) {
-            for (Integer integer : list) {
-                System.out.print(integer + " ");
-            }
-            System.out.println();
-        }
+    public void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }

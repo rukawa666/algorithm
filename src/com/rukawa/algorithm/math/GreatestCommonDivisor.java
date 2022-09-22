@@ -59,7 +59,4 @@ public class GreatestCommonDivisor {
         System.out.println(gcd1(a, b));
         System.out.println(gcd2(a, b));
     }
-
-
-
 }

@@ -28,12 +28,16 @@ public class Problem_0066_PlusOne {
     public int[] plusOne(int[] digits) {
         int n = digits.length;
         for (int i = n - 1; i >= 0; i--) {
+            // 如果最后一个数字小于9，则最后一位+1，直接返回
             if (digits[i] < 9) {
                 digits[i]++;
                 return digits;
             }
+            // 当前数字等于9，+1之后变成0，前一位去加1
             digits[i] = 0;
         }
+        // 如果能计算到最后，跳出循环，说明最高位置是0，产生一个进位
+        // 产生一个n+1的格子，0位置是1，其余位置是0
         int[] ans = new int[n + 1];
         ans[0] = 1;
         return ans;

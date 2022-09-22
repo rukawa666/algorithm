@@ -39,6 +39,9 @@ public class Problem_0003_LongestSubstringWithoutRepeatingCharacters {
     public int lengthOfLongestSubstring(String s) {
         /**
          * 假设以i位置结尾的情况下，最长无重复的子串，在所有的可能性中，答案必在其中
+         * i位置往左能推多远？
+         *  1. i上次出现的位置就推不动了
+         *  2. 还有i-1往前推的位置
          */
         if (s == null || s.equals("")) {
             return 0;

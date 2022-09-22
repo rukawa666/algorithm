@@ -20,13 +20,21 @@ public class Problem_0042_TrappingRainWater {
      */
 
     public int trap(int[] height) {
+        /**
+         * 思路：求每个i位置能搞定多少水，最终累加
+         * 假设i位置是5，不包含i位置，从左边到i-1位置最大位置的高度是17；不包含i位置，从i+1位置及其往后最大位置的高度是23
+         * 水平面最高能涨到17
+         *
+         * i位置的水量=0~i-1位置的max和i+1～n-1位置的max求min - i位置自身的值
+         * 只要左边或者右边的最大位置水低于i位置的水，i位置只能存放0的水
+         */
         if (height == null || height.length < 3) {
             return 0;
         }
         int N = height.length;
         int leftMax = height[0];
-        int L = 1;
         int rightMax = height[N - 1];
+        int L = 1;
         int R = N - 2;
         int water = 0;
         while (L <= R) {

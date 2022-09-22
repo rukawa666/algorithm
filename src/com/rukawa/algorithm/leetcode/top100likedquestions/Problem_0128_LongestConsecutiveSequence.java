@@ -26,6 +26,7 @@ public class Problem_0128_LongestConsecutiveSequence {
      */
 
     public int longestConsecutive(int[] nums) {
+        // key：连续区间的头和尾，value：连续区间的长度
         HashMap<Integer, Integer> map = new HashMap<>();
         int len = 0;
         for (int num : nums) {
@@ -34,6 +35,7 @@ public class Problem_0128_LongestConsecutiveSequence {
                 int preLen = map.containsKey(num - 1) ? map.get(num - 1) : 0;
                 int postLen = map.containsKey(num + 1) ? map.get(num + 1) : 0;
                 int all = preLen + postLen + 1;
+                // 区间合并
                 map.put(num - preLen, all);
                 map.put(num + postLen, all);
                 len = Math.max(len, all);

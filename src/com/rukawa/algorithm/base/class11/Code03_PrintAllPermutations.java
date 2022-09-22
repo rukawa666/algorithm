@@ -106,8 +106,5 @@ public class Code03_PrintAllPermutations {
         for (String str : ans2) {
             System.out.println(str);
         }
-
     }
-
-
 }

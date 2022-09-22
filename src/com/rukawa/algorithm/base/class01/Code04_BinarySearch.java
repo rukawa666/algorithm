@@ -33,20 +33,6 @@ public class Code04_BinarySearch {
      * @param args
      */
 
-    public static void main(String[] args) {
-        int[] nums = {1,2,2,2,4,4,5,5};
-        int target = 5;
-        System.out.println(binarySearch0101(nums, target));
-        System.out.println(binarySearch0102(nums, target));
-        System.out.println(binarySearch0201(nums, 2));
-        System.out.println(binarySearch0202(nums, 2));
-        System.out.println(binarySearch0301(nums, 5));
-        System.out.println(binarySearch0302(nums, 5));
-        System.out.println(binarySearch0401(nums, 3));
-        System.out.println(binarySearch0501(nums, 4));
-        System.out.println(binarySearch0601(nums, 4));
-    }
-
     /**
      * 模板1-1：查找第一个=target的位置
      * 在左闭右开的区间[l,r}

@@ -37,14 +37,15 @@ public class Problem_0098_ValidateBinarySearchTree {
      * @param root
      * @return
      */
+
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
         }
         TreeNode cur = root;
         TreeNode mostRight = null;
-
         Integer pre = null;
+        boolean res = true;
         while (cur != null) {
             mostRight = cur.left;
             if (mostRight != null) {
@@ -53,43 +54,28 @@ public class Problem_0098_ValidateBinarySearchTree {
                 }
 
                 if (mostRight.right == null) {
+                    // 能到达两次的节点第一次到达
                     mostRight.right = cur;
                     cur = cur.left;
                     continue;
                 } else {
+                    // 能到达两次的节点第二次到达
                     mostRight.right = null;
                 }
             }
+            // 能到达一次的节点第一次到达
             // 中序遍历，搜索二叉树必须递增，所以pre的value必须小于cur的value
             if (pre != null && pre >= cur.val) {
-                return false;
+                res = false;
             }
             pre = cur.val;
             cur = cur.right;
         }
-        return true;
+        return res;
     }
 
-    
-    long pre = Long.MIN_VALUE;
-    public boolean isValidBST1(TreeNode root) {
-        if (root == null) {
-            return true;
-        }
-        // 访问左子树
-        if (!isValidBST1(root.left)) {
-            return false;
-        }
-        // 访问当前节点：如果当前节点小于等于中序遍历的前一个节点，说明不满足BST，返回 false；否则继续遍历。
-        if (root.val <= pre) {
-            return false;
-        }
-        pre = root.val;
-        // 访问右子树
-        return isValidBST1(root.right);
-    }
-
-    public boolean isValidBST3(TreeNode root) {
+    // 二叉树的递归套路
+    public boolean isValidBST2(TreeNode root) {
         if (root == null) {
             return true;
         }
@@ -115,19 +101,14 @@ public class Problem_0098_ValidateBinarySearchTree {
         }
 
         boolean isBST = true;
-        if (leftInfo != null && !leftInfo.isBST) {
+        if (leftInfo != null && (!leftInfo.isBST || leftInfo.max >= x.val)) {
             isBST = false;
         }
-        if (rightInfo != null && !rightInfo.isBST) {
+
+        if (rightInfo != null && (!rightInfo.isBST || rightInfo.min <= x.val)) {
             isBST = false;
         }
-        if (leftInfo != null && leftInfo.max >= x.val) {
-            isBST = false;
-        }
-        if (rightInfo != null && rightInfo.min <= x.val) {
-            isBST = false;
-        }
-        return new Info(isBST, max, min);
+        return new Info(isBST, min, max);
     }
 
     public static class Info {
@@ -140,6 +121,24 @@ public class Problem_0098_ValidateBinarySearchTree {
             this.max = max;
             this.min = min;
         }
+    }
+
+    long pre = Long.MIN_VALUE;
+    public boolean isValidBST1(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        // 访问左子树
+        if (!isValidBST1(root.left)) {
+            return false;
+        }
+        // 访问当前节点：如果当前节点小于等于中序遍历的前一个节点，说明不满足BST，返回 false；否则继续遍历。
+        if (root.val <= pre) {
+            return false;
+        }
+        pre = root.val;
+        // 访问右子树
+        return isValidBST1(root.right);
     }
 
     public static class TreeNode {

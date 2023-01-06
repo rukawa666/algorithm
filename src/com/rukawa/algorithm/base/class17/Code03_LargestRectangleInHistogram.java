@@ -17,7 +17,7 @@ public class Code03_LargestRectangleInHistogram {
      * height[3,2,4,2,5]
      */
 
-    public static int largestRectangleArea1(int[] heights) {
+    public static int largestRectangleArea(int[] heights) {
         if (heights == null || heights.length == 0) {
             return 0;
         }

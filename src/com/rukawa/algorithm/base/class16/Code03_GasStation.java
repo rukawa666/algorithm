@@ -68,6 +68,7 @@ public class Code03_GasStation {
         }
 
         // 在长度为N的窗口内获取最小值
+        // 从小 -> 大的顺序
         LinkedList<Integer> window = new LinkedList<>();
         for (int i = 0; i < N; i++) {
             while (!window.isEmpty() && arr[window.peekLast()] >= arr[i]) {

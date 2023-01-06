@@ -42,14 +42,17 @@ public class Problem_0094_BinaryTreeInOrderTraversal {
                 }
 
                 if (mostRight.right == null) {
+                    // 节点第一次到达
                     mostRight.right = cur;
                     cur = cur.left;
                     continue;
                 } else {
+                    // 节点第二次到达
                     mostRight.right = null;
                 }
             }
-            res.add(cur.val);
+            // 节点第一次到达
+            res.add(cur. val);
             cur = cur.right;
         }
         return res;

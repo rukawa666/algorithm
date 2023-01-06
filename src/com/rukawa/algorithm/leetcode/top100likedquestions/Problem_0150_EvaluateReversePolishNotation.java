@@ -64,27 +64,26 @@ public class Problem_0150_EvaluateReversePolishNotation {
         return stack.peek();
     }
 
-    public static void compute(Stack<Integer> stack, String op) {
-        int num2 = stack.pop();
-        int num1 = stack.pop();
-
-        int ans = 0;
+    public void compute(Stack<Integer> stack, String op) {
+        int y = stack.pop();
+        int x = stack.pop();
+        int res = 0;
         switch (op) {
-            case "+":
-                ans = num1 + num2;
+            case "+" :
+                res = x + y;
                 break;
             case "-":
-                ans = num1 - num2;
+                res = x - y;
                 break;
             case "*":
-                ans = num1 * num2;
+                res = x * y;
                 break;
             case "/":
-                ans = num1 / num2;
+                res = x / y;
                 break;
             default:
                 break;
         }
-        stack.push(ans);
+        stack.push(res);
     }
 }

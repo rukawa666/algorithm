@@ -118,7 +118,7 @@ public class Code04_LargestComponentSizeByCommonFactor {
         return set.maxSize();
     }
 
-    // 最小公倍数
+    // 最大公约数
     public static int gcd(int m, int n) {
         return n == 0 ? m : gcd(n, m % n);
     }
@@ -182,8 +182,12 @@ public class Code04_LargestComponentSizeByCommonFactor {
     }
 
     public static void main(String[] args) {
-        int[] test = { 2, 3, 6, 7, 4, 12, 21, 39 };
-        System.out.println(largestComponentSize1(test));
-        System.out.println(largestComponentSize2(test));
+//        int[] test = { 2, 3, 6, 7, 4, 12, 21, 39 };
+//        System.out.println(largestComponentSize1(test));
+//        System.out.println(largestComponentSize2(test));
+
+        int a = 2;
+        int b = 4;
+        System.out.println(gcd(a, b));
     }
 }

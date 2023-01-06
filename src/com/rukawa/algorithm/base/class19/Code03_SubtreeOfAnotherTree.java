@@ -28,20 +28,20 @@ public class Code03_SubtreeOfAnotherTree {
         }
     }
 
-    public static boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (subRoot == null) {
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if (B == null) {
             return true;
         }
-        if (root == null) {
+        if (A == null) {
             return false;
         }
-        ArrayList<String> bigList = preSerial(root);
+        ArrayList<String> bigList = preSerial(A);
         String[] bigStr = new String[bigList.size()];
         for (int i = 0; i < bigStr.length; i++) {
             bigStr[i] = bigList.get(i);
         }
 
-        ArrayList<String> smallList = preSerial(subRoot);
+        ArrayList<String> smallList = preSerial(B);
         String[] smallStr = new String[smallList.size()];
         for (int i = 0; i < smallStr.length; i++) {
             smallStr[i] = smallList.get(i);
@@ -49,13 +49,13 @@ public class Code03_SubtreeOfAnotherTree {
         return getIndexOf(bigStr, smallStr) != -1;
     }
 
-    public static ArrayList<String> preSerial(TreeNode node) {
+    public ArrayList<String> preSerial(TreeNode node) {
         ArrayList<String> res = new ArrayList<>();
         pre(node, res);
         return res;
     }
 
-    public static void pre(TreeNode node, ArrayList<String> res) {
+    public void pre(TreeNode node, ArrayList<String> res) {
         if (node == null) {
             res.add(null);
         } else {
@@ -65,7 +65,7 @@ public class Code03_SubtreeOfAnotherTree {
         }
     }
 
-    public static int getIndexOf(String[] str1, String[] str2) {
+    public int getIndexOf(String[] str1, String[] str2) {
         if (str1 == null || str2 == null || str1.length == 0 || str1.length < str2.length) {
             return -1;
         }
@@ -85,7 +85,7 @@ public class Code03_SubtreeOfAnotherTree {
         return y == str2.length ? x - y : -1;
     }
 
-    public static int[] getNextArray(String[] str2) {
+    public int[] getNextArray(String[] str2) {
         if (str2.length == 0) {
             return new int[]{-1};
         }
@@ -106,7 +106,7 @@ public class Code03_SubtreeOfAnotherTree {
         return ans;
     }
 
-    public static boolean isEqual(String s1, String s2) {
+    public boolean isEqual(String s1, String s2) {
         if (s1 == null && s2 == null) {
             return true;
         } else {

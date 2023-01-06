@@ -64,11 +64,11 @@ public class Code02_IsBST {
             isBST = false;
         }
 
-        if (leftInfo != null && node.value < leftInfo.min) {
+        if (leftInfo != null && leftInfo.max >= node.value) {
             isBST = false;
         }
 
-        if (rightInfo != null && node.value > rightInfo.max) {
+        if (rightInfo != null && rightInfo.min <= node.value) {
             isBST = false;
         }
         return new Info(isBST, min, max);

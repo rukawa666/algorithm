@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -64,7 +65,9 @@ public class Problem_0139_WordBreak {
     public boolean wordBreak3(String s, List<String> wordDict) {
         HashSet<String> set = new HashSet<>(wordDict);
         int N = s.length();
+        // s从i出发及其后面的所有，能不能被分解
         int[] dp = new int[N + 1];
+        // ""能不能被分解，可以
         dp[N] = 1;
         for (int index = N - 1; index >= 0; index--) {
             int ways = 0;
@@ -85,16 +88,16 @@ public class Problem_0139_WordBreak {
     }
 
     public boolean wordBreak(String s, List<String> wordDict) {
-        Node root = new Node();
+        TrieNode root = new TrieNode();
         // 字典建立前缀树
         for (String str : wordDict) {
             char[] chs = str.toCharArray();
-            Node node = root;
+            TrieNode node = root;
             int index = 0;
             for (int i = 0; i < chs.length; i++) {
                 index = chs[i] - 'a';
                 if (node.nextS[index] == null) {
-                    node.nextS[index] = new Node();
+                    node.nextS[index] = new TrieNode();
                 }
                 node = node.nextS[index];
             }
@@ -103,10 +106,12 @@ public class Problem_0139_WordBreak {
 
         char[] str = s.toCharArray();
         int N = str.length;
+        // s从i出发及其后面的所有，能不能被分解
         int[] dp = new int[N + 1];
+        // ""能不能被分解，可以
         dp[N] = 1;
         for (int index = N - 1; index >= 0; index--) {
-            Node cur = root;
+            TrieNode cur = root;
             // 假设出a出发的这一段 a a a b
             // a a a b
             // i
@@ -128,13 +133,65 @@ public class Problem_0139_WordBreak {
         return dp[0] != 0;
     }
 
-    public static class Node {
-        public boolean end;
-        public Node[] nextS;
-
-        public Node() {
-            this.end = false;
-            this.nextS = new Node[26];
+    public static boolean wordBreak1(String s, List<String> wordDict) {
+        TrieNode root = new TrieNode();
+        // 建立前缀树
+        for (String word : wordDict) {
+            TrieNode cur = root;
+            char[] str = word.toCharArray();
+            int path = 0;
+            for (int i = 0; i < str.length; i++) {
+                path = str[i] - 'a';
+                if (cur.nextS[path] == null) {
+                    cur.nextS[path] = new TrieNode();
+                }
+                cur = cur.nextS[path];
+            }
+            cur.end = true;
         }
+        char[] str = s.toCharArray();
+        int n = str.length;
+        // s从start出发及其往后的所有可能，能不能被分解
+        boolean[] dp = new boolean[n + 1];
+        // ""能不能被分解
+        dp[n] = true;
+        for (int start = n - 1; start >= 0; start--) {
+            // s[start...]能不能被分解
+            TrieNode cur = root;
+            for (int end = start; end < n; end++) {
+                // 下级的路
+                cur = cur.nextS[str[end] - 'a'];
+                // 没有下级的路直接停
+                if (cur == null) {
+                    break;
+                }
+                // 有路，且s[start...end]是在字典中的有效串，看从end+1...及其往后能不能被分解
+                if (cur.end) {
+                    dp[start] |= dp[end + 1];
+                }
+                if (dp[start]) {
+                    break;
+                }
+            }
+        }
+        return dp[0];
+    }
+
+    public static class TrieNode {
+        public boolean end;
+        public TrieNode[] nextS;
+
+        public TrieNode() {
+            this.end = false;
+            this.nextS = new TrieNode[26];
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "aaaaaaa";
+        List<String> wordDict = new ArrayList<>();
+        wordDict.add("aaaa");
+        wordDict.add("aa");
+        System.out.println(wordBreak1(s, wordDict));
     }
 }

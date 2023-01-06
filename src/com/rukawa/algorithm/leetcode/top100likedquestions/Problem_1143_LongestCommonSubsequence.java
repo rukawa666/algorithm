@@ -88,13 +88,12 @@ public class Problem_1143_LongestCommonSubsequence {
             return (str1[i] == str2[j] || process(str1, str2, i - 1, j) == 1) ? 1 : 0;
         }
 
-        int p1 = process(str1, str2, i - 1, j - 1);
-        int p2 = process(str1, str2, i - 1, j);
-        int p3 = process(str1, str2, i, j - 1);
-        int p4 = 0;
+        int p1 = process(str1, str2, i - 1, j);
+        int p2 = process(str1, str2, i, j - 1);
+        int p3 = 0;
         if (str1[i] == str2[j]) {
-            p4 = p1 + 1;
+            p3 = process(str1, str2, i - 1, j - 1) + 1;
         }
-        return Math.max(Math.max(p1, p2), Math.max(p3, p4));
+        return Math.max(Math.max(p1, p2), p3);
     }
 }

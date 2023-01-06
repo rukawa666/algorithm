@@ -164,8 +164,8 @@ public class Code07_MaxSumInTree {
             return null;
         }
 
-        Info leftInfo = f(x.left);
-        Info rightInfo = f(x.right);
+        Info leftInfo = process(x.left);
+        Info rightInfo = process(x.right);
         int p1 = Integer.MIN_VALUE;
         if (leftInfo != null) {
             p1 = leftInfo.allTreeMaxSum;

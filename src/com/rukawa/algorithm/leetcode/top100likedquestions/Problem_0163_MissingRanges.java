@@ -1,5 +1,6 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +13,8 @@ import java.util.List;
  */
 public class Problem_0163_MissingRanges {
     /**
-     *  Missing Ranges
-     *  You are given an inclusive range[lower, upper] and a sorted unique integer array nums,where all elements
-     *  are in the inclusive range.A number x is considered missing if x is in the range[lower, upper] and x is not
-     *  in nums.Return the smallest sorted list of ranges that cover every missing number exactly.That is, no element
-     *  of nums is in any of the ranges,and each missing number is in one of the ranges.
-     *
-     *  Each range [a,b] in the list should be output as:
-     *  · "a->b" if a != b
-     *  · "a" if a == b
+     *  缺失的区间
+     *  给定一个排序的整数数组 nums ，其中元素的范围在 闭区间 [lower, upper] 当中，返回不包含在数组中的缺失区间。
      *
      * Example 1:
      * Input: nums=[0,1,3,50,75], lower = 0, upper = 99
@@ -31,9 +25,11 @@ public class Problem_0163_MissingRanges {
      * [51,74] -> "51->74"
      * [76,99] -> "76->99"
      */
-    public static List<String> findMissingRanges(int[] nums, int lower, int upper) {
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> res = new ArrayList<>();
         for (int num : nums) {
+            // lower:0 upper:99
+            // 当前数字7  缺少0～6
             if (num > lower) {
                 res.add(miss(lower, num - 1));
             }
@@ -41,17 +37,17 @@ public class Problem_0163_MissingRanges {
             if (num == upper) {
                 return res;
             }
-
             lower = num + 1;
         }
-
+        // 所有数字遍历完了
         if (lower <= upper) {
             res.add(miss(lower, upper));
         }
         return res;
     }
 
-    public static String miss(int lower, int upper) {
+    // "4->49"
+    public String miss(int lower, int upper) {
         String left = String.valueOf(lower);
         String right = "";
         if (upper > lower) {

@@ -1,9 +1,6 @@
 package com.rukawa.algorithm.leetcode.highfrequency;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,5 +41,14 @@ public class Problem_0047_PermutationsII {
         int tmp = nums[i];
         nums[i] = nums[j];
         nums[j] = tmp;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int i = sc.nextInt();
+        int j = sc.nextInt();
+        System.out.println(i);
+        System.out.println(j);
+
     }
 }

@@ -27,41 +27,39 @@ public class Problem_0125_ValidPalindrome {
             return true;
         }
         char[] str = s.toCharArray();
-        int L = 0;
-        int R = str.length - 1;
-        while (L < R) {
-            if (validChar(str[L]) && validChar(str[R])) {
-                if (!equal(str[L], str[R])) {
+        int l = 0;
+        int r = str.length - 1;
+        while (l < r) {
+            if (validChar(str[l]) && validChar(str[r])) {
+                if (!isEqual(str[l], str[r])) {
                     return false;
                 }
-                L++;
-                R--;
+                l++;
+                r--;
             } else {
-                L += validChar(str[L]) ? 0 : 1;
-                R -= validChar(str[R]) ? 0 : 1;
+                l += validChar(str[l]) ? 0 : 1;
+                r -= validChar(str[r]) ? 0 : 1;
             }
-
         }
         return true;
     }
 
-    public static boolean validChar(char c) {
-        return isNumber(c) || isLetter(c);
+    public boolean validChar(char c) {
+        return isLetter(c) || isNumber(c);
     }
 
-    public static boolean equal(char c1, char c2) {
-        if (isNumber(c1) || isNumber(c2)) {
-            return c1 == c2;
-        }
-
-        return (c1 == c2) || (Math.max(c1, c2) - Math.min(c1, c2) == 32);
-    }
-
-    public static boolean isLetter(char c) {
+    public boolean isLetter(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 
-    public static boolean isNumber(char c) {
+    public boolean isNumber(char c) {
         return (c >= '0' && c <= '9');
+    }
+
+    public boolean isEqual(char a, char b) {
+        if (isNumber(a) || isNumber(b)) {
+            return a == b;
+        }
+        return (a == b) || (Math.max(a, b) - Math.min(a, b) == 32);
     }
 }

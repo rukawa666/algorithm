@@ -59,7 +59,7 @@ public class Code01_MorrisTraversal {
         }
     }
 
-    // 先序遍历
+    // 中序遍历
     public static void morrisIn(Node head) {
         if (head == null) {
             return;

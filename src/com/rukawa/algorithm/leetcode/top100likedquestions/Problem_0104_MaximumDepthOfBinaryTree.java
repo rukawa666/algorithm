@@ -1,5 +1,8 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created with Intellij IDEA
  *
@@ -35,6 +38,30 @@ public class Problem_0104_MaximumDepthOfBinaryTree {
         }
 
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
+    public int maxDepth2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int res = 0;
+        int size = 0;
+        while (!queue.isEmpty()) {
+            size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+            res++;
+        }
+        return res;
     }
 
     public static class TreeNode {

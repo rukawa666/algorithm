@@ -38,6 +38,18 @@ public class Problem_0122_BestTimeToBuyAndSellStockII {
      */
 
     public int maxProfit(int[] prices) {
-        return 0;
+        /**
+         * 思路：波谷的时候买入，波峰的时候卖出
+         * 后一天的值-当天的值 累加起来就是
+         */
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+
+        int res = 0;
+        for (int i = 1; i < prices.length; i++) {
+            res += Math.max(prices[i] - prices[i - 1], 0);
+        }
+        return res;
     }
 }

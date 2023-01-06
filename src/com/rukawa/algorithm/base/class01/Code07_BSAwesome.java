@@ -20,7 +20,7 @@ public class Code07_BSAwesome {
         }
 
         if (arr.length == 1 || arr[0] < arr[1]) {
-            return 0;
+            return arr[0];
         }
 
         if (arr[arr.length - 1] < arr[arr.length - 2]) {

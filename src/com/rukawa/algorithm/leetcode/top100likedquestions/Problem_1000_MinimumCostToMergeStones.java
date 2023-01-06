@@ -45,49 +45,115 @@ public class Problem_1000_MinimumCostToMergeStones {
      * 1 <= stones[i] <= 100
      */
     public int mergeStones(int[] stones, int K) {
+        // 定义一个函数：在l...r范围上变成k份最小代价是多少  范围尝试+业务限制模型
+        // f(l,r,1) 最终l...r范围上合成1份  依赖f(l,r,k) l...r范围上合成k份，然后k份最终合并成一堆
+
         int n = stones.length;
+        // n个数，到底能不能由K个相邻的数合并，最终变成一个数
+        // 观察得到
         if ((n - 1) % (K - 1) > 0) {
             return -1;
         }
-        int[] presum = new int[n + 1];
+        int[] preSum = new int[n + 1];
         for (int i = 0; i < n; i++) {
-            presum[i + 1] = presum[i] + stones[i];
+            preSum[i + 1] = preSum[i] + stones[i];
         }
         int[][][] dp = new int[n][n][K + 1];
-        return process(0, n - 1, 1, stones, K, presum, dp);
+        return process(stones, 0, n - 1, K, 1, preSum, dp);
     }
 
-    public static int process(int i, int j, int part, int[] arr, int K, int[] presum, int[][][] dp) {
-        if (dp[i][j][part] != 0) {
-            return dp[i][j][part];
+    // 优化
+    // 在l...r范围上合成p份最小代价是多少
+    public int process(int[] stones, int l, int r, int K, int P, int[] preSum, int[][][] dp) {
+        if (dp[l][r][P] != 0) {
+            return dp[l][r][P];
         }
-        if (i == j) {
-            return part == 1 ? 0 : -1;
+
+        if (l == r) {
+            // 只有一个数分成一份的代价是0，否则无效解
+            return P == 1 ? 0 : -1;
         }
-        if (part == 1) {
-            int next = process(i, j, K, arr, K, presum, dp);
+
+        // l != r
+        if (P == 1) {
+            int next = process(stones, l, r, K, K, preSum, dp);
             if (next == -1) {
-                dp[i][j][part] = -1;
+                dp[l][r][P] = -1;
                 return -1;
             } else {
-                dp[i][j][part] = next + presum[j + 1] - presum[i];
-                return next + presum[j + 1] - presum[i];
+                dp[l][r][P] = next + preSum[r + 1] - preSum[l];
+                return next + preSum[r + 1] - preSum[l];
             }
         } else {
-            int ans = Integer.MAX_VALUE;
-            // i...mid是第1块，剩下的是part-1块
-            for (int mid = i; mid < j; mid += K - 1) {
-                int next1 = process(i, mid, 1, arr, K, presum, dp);
-                int next2 = process(mid + 1, j, part - 1, arr, K, presum, dp);
-                if (next1 == -1 || next2 == -1) {
-                    dp[i][j][part] = -1;
+            int res = Integer.MAX_VALUE;
+            // mid += K - 1 观察出来的
+            for (int mid = l; mid < r; mid += K - 1) {
+                // l...mid是第一块，上下的部分是p-1块
+                int left = process(stones, l, mid, K, 1, preSum, dp);
+                int right = process(stones, mid + 1, r, K, P - 1, preSum, dp);
+                if (left == -1 || right == -1) {
+                    dp[l][r][P] = -1;
                     return -1;
                 } else {
-                    ans = Math.min(ans, next1 + next2);
+                    res = Math.min(res, left + right);
                 }
             }
-            dp[i][j][part] = ans;
-            return ans;
+            dp[l][r][P] = res;
+            return res;
         }
     }
+
+    // 初始
+//    public int process1(int[] stones, int l, int r, int K, int P, int[] preSum) {
+//        if (l == r) {
+//            // 只有一个数分成一份的代价是0，否则无效解
+//            return P == 1 ? 0 : -1;
+//        }
+//        // l != r
+//        if (P == 1) {
+//            int next = process1(stones, l, r, K, K, preSum);
+//            if (next == -1) {
+//                return -1;
+//            } else {
+//                return next + preSum[r + 1] - preSum[l];
+//            }
+//        } else {
+//            int res = Integer.MAX_VALUE;
+//            // l...mid是第一块，上下的部分是p-1块
+//            for (int mid = l; mid < r; mid += K - 1) {
+//                int left = process1(stones, l, mid, K, 1, preSum);
+//                int right = process1(stones, mid + 1, r, K, P - 1, preSum);
+//                if (left != -1 && right != -1) {
+//                    res = Math.min(res, left + right);
+//                }
+//            }
+//            return res;
+//        }
+//    }
+
+    // 在l...r范围上合成p份最小代价是多少
+//    public int func(int[] stones, int l, int r, int k, int p) {
+//        if (l...r 根本弄不出p份) {
+//            return Integer.MAX_VALUE;
+//        }
+//        if (p == 1) {
+//            return l == r ? 0 : func(null, l,r, k, k) + 最后一次大合并的代价;
+//        }
+//
+//        int res = Integer.MAX_VALUE;
+//        for (int i = l; i < r; i++) {
+//            // L...i分成一份 i+1...r分成p-1份
+//            int left = func(stones, l, i, k, 1);
+//            if (left == Integer.MAX_VALUE) {
+//                continue;
+//            }
+//            int right = func(stones, i + 1, r, k, p - 1);
+//            if (right == Integer.MAX_VALUE) {
+//                continue;
+//            }
+//            int all = left + right;
+//            res = Math.max(res, all);
+//        }
+//        return res;
+//    }
 }

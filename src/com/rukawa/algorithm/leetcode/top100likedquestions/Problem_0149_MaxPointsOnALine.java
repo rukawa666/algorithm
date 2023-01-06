@@ -100,7 +100,15 @@ public class Problem_0149_MaxPointsOnALine {
         return b == 0 ? a : gcd(b, a % b);
     }
 
+    // 最小公倍数
     public static int lcm(int a, int b) {
         return a * b / gcd(a, b);
+    }
+
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 7;
+        System.out.println(lcm(a, b));
+
     }
 }

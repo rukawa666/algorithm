@@ -44,4 +44,18 @@ public class Problem_0053_MaximumSubarray {
         }
         return max;
     }
+
+    public int maxSubArray1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int max = Integer.MIN_VALUE;
+        int curMaxSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            curMaxSum += nums[i];
+            max = Math.max(max, curMaxSum);
+            curMaxSum = curMaxSum < 0 ? 0 : curMaxSum;
+        }
+        return max;
+    }
 }

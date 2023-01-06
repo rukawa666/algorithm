@@ -10,7 +10,7 @@ package com.rukawa.algorithm.leetcode.top100likedquestions;
 public class Problem_0300_LongestIncreasingSubsequence {
 
     /**
-     * 最长上升子序列
+     * 最长递增子序列
      * 给定一个无序的整数数组，找到其中最长上升子序列的长度。
      *
      * 示例:
@@ -61,5 +61,20 @@ public class Problem_0300_LongestIncreasingSubsequence {
             ends[l] = nums[i];
         }
         return right + 1;
+    }
+
+    public int lengthOfLIS2(int[] nums) {
+        int[] dp = new int[nums.length];
+        int max = 0;
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
     }
 }

@@ -82,7 +82,7 @@ public class Problem_0015_3Sum {
             } else {
                 // 有重复数字的时候，只收集第一次出现的
                 // 左边没数，可以收集
-                // 和左边的数不想等可以收集
+                // 和左边的数不相等可以收集
                 if (l == 0 || nums[l] != nums[l - 1]) {
                     List<Integer> cur = new ArrayList<>();
                     cur.add(nums[l]);

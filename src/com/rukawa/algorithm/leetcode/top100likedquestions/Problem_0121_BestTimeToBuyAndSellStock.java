@@ -26,15 +26,18 @@ public class Problem_0121_BestTimeToBuyAndSellStock {
      * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
      */
     public int maxProfit(int[] prices) {
+        /**
+         * 思路：以i位置考虑，找到左边的最小值，当前位置的值-最小值
+         */
         if (prices == null || prices.length == 0) {
             return 0;
         }
         int min = prices[0];
-        int max = 0;
-        for (int i = 0; i < prices.length; i++) {
+        int res = 0;
+        for (int i = 1; i < prices.length; i++) {
             min = Math.min(min, prices[i]);
-            max = Math.max(max, prices[i] - min);
+            res = Math.max(res, prices[i] - min);
         }
-        return max;
+        return res;
     }
 }

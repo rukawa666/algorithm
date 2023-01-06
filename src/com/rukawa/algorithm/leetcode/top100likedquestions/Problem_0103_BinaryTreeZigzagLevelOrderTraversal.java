@@ -35,45 +35,48 @@ public class Problem_0103_BinaryTreeZigzagLevelOrderTraversal {
      * -100 <= Node.val <= 100
      */
 
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
-
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) {
             return res;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
+        LinkedList<TreeNode> deque = new LinkedList<>();
+        deque.add(root);
         int size = 0;
-        TreeNode cur = null;
-        boolean flag = false;
-        while (!queue.isEmpty()) {
-            size = queue.size();
-            List<Integer> levelList = new ArrayList<>();
+        boolean isHead = true;
+        while (!deque.isEmpty()) {
+            size = deque.size();
+            List<Integer> curlevel = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                cur = queue.poll();
-                if (flag) {
-                    levelList.add(cur.val);
+                TreeNode cur = isHead ? deque.pollFirst() : deque.pollLast();
+                curlevel.add(cur.val);
+
+                if (isHead) {
+                    if (cur.left != null) {
+                        deque.addLast(cur.left);
+                    }
+                    if (cur.right != null) {
+                        deque.addLast(cur.right);
+                    }
                 } else {
-                    levelList.add(0, cur.val);
-                }
-
-                if (cur.left != null) {
-                    queue.add(cur.left);
-                }
-
-                if (cur.right != null) {
-                    queue.add(cur.right);
+                    if (cur.right != null) {
+                        deque.addFirst(cur.right);
+                    }
+                    if (cur.left != null) {
+                        deque.addFirst(cur.left);
+                    }
                 }
             }
-            flag = !flag;
-            res.add(levelList);
+            isHead = !isHead;
+            res.add(curlevel);
         }
         return res;
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
     }
 }

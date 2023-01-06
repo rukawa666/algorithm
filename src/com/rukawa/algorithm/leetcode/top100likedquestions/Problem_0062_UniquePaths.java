@@ -61,6 +61,7 @@ public class Problem_0062_UniquePaths {
         return (int) o1;
     }
 
+    // 最大公约数
     public long gcb(long x, long y) {
         return y == 0 ? x : gcb(y, x % y);
     }

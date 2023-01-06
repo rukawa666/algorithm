@@ -32,6 +32,31 @@ public class Problem_0189_RotateArray {
      * 要求使用空间复杂度为 O(1) 的 原地 算法。
      */
     public void rotate(int[] nums, int k) {
+        /**
+         * 思路：
+         *  前k个和后n-k个数分别逆序
+         *  然后整体逆序
+         *  a,b,c,d,e,f,g,h
+         *  c,b,a h,g,f,e,d 前k个和后n-k个数分别逆序
+         *  d,e,f,g,h,a,b,c 然后整体逆序
+         */
+        int n = nums.length;
+        // 防止k比n大
+        k = k % n;
+        reverse(nums, 0, n - k - 1);
+        reverse(nums, n - k, n - 1);
+        reverse(nums, 0, n - 1);
+    }
 
+    public void reverse(int[] nums, int l, int r) {
+        while (l < r) {
+            int tmp = nums[l];
+            nums[l++] = nums[r];
+            nums[r--] = tmp;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(7 % 4);
     }
 }

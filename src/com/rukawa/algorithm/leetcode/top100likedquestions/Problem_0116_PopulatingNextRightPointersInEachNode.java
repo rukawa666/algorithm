@@ -24,15 +24,6 @@ public class Problem_0116_PopulatingNextRightPointersInEachNode {
      * 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
      * 初始状态下，所有 next 指针都被设置为 NULL。
      *
-     * 示例 1：
-     * 输入：root = [1,2,3,4,5,6,7]
-     * 输出：[1,#,2,3,#,4,5,6,7,#]
-     * 解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。序列化的输出按层序遍历排列，同一层节点由 next 指针连接，'#' 标志着每一层的结束。
-     *
-     * 示例 2:
-     * 输入：root = []
-     * 输出：[]
-     *
      * 提示：
      * 树中节点的数量在 [0, 212 - 1] 范围内
      * -1000 <= node.val <= 1000
@@ -61,6 +52,69 @@ public class Problem_0116_PopulatingNextRightPointersInEachNode {
     }
 
     public Node connect(Node root) {
+        if (root == null) {
+            return root;
+        }
+        MyQueue queue = new MyQueue();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            Node pre = null;
+            int size = queue.size;
+            while (size > 0) {
+                Node cur = queue.poll();
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (pre != null) {
+                    pre.next = cur;
+                }
+                pre = cur;
+                size--;
+            }
+        }
+        return root;
+    }
+
+    // 双端队列，从尾部加，头部弹出
+    public static class MyQueue{
+        private Node head;
+        private Node tail;
+        private int size;
+
+        public MyQueue() {
+            head = null;
+            tail = null;
+            size = 0;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        public void offer(Node cur) {
+            size++;
+            if (head == null) {
+                head = cur;
+                tail = cur;
+            } else {
+                tail.next = cur;
+                tail = cur;
+            }
+        }
+
+        public Node poll() {
+            size--;
+            Node res = head;
+            head = head.next;
+            res.next = null;
+            return res;
+        }
+    }
+
+    public Node connect1(Node root) {
         if (root == null) {
             return null;
         }

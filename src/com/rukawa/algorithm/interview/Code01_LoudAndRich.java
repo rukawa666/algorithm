@@ -15,7 +15,6 @@ public class Code01_LoudAndRich {
      * 现在，返回一个整数数组answer作为答案，其中answer[x]=y的前提是：
      * 在所有拥有的钱肯定不少于person x的人中，person y是最安静的人（也就是安静值quiet[y]最小的人）
      */
-
     public int[] loudAndRich(int[][] richer, int[] quiet) {
         return null;
     }

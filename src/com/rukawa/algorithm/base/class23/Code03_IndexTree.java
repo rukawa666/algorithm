@@ -1,23 +1,19 @@
-package com.rukawa.algorithm.types.indexTree;
+package com.rukawa.algorithm.base.class23;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @Author: Administrator
- * @Date: 2021/6/20 0020 22:42
+ * create by hqh on 2023/1/7
  */
-public class Code01_IndexTree {
-
+public class Code03_IndexTree {
     /**
      * IndexTree
      *  特点：
      *  1、支持区间查询
      *  2、每与线段树那么强，但是非常同意改成一维、二维、三维的结构
-     *  3、只支持单点更新
+     *  3、只支持单点更新（不支持范围更新）
      *
      *
      *  arr[1~12]
+     *  组合方式：判断当前位置能不能和之前凑成一对
      *  help[{1}, {1,2}, {3}, {1,2,3,4}, {5}, {5,6}, {7}, {1,2,3,4,5,6,7,8}, {9}, {9, 10}, {11}, {9,10,11,12}]
      *  两条规则：随便给一个二进制的数01011000
      *  1、此时这个位置的数要+d，还有哪些位置的会受牵连，不断的+最右侧的1，不超过N，都是受牵连的位置
@@ -29,6 +25,7 @@ public class Code01_IndexTree {
      */
 
     // 一维结构
+    // 下标从1 开始
     public static class IndexTree {
         private int[] tree;
         private int N;
@@ -63,6 +60,12 @@ public class Code01_IndexTree {
             }
             return ret;
         }
+
+        // l~r的前缀和是多少
+        public int prefixSum(int l, int r) {
+            return sum(r) - sum(l);
+        }
+
     }
 
     public static class Right {
@@ -85,7 +88,6 @@ public class Code01_IndexTree {
         public void add(int index, int d) {
             nums[index] += d;
         }
-
     }
 
     public static void main(String[] args) {
@@ -109,4 +111,5 @@ public class Code01_IndexTree {
         }
         System.out.println("test finish");
     }
+
 }

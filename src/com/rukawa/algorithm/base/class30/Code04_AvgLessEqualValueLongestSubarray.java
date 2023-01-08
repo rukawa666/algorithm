@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.base.class29;
+package com.rukawa.algorithm.base.class30;
 
 import java.util.TreeMap;
 

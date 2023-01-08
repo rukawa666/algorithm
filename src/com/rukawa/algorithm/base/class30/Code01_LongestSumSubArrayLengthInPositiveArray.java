@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.base.class29;
+package com.rukawa.algorithm.base.class30;
 
 /**
  * create by hqh on 2022/9/19

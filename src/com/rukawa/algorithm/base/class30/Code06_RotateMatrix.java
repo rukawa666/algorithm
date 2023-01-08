@@ -1,12 +1,12 @@
-package com.rukawa.algorithm.base.class29;
+package com.rukawa.algorithm.base.class30;
 
 /**
  * create by hqh on 2022/9/19
  */
-public class Code05_PrintMatrixSpiralOrder {
+public class Code06_RotateMatrix {
 
     /**
-     * 给定一个正方形矩阵matrix，原地调整成顺时针90度转动的样子
+     * 给定一个长方形矩阵matrix，转圈打印打印
      */
     public static void spiralOrderPrint(int[][] matrix) {
         int a = 0;

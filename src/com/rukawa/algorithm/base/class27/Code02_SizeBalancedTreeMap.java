@@ -149,7 +149,7 @@ public class Code02_SizeBalancedTreeMap {
             SBTNode<K, V> ans = null;
             SBTNode<K, V> cur = root;
             while (cur != null) {
-                if (key.compareTo(key) == 0) {
+                if (key.compareTo(cur.k) == 0) {
                     ans = cur;
                     break;
                 } else if (key.compareTo(cur.k) < 0) {
@@ -198,6 +198,7 @@ public class Code02_SizeBalancedTreeMap {
                     // 找到后继节点替换cur
                     SBTNode<K, V> pre = null;
                     SBTNode<K, V> des = cur.r;
+                    des.size--;
                     while (des.l != null) {
                         pre = des;
                         des = des.l;
@@ -248,7 +249,7 @@ public class Code02_SizeBalancedTreeMap {
 
         public boolean containsKey(K key) {
             if (key == null) {
-                throw new RuntimeException("Invalid Parameter");
+                throw new RuntimeException("invalid parameter.");
             }
             SBTNode<K, V> lastNode = findLastIndex(key);
             return lastNode != null && key.compareTo(lastNode.k) == 0 ? true : false;
@@ -256,7 +257,7 @@ public class Code02_SizeBalancedTreeMap {
 
         public void put(K key, V value) {
             if (key == null) {
-                throw new RuntimeException("Invalid Parameter");
+                throw new RuntimeException("invalid parameter.");
             }
             SBTNode<K, V> lastNode = findLastIndex(key);
             if (lastNode != null && key.compareTo(lastNode.k) == 0) {
@@ -268,7 +269,7 @@ public class Code02_SizeBalancedTreeMap {
 
         public void remove(K key) {
             if (key == null) {
-                throw new RuntimeException("Invalid Parameter");
+                throw new RuntimeException("invalid parameter.");
             }
             if (containsKey(key)) {
                 root = delete(root, key);

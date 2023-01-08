@@ -1,18 +1,15 @@
-package com.rukawa.algorithm.types.orderTable;
+package com.rukawa.algorithm.base.class27;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @Author: Administrator
- * @Date: 2021/7/5 0005 0:03
+ * create by hqh on 2023/1/8
  */
 public class Code02_SizeBalancedTreeMap {
-
     /**
      * SizeBalancedTree
-     * 	规定：任何叔叔节点的子树节点个数不小于任何侄子节点的子树节点个数
+     * 	平衡性规定：任何叔叔节点的子树节点个数不小于任何侄子节点的子树节点个数
+     * 	不像AVL的平衡性很严苛，SB树的叔叔节点的个数不能比侄子节点个数少，如果整棵树的右孩子节点节点个数比较多，左孩子的节点比较少，差距不会超过2倍以上
      *
+     *  四种违规类型：
      * 	LL型违规：左孩子的左孩子的节点个数大于右孩子的节点个数
      * 	RR型违规：右孩子的右孩子的节点个数大于左孩子的节点个数
      * 	LR型违规：左孩子的右孩子的节点个数大于右孩子的节点个数
@@ -20,11 +17,11 @@ public class Code02_SizeBalancedTreeMap {
      */
 
     public static class SBTNode<K extends Comparable<K>, V> {
-        public K k;
-        public V v;
-        public SBTNode<K, V> l;
-        public SBTNode<K, V> r;
-        public int size;
+        private K k;
+        private V v;
+        private SBTNode<K, V> l;
+        private SBTNode<K, V> r;
+        private int size; // 不同的key的数量
 
         public SBTNode(K key, V value) {
             this.k = key;
@@ -33,26 +30,48 @@ public class Code02_SizeBalancedTreeMap {
         }
     }
 
+    // 右旋：
+    // 1、节点的左孩子替代该节点的位置；
+    // 2、左孩子的右子树变为该节点的左子树；
+    // 3、节点本身变为左孩子的右子树
+    /**
+     *             cur              left
+     *           /    ｜            /   ｜
+     *         left   R   ---->   LL   cur
+     *        /   ｜                   /  ｜
+     *      LL    LR                  LR  R
+     */
     public static class SBTreeMap<K extends Comparable<K>, V> {
-        public SBTNode<K, V> root;
+        private SBTNode<K, V> root;
 
-        // 右旋：1、节点的左孩子替代该节点的位置；2、左孩子的右子树变为该节点的左子树；节点本身变为左孩子的右子树
-        private SBTNode<K, V> rightRotate(SBTNode<K, V> node) {
-            SBTNode<K, V> left = node.l;
-            node.l = left.r;
-            left.r = node;
-            left.size = node.size;
-            node.size = (node.l != null ? node.l.size : 0) + (node.r != null ? node.r.size : 0) + 1;
+        private SBTNode<K, V> rightRotate(SBTNode<K, V> cur) {
+            SBTNode<K, V> left = cur.l;
+            cur.l = left.r;
+            left.r = cur;
+            left.size = cur.size;
+            cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
             return left;
         }
 
-        // 左旋：1、节点的右孩子替代该节点的位置；2、右孩子的左子树变为该节点的右子树；节点本身变为右孩子的左子树
-        private SBTNode<K, V> leftRotate(SBTNode<K, V> node) {
-            SBTNode<K, V> right = node.r;
-            node.r = right.l;
-            right.l = node;
-            right.size = node.size;
-            node.size = (node.l != null ? node.l.size : 0) + (node.r != null ? node.r.size : 0) + 1;
+        // 左旋：
+        // 1、节点的右孩子替代该节点的位置；
+        // 2、右孩子的左子树变为该节点的右子树；
+        // 3、节点本身变为右孩子的左子树
+        /**
+         *             cur              right
+         *           /    ｜            /   ｜
+         *         L    right   ---->  cur   LR
+         *              /   ｜        /  |
+         *            LL    LR       L  LL
+         */
+        private SBTNode<K, V> leftRotate(SBTNode<K, V> cur) {
+            SBTNode<K, V> right = cur.r;
+            // 右孩子的左子树变为该节点的右子树
+            cur.r = right.l;
+            // 节点的右孩子替代该节点的位置
+            right.l = cur;
+            right.size = cur.size;
+            cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
             return right;
         }
 
@@ -64,30 +83,26 @@ public class Code02_SizeBalancedTreeMap {
             int leftLeftSize = cur.l != null && cur.l.l != null ? cur.l.l.size : 0;
             int leftRightSize = cur.l != null && cur.l.r != null ? cur.l.r.size : 0;
             int rightSize = cur.r != null ? cur.r.size : 0;
-            int rightRightSize = cur.r != null && cur.r.r != null ? cur.r.r.size : 0;
             int rightLeftSize = cur.r != null && cur.r.l != null ? cur.r.l.size : 0;
-            // 左孩子的左孩子节点个数大于右孩子的节点个数，认为是LL型
-            // LL型
-            if (leftLeftSize > rightSize) {
+            int rightRightSize = cur.r != null && cur.r.r != null ? cur.r.r.size : 0;
+            if (leftLeftSize > rightSize) { // LL型违规：左孩子的左孩子的节点个数大于右孩子的节点个数
                 // 头节点右旋
                 cur = rightRotate(cur);
-                // 对孩子节点个数发生变化的父亲节点继续调整
                 cur.r = maintain(cur.r);
                 cur = maintain(cur);
-            } else if (leftRightSize > rightSize) {     // LR型 先对左孩子进行左旋，再对整颗树进行右旋
+            } else if (leftRightSize > rightSize) { // LR型违规：左孩子的右孩子的节点个数大于右孩子的节点个数
                 cur.l = leftRotate(cur.l);
                 cur = rightRotate(cur);
                 cur.l = maintain(cur.l);
                 cur.r = maintain(cur.r);
                 cur = maintain(cur);
-            } else if (rightRightSize > leftSize) {     // RR型 头节点左旋
+            } else if (rightRightSize > leftSize) { // RR型违规：右孩子的右孩子的节点个数大于左孩子的节点个数
+                //  头孩子左旋
                 cur = leftRotate(cur);
                 cur.l = maintain(cur.l);
                 cur = maintain(cur);
-            } else if (rightLeftSize > leftSize) {  // RL型  先对右孩子进行右旋  然后整颗树进行左旋
-                //  右孩子右旋
+            } else if (rightLeftSize > leftSize) { // RL型违规：右孩子的左孩子的节点个数大于左孩子的节点个数
                 cur.r = rightRotate(cur.r);
-                // 整颗树左旋
                 cur = leftRotate(cur);
                 cur.l = maintain(cur.l);
                 cur.r = maintain(cur.r);
@@ -147,34 +162,40 @@ public class Code02_SizeBalancedTreeMap {
             return ans;
         }
 
-        private SBTNode<K, V> add(SBTNode<K, V> cur, K key, V value) {
+        // 现在，以cur为头的树上，新增，加入(key,val)这样的记录
+        // 加完之后，会对cur做检查，该调整调整
+        // 返回，调整完之后，整棵树的新头部
+        private SBTNode<K, V> add(SBTNode<K, V> cur, K key, V val) {
             if (cur == null) {
-                return new SBTNode<>(key, value);
+                return new SBTNode<>(key, val);
             } else {
                 cur.size++;
                 if (key.compareTo(cur.k) < 0) {
-                    cur.l = add(cur.l, key, value);
+                    cur.l = add(cur.l, key, val);
                 } else {
-                    cur.r = add(cur.r, key, value);
+                    cur.r = add(cur.r, key, val);
                 }
                 return maintain(cur);
             }
         }
 
+        // 在cur这棵树上，删掉key所代表的节点
+        // 返回cur这棵树的新头部
         private SBTNode<K, V> delete(SBTNode<K, V> cur, K key) {
             cur.size--;
             if (key.compareTo(cur.k) > 0) {
                 cur.r = delete(cur.r, key);
             } else if (key.compareTo(cur.k) < 0) {
                 cur.l = delete(cur.l, key);
-            } else {
-                if (cur.l == null && cur.r == null) {
+            } else { // 当前要删掉cur
+                if (cur.l == null && cur.r == null) { // 即没有左孩子也没有右孩子
                     cur = null;
-                } else if (cur.l == null && cur.r != null) {
+                } else if (cur.l == null && cur.r != null) { // 没有左孩子有右孩子
                     cur = cur.r;
-                } else if (cur.l != null && cur.r == null) {
+                } else if (cur.l != null && cur.r == null) { // 有左孩子没有右孩子
                     cur = cur.l;
-                } else {
+                } else { // 有左孩子和右孩子
+                    // 找到后继节点替换cur
                     SBTNode<K, V> pre = null;
                     SBTNode<K, V> des = cur.r;
                     while (des.l != null) {
@@ -207,7 +228,6 @@ public class Code02_SizeBalancedTreeMap {
              *  忍受的是所有数据量最大的规模，也就是log(N)，SB能少调整就少调整，哪怕少调不了，牺牲一时的性能也没多少的结构
              *  后续有加入节点也迅速调整平衡
              */
-
             return cur;
         }
 

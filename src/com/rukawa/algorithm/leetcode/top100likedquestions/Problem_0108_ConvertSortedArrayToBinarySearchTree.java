@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
-import com.rukawa.algorithm.base.class19.Code03_SubtreeOfAnotherTree;
-
 /**
  * Created with Intellij IDEA
  *

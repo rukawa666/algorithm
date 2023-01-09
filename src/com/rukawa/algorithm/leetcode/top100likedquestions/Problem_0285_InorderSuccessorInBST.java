@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
-import com.rukawa.algorithm.base.class07.Code07_SuccessorNode;
-
 /**
  * Created with Intellij IDEA
  *

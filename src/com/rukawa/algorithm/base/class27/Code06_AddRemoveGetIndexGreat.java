@@ -1,46 +1,55 @@
-package com.rukawa.algorithm.types.orderTable;
+package com.rukawa.algorithm.base.class27;
 
 import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @Author: Administrator
- * @Date: 2021/7/11 0011 0:42
+ * create by hqh on 2023/1/9
  */
-public class Code03_AddRemoveGetIndexGreat {
+public class Code06_AddRemoveGetIndexGreat {
+    /**
+     * 设计一个数据结构包含如下三个方法
+     * void add(int index, int num)：把num加入到index位置
+     * int get(int index)：取出index位置的值
+     * void remove(int index)：把index位置上的值删除
+     * 要求三个方法时间复杂度O(logN)
+     */
+
     public static class SBTNode<V> {
-        public V value;
+        public V val;
         public SBTNode<V> l;
         public SBTNode<V> r;
         public int size;
 
-        public SBTNode(V v) {
-            value = v;
+        public SBTNode(V value) {
+            this.val = value;
             size = 1;
         }
     }
 
-    public static class SbtList<V> {
+    public static class SBTList<V> {
         private SBTNode<V> root;
 
         private SBTNode<V> rightRotate(SBTNode<V> cur) {
-            SBTNode<V> leftNode = cur.l;
-            cur.l = leftNode.r;
-            leftNode.r = cur;
-            leftNode.size = cur.size;
+            SBTNode<V> left = cur.l;
+            // 当前节点的左孩子由左孩子的右孩子替代
+            cur.l = left.r;
+            // 左孩子的右孩子由当前节点替代
+            left.r = cur;
+            left.size = cur.size;
             cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
-            return leftNode;
+            return left;
         }
 
         private SBTNode<V> leftRotate(SBTNode<V> cur) {
-            SBTNode<V> rightNode = cur.r;
-            cur.r = rightNode.l;
-            rightNode.l = cur;
-            rightNode.size = cur.size;
+            SBTNode<V> right = cur.r;
+            // 右孩子的左孩子节点替代当前节点的右孩子
+            cur.r = right.l;
+            // 当前节点替代右孩子的左孩子节点
+            right.l = cur;
+            right.size = cur.size;
             cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
-            return rightNode;
+            // 节点的右孩子替代该节点的位置
+            return right;
         }
 
         private SBTNode<V> maintain(SBTNode<V> cur) {
@@ -51,23 +60,24 @@ public class Code03_AddRemoveGetIndexGreat {
             int leftLeftSize = cur.l != null && cur.l.l != null ? cur.l.l.size : 0;
             int leftRightSize = cur.l != null && cur.l.r != null ? cur.l.r.size : 0;
             int rightSize = cur.r != null ? cur.r.size : 0;
-            int rightLeftSize = cur.r != null && cur.r.l != null ? cur.r.l.size : 0;
             int rightRightSize = cur.r != null && cur.r.r != null ? cur.r.r.size : 0;
-            if (leftLeftSize > rightSize) {
+            int rightLeftSize = cur.r != null && cur.r.l != null ? cur.r.l.size : 0;
+
+            if (leftLeftSize > rightSize) { // LL型，只需要右旋
                 cur = rightRotate(cur);
                 cur.r = maintain(cur.r);
                 cur = maintain(cur);
-            } else if (leftRightSize > rightSize) {
+            } else if (leftRightSize > rightSize) { // LR型， 先对左孩子左旋，再对父亲右旋
                 cur.l = leftRotate(cur.l);
                 cur = rightRotate(cur);
                 cur.l = maintain(cur.l);
                 cur.r = maintain(cur.r);
                 cur = maintain(cur);
-            } else if (rightRightSize > leftSize) {
+            } else if (rightRightSize > leftSize) { // RR型，只需要左旋
                 cur = leftRotate(cur);
                 cur.l = maintain(cur.l);
                 cur = maintain(cur);
-            } else if (rightLeftSize > leftSize) {
+            } else if (rightLeftSize > leftSize) { // RL型违规
                 cur.r = rightRotate(cur.r);
                 cur = leftRotate(cur);
                 cur.l = maintain(cur.l);
@@ -77,11 +87,13 @@ public class Code03_AddRemoveGetIndexGreat {
             return cur;
         }
 
+        // cur节点挂到root树上
         private SBTNode<V> add(SBTNode<V> root, int index, SBTNode<V> cur) {
             if (root == null) {
                 return cur;
             }
             root.size++;
+            // 从1位置开始
             int leftAndHeadSize = (root.l != null ? root.l.size : 0) + 1;
             if (index < leftAndHeadSize) {
                 root.l = add(root.l, index, cur);
@@ -113,30 +125,30 @@ public class Code03_AddRemoveGetIndexGreat {
                 return root.l;
             }
             SBTNode<V> pre = null;
-            SBTNode<V> suc = root.r;
-            suc.size--;
-            while (suc.l != null) {
-                pre = suc;
-                suc = suc.l;
-                suc.size--;
+            SBTNode<V> cur = root.r;
+            cur.size--;
+            while (cur.l != null) {
+                pre = cur;
+                cur = cur.l;
+                cur.size--;
             }
             if (pre != null) {
-                pre.l = suc.r;
-                suc.r = root.r;
+                pre.l = cur.r;
+                cur.r = root.r;
             }
-            suc.l = root.l;
-            suc.size = suc.l.size + (suc.r == null ? 0 : suc.r.size) + 1;
-            return suc;
+            cur.l = root.l;
+            cur.size = cur.l.size + (cur.r == null ? 0 : cur.r.size) + 1;
+            return cur;
         }
 
         private SBTNode<V> get(SBTNode<V> root, int index) {
             int leftSize = root.l != null ? root.l.size : 0;
             if (index < leftSize) {
                 return get(root.l, index);
-            } else if (index == leftSize) {
-                return root;
-            } else {
+            } else if (index > leftSize) {
                 return get(root.r, index - leftSize - 1);
+            } else {
+                return root;
             }
         }
 
@@ -153,19 +165,18 @@ public class Code03_AddRemoveGetIndexGreat {
 
         public V get(int index) {
             SBTNode<V> ans = get(root, index);
-            return ans.value;
-        }
-
-        public void remove(int index) {
-            if (index >= 0 && size() > index) {
-                root = remove(root, index);
-            }
+            return ans.val;
         }
 
         public int size() {
             return root == null ? 0 : root.size;
         }
 
+        public void remove(int index) {
+            if (index >= 0 && index < size()) {
+                root = remove(root, index);
+            }
+        }
     }
 
     // 通过以下这个测试，
@@ -178,7 +189,7 @@ public class Code03_AddRemoveGetIndexGreat {
         int max = 1000000;
         boolean pass = true;
         ArrayList<Integer> list = new ArrayList<>();
-        SbtList<Integer> sbtList = new SbtList<>();
+        SBTList<Integer> sbtList = new SBTList<>();
         for (int i = 0; i < test; i++) {
             if (list.size() != sbtList.size()) {
                 pass = false;
@@ -206,7 +217,7 @@ public class Code03_AddRemoveGetIndexGreat {
         // 性能测试
         test = 500000;
         list = new ArrayList<>();
-        sbtList = new SbtList<>();
+        sbtList = new SBTList<>();
         long start = 0;
         long end = 0;
 

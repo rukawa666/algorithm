@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.base.class28;
+package com.rukawa.algorithm.base.class28_guesssolution;
 
 /**
  * create by hqh on 2023/1/9

@@ -1,12 +1,9 @@
-package com.rukawa.algorithm.types.guessTheSolution;
+package com.rukawa.algorithm.base.class28_guesssolution;
 
 /**
- * @className: Code01_
- * @description: TODO 类描述
- * @author: 鎏川疯
- * @date: 2021/7/11 0011 23:43
- **/
-public class Code01_MoneyProblem {
+ * create by hqh on 2023/1/9
+ */
+public class Code04_MoneyProblem {
     /**
      * int[] d, d[i]: i号怪兽的能力
      * int[] p, p[i]: i号怪兽要求的钱
@@ -23,7 +20,6 @@ public class Code01_MoneyProblem {
     public static long func1(int[] d, int[] p) {
         return process1(d, p, 0, 0);
     }
-
     /**
      * 目前你的能力是ability，来到了index号怪兽的面前，如果要通过后续所有的怪兽
      * 请返回需要花的最少钱数
@@ -33,19 +29,23 @@ public class Code01_MoneyProblem {
      * @param index 来到了第index号怪兽的 面前
      * @return
      */
+    // 目前你的能力是ability，来到了index号怪兽的面前，如果要通过后续所有怪兽
+    // 返回需要花的最小钱数
     public static long process1(int[] d, int[] p, int ability, int index) {
         // 如果已经到达终止位置，只需要花费0元
         if (index == d.length) {
             return 0;
         }
 
-        // 如果人的能力小于怪兽的能力，则必须花钱
-        if (ability < d[index]) {
+        if (ability < d[index]) {  // 如果人的能力小于怪兽的能力，则必须花钱
             return p[index] + process1(d, p, ability + d[index], index + 1);
-        } else {    // 可以花钱也可以不花钱
-            return Math.min(p[index] + process1(d, p, ability + d[index], index + 1), process1(d, p, ability, index + 1));
+        } else { // 可以花钱也可以不花钱
+            return Math.min(
+                    p[index] + process1(d, p, ability + d[index], index + 1),
+                    process1(d, p, ability,index + 1));
         }
     }
+
     // 如果告诉你，怪兽的能力值在10^8~10^12之间，做出一张表dp表，列是能力的累加和，这张表不可能在10^8内填写完
     // dp[i][j]: 如果我从0号怪兽一路通关到i号怪兽过程中，能力大于等于j的情况下，至少需要花费多少钱？达不到j能力，返回-1
 
@@ -82,12 +82,11 @@ public class Code01_MoneyProblem {
      * @return
      */
     public static long process2(int[] d, int[] p, int index, int money) {
-        if (index == - 1) {     // 一个怪兽也没遇到
+        if (index == -1) {  // 一个怪兽也没遇到
             return money == 0 ? 0 : -1;
         }
-
         // index >= 0
-        // 1、不贿赂当前index号怪兽，从0~index-1 花费130的能力是多少
+        // 1、不贿赂当前index号怪兽
         long preMaxAbility = process2(d, p, index - 1, money);
         long p1 = -1;
         // 之前的过程要有效 且 之前得到的能力值要>=当前怪兽的能力值 才能通关
@@ -95,14 +94,15 @@ public class Code01_MoneyProblem {
             p1 = preMaxAbility;
         }
 
-        // 2、贿赂当前怪兽
-        preMaxAbility = process2(d, p, index - 1, money - p[index]);
+        // 2、贿赂当前的index号怪兽
+        long preMaxAbility2 = process2(d, p, index - 1, money - p[index]);
         long p2 = -1;
-        if (preMaxAbility != -1) {
-            p2 = preMaxAbility + d[index];
+        if (preMaxAbility2 != -1) {
+            p2 = preMaxAbility2 + d[index];
         }
         return Math.max(p1, p2);
     }
+
     // func1方法改动态规划
     public static long func3(int[] d, int[] p) {
         int sum = 0;
@@ -183,7 +183,7 @@ public class Code01_MoneyProblem {
     public static void main(String[] args) {
         int len = 10;
         int value = 20;
-        int testTimes = 10000;
+        int testTimes = 100000;
         for (int i = 0; i < testTimes; i++) {
             int[][] arrs = generateTwoRandomArray(len, value);
             int[] d = arrs[0];
@@ -196,6 +196,5 @@ public class Code01_MoneyProblem {
                 System.out.println("oops!");
             }
         }
-
     }
 }

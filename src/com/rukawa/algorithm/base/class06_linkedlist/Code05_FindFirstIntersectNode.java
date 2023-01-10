@@ -11,50 +11,6 @@ import com.rukawa.algorithm.base.class02.ListNode;
  * @Version：1.0
  */
 public class Code05_FindFirstIntersectNode {
-
-    public static void main(String[] args) {
-        // 1->2->3->4->5->6->7->null
-        ListNode head1 = new ListNode(1);
-        head1.next = new ListNode(2);
-        head1.next.next = new ListNode(3);
-        head1.next.next.next = new ListNode(4);
-        head1.next.next.next.next = new ListNode(5);
-        head1.next.next.next.next.next = new ListNode(6);
-        head1.next.next.next.next.next.next = new ListNode(7);
-
-        // 0->9->8->6->7->null
-        ListNode head2 = new ListNode(0);
-        head2.next = new ListNode(9);
-        head2.next.next = new ListNode(8);
-        head2.next.next.next = head1.next.next.next.next.next; // 8->6
-        System.out.println(getIntersectNode(head1, head2).val);
-
-        // 1->2->3->4->5->6->7->4...
-        head1 = new ListNode(1);
-        head1.next = new ListNode(2);
-        head1.next.next = new ListNode(3);
-        head1.next.next.next = new ListNode(4);
-        head1.next.next.next.next = new ListNode(5);
-        head1.next.next.next.next.next = new ListNode(6);
-        head1.next.next.next.next.next.next = new ListNode(7);
-        head1.next.next.next.next.next.next = head1.next.next.next; // 7->4
-
-        // 0->9->8->2...
-        head2 = new ListNode(0);
-        head2.next = new ListNode(9);
-        head2.next.next = new ListNode(8);
-        head2.next.next.next = head1.next; // 8->2
-        System.out.println(getIntersectNode(head1, head2).val);
-
-        // 0->9->8->6->4->5->6..
-        head2 = new ListNode(0);
-        head2.next = new ListNode(9);
-        head2.next.next = new ListNode(8);
-        head2.next.next.next = head1.next.next.next.next.next; // 8->6
-        System.out.println(getIntersectNode(head1, head2).val);
-
-    }
-
     /**
      * 给定两个可能有环也可能无环的单链表，头结点head1和head2。请实现一个函数，如果两个链表相交，请返回相交的第一个节点，如果不相交，返回null
      *
@@ -196,5 +152,48 @@ public class Code05_FindFirstIntersectNode {
             }
             return null;
         }
+    }
+
+    public static void main(String[] args) {
+        // 1->2->3->4->5->6->7->null
+        ListNode head1 = new ListNode(1);
+        head1.next = new ListNode(2);
+        head1.next.next = new ListNode(3);
+        head1.next.next.next = new ListNode(4);
+        head1.next.next.next.next = new ListNode(5);
+        head1.next.next.next.next.next = new ListNode(6);
+        head1.next.next.next.next.next.next = new ListNode(7);
+
+        // 0->9->8->6->7->null
+        ListNode head2 = new ListNode(0);
+        head2.next = new ListNode(9);
+        head2.next.next = new ListNode(8);
+        head2.next.next.next = head1.next.next.next.next.next; // 8->6
+        System.out.println(getIntersectNode(head1, head2).val);
+
+        // 1->2->3->4->5->6->7->4...
+        head1 = new ListNode(1);
+        head1.next = new ListNode(2);
+        head1.next.next = new ListNode(3);
+        head1.next.next.next = new ListNode(4);
+        head1.next.next.next.next = new ListNode(5);
+        head1.next.next.next.next.next = new ListNode(6);
+        head1.next.next.next.next.next.next = new ListNode(7);
+        head1.next.next.next.next.next.next = head1.next.next.next; // 7->4
+
+        // 0->9->8->2...
+        head2 = new ListNode(0);
+        head2.next = new ListNode(9);
+        head2.next.next = new ListNode(8);
+        head2.next.next.next = head1.next; // 8->2
+        System.out.println(getIntersectNode(head1, head2).val);
+
+        // 0->9->8->6->4->5->6..
+        head2 = new ListNode(0);
+        head2.next = new ListNode(9);
+        head2.next.next = new ListNode(8);
+        head2.next.next.next = head1.next.next.next.next.next; // 8->6
+        System.out.println(getIntersectNode(head1, head2).val);
+
     }
 }

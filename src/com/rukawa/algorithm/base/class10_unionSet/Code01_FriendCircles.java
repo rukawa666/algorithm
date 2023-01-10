@@ -6,6 +6,7 @@ package com.rukawa.algorithm.base.class10_unionSet;
 public class Code01_FriendCircles {
     /**
      * 本题为LeetCode原题547
+     * 身份的数量
      * 链接地址：https://leetcode.cn/problems/number-of-provinces/
      */
 

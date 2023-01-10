@@ -12,11 +12,6 @@ import java.util.PriorityQueue;
  * @Version：1.0
  */
 public class Code04_CoverMax {
-
-    public static void main(String[] args) {
-        int[][] m = {{10,16}, {2,8}, {1,6}, {7,12}};
-        System.out.println(maxCover(m));
-    }
     /**
      * 最大线段重合问题(用堆实现)
      * 给定很多线段，每个线段都有两个数[start, end]，表示线段开始位置和结束位置，左右都是闭区间
@@ -70,5 +65,10 @@ public class Code04_CoverMax {
         public int compare(Line o1, Line o2) {
             return o1.start - o2.start;
         }
+    }
+
+    public static void main(String[] args) {
+        int[][] m = {{10,16}, {2,8}, {1,6}, {7,12}};
+        System.out.println(maxCover(m));
     }
 }

@@ -17,12 +17,6 @@ public class Code03_SmallerEqualBigger {
      * 将单向链表按照某值划分为左边小、中间相等、右边打的形式
      * @param args
      */
-    public static void main(String[] args) {
-        int[] arr = {1,2,4,7,4,3,6,5};
-        ListNode heap = new ListNode(arr);
-        ListNode node = listPartition02(heap, 4);
-        System.out.println(node);
-    }
 
     /**
      * O(1)的时间复杂度
@@ -134,4 +128,10 @@ public class Code03_SmallerEqualBigger {
         nodeArr[j] = tmp;
     }
 
+    public static void main(String[] args) {
+        int[] arr = {1,2,4,7,4,3,6,5};
+        ListNode heap = new ListNode(arr);
+        ListNode node = listPartition02(heap, 4);
+        System.out.println(node);
+    }
 }

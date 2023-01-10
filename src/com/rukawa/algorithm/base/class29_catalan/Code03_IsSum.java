@@ -1,4 +1,4 @@
-package com.rukawa.algorithm.types.catalan;
+package com.rukawa.algorithm.base.class29_catalan;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import java.util.HashSet;
  * @author: 鎏川疯
  * @date: 2021/7/15 0015 7:34
  **/
-public class IsSum {
+public class Code03_IsSum {
 
     // arr中的值可能为正，可能为负，可能为0
     // 自由选择arr中的数字，能不能累加得到sum

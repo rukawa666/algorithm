@@ -64,35 +64,37 @@ public class Code01_10Ways {
         }
     }
 
-    public static long ways2(int N) {
-        if (N < 0) {
+    public static long ways2(int n) {
+        if (n < 0) {
             return 0;
         }
-        if (N < 2) {
+        if (n < 2) {
             return 1;
         }
         long a = 1;
         long b = 1;
-        long limit = N << 1;
+        long limit = n << 1;
         for (long i = 1; i <= limit; i++) {
-            if (i <= N) {
+            if (i <= n) {
                 a *= i;
             } else {
                 b *= i;
             }
         }
-        return (b / a) / (N + 1);
+        return (b / a) / (n + 1);
     }
 
     public static void main(String[] args) {
         System.out.println("test begin");
-        for (int i = 0; i < 10; i++) {
-            long ans1 = ways1(i);
-            long ans2 = ways2(i);
-            if (ans1 != ans2) {
-                System.out.println("Oops!");
-            }
-        }
+//        for (int i = 0; i < 10; i++) {
+//            long ans1 = ways1(i);
+//            long ans2 = ways2(i);
+//            if (ans1 != ans2) {
+//                System.out.println("Oops!");
+//            }
+//        }
+//        System.out.println(ways1(19));
+        System.out.println(ways2(19));
         System.out.println("test finish");
     }
 }

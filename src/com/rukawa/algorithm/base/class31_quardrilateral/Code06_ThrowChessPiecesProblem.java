@@ -1,13 +1,9 @@
-package com.rukawa.algorithm.trainingcamp.trainingcamp5.class4;
+package com.rukawa.algorithm.base.class31_quardrilateral;
 
 /**
- * Created with Intellij IDEA
- *
- * @Author：SuperHai
- * @Date：2020-11-08 15:28
- * @Version：1.0
+ * create by hqh on 2023/1/11
  */
-public class Code02_ThrowChessPiecesProblem {
+public class Code06_ThrowChessPiecesProblem {
     /**
      * 一座大楼有0~N层，地面算作第0层，最高的一层为第N层。已知棋子从第0层掉落肯定不会摔碎，从第i层掉落可能会摔碎，也可能不会摔碎(1≤i≤N)
      * 。给定整数N作为楼层数，再给定整数K作为棋子数，返回如果想找到棋子不会摔碎的最高层数，即使在最差的情况下扔的最少次数。一次只能扔一个棋子。
@@ -36,46 +32,46 @@ public class Code02_ThrowChessPiecesProblem {
      * 若没碎，第一个棋子继续在104层扔，碎了则用仅存的一个棋子试103。
      * 若没碎，第一个棋子继续在 105层扔，若到这一步还没碎，那么105便是结果。
      */
-
+    // 方法1和方法2会超时
+    // 方法3勉强通过
+    // 方法4打败100%
+    // 方法5打败100%，方法5是在方法4的基础上做了进一步的常数优化
     // 暴力方法
-    public static int solution1(int nLevel, int kChess) {
+    public static int superEggDrop1(int nLevel, int kChess) {
         if (nLevel < 1 || kChess < 1) {
             return 0;
         }
-        return process(nLevel, kChess);
+        return process1(nLevel, kChess);
     }
 
-    // rest还剩下多少层楼需要去验证
+    // rest还剩多少层需要验证
     // k还有多少颗棋子能够使用
     // 一定要验证出最高的不会碎的楼层！但是每次都是坏运气
-    // 返回至少需要扔几次？
-    public static int process(int rest, int k) {
+    // 返回至少需要仍几次？
+    public static int process1(int rest, int k) {
         if (rest == 0) {
             return 0;
         }
-
         if (k == 1) {
             return rest;
         }
         int min = Integer.MAX_VALUE;
-        for (int i = 1; i != rest + 1; i++) {   // 第一次扔的时候，扔在了i层
-            min = Math.min(min, Math.max(process(i - 1, k - 1), process(rest - i, k)));
+        for (int i = 0; i != rest + 1; i++) { // 第一次仍的时候，在i层
+            min = Math.min(min, Math.max(process1(i - 1, k - 1), process1(rest - i, k)));
         }
         return min + 1;
     }
 
-    public static int solution2(int nLevel, int kChess) {
+    // 完全不优化的方法
+    public static int superEggDrop2(int nLevel, int kChess) {
         if (nLevel < 1 || kChess < 1) {
             return 0;
         }
-        // 如果只有一个棋子，必须要从1层往上开始尝试
         if (kChess == 1) {
             return nLevel;
         }
-        int[][] dp = new int[nLevel][kChess];
-        // 0行，永远不会摔碎，所以都是0
-        // 0列，没有棋子可以摔，返回0
-        for (int i = 0; i <= nLevel; i++) {
+        int[][] dp = new int[nLevel + 1][kChess + 1];
+        for (int i = 1; i != dp.length; i++) {
             dp[i][1] = i;
         }
         /**
@@ -88,9 +84,10 @@ public class Code02_ThrowChessPiecesProblem {
          * 可能性5：棋子扔在第6层，碎了还剩5层去尝试最后一颗棋子，dp[5][1]；如果没碎，去剩下1个位置去尝试剩余2颗棋子，dp[1][2]
          * 可能性5：棋子扔在第7层，碎了还剩6层去尝试最后一颗棋子，dp[6][1]；如果没碎，去剩下0个位置去尝试剩余2颗棋子，dp[0][2]
          */
-        for (int i = 1; i <= nLevel; i++) {
-            for (int j = 2; j <= kChess; j++) {
+        for (int i = 1; i != dp.length; i++) {
+            for (int j = 2; j != dp[0].length; j++) {
                 int min = Integer.MAX_VALUE;
+                // 枚举
                 for (int k = 1; k != i + 1; k++) {
                     min = Math.min(min, Math.max(dp[k - 1][j - 1], dp[i - k][j]));
                 }
@@ -103,45 +100,80 @@ public class Code02_ThrowChessPiecesProblem {
     // k个棋子，必须S次弄完，时间复杂度O(k*S)
     // 只有一颗棋子，O(N)
     // 最差O(k * N)
-    public static int solution3(int nLevel, int kChess) {
-        // dp[i][j]：假设有i颗棋子，可以扔j次的情况，可以搞定多少层楼
-        // 第0列，只能扔0次，再多棋子没用，直接废弃
-        // 第0行，没有棋子可以扔，不能搞定，直接废弃
-        // 第1列，只能扔1次，只能搞定一层楼，所以都是1
-        // 第1行，1颗棋子扔多次，扔一次搞定一层楼，都是都是j
-        /**
-         * 普遍位置dp[3][10]
-         * 第一种方式：假设3颗棋子扔10次，假设是最优层，如果碎了，扔过一次，还剩9次可以扔，还剩2颗棋子 -> dp[2][9] = b
-         *                                       如果没碎，扔过一次，还剩9次可以扔，还剩3颗棋子 -> dp[3][9] = a
-         *                                       dp[3][10] = a + b + 1;
-         * 第二种方式：客观情况下，假设3颗棋子扔9次可以解决20层楼，2颗棋子扔9次可以解决15层楼，3颗棋子扔10次绝对可以解决36层楼。
-         *           假设客观上，第一次扔在16层，最高的碎的楼层在16层以下，得到结果是棋子碎了，还剩2颗棋子可以扔9次
-         *           假设客观上，最高的不碎的楼层在16层以上，第一次扔没碎，还剩3颗棋子可以扔9次
-         *           最后假设，最高的不碎的楼层就是16，
-         */
+    public static int superEggDrop3(int kChess, int nLevel) {
         if (nLevel < 1 || kChess < 1) {
             return 0;
         }
         if (kChess == 1) {
             return nLevel;
         }
-        int[] preArr = new int[nLevel + 1];
-        int[] curArr = new int[nLevel + 1];
-        for (int i = 1; i != curArr.length; i++) {
-            curArr[i] = i;
+        int[][] dp = new int[nLevel + 1][kChess + 1];
+        for (int i = 1; i != dp.length; i++) {
+            dp[i][1] = i;
         }
-        for (int i = 1; i != kChess; i++) {
-            int[] tmp = preArr;
-            preArr = curArr;
-            curArr = tmp;
-            for (int j = 1; j != curArr.length; j++) {
-                int min = Integer.MAX_VALUE;
-                for (int k = 1; k != j + 1; k++) {
-                    min = Math.min(min, Math.max(preArr[k - 1], curArr[j - k]));
+
+        int[][] best = new int[nLevel + 1][kChess + 1];
+        for (int j = 1; j != dp[0].length; j++) {
+            dp[1][j] = 1;
+            // 一层楼，有i颗棋子，最优方案在第一层
+            best[1][j] = 1;
+        }
+
+        // 从上往下，从右往左填写，因为要取得上+右的位置对
+        for (int i = 2; i < nLevel + 1; i++) {
+            for (int j = kChess; j > 1; j--) {
+                int ans = Integer.MAX_VALUE;
+                int bestChoose = -1;
+                int down = best[i - 1][j];
+                int up = j == kChess ? i : best[i][j + 1];
+                for (int first = down; first <= up; first++) {
+                    int cur = Math.max(dp[first - 1][j - 1], dp[i - first][j]);
+                    if (cur <= ans) {
+                        ans = cur;
+                        bestChoose = first;
+                    }
                 }
-                curArr[j] = min + 1;
+                dp[i][j] = ans + 1;
+                best[i][j] = bestChoose;
             }
         }
-        return curArr[curArr.length - 1];
+        return dp[nLevel][kChess];
+    }
+
+    // 最优解
+    public static int superEggDrop4(int kChess, int nLevel) {
+        /**
+         * 思路：i颗棋子扔j次可以解决几层楼？
+         * 假设，当前有7颗棋子，扔10次，可以解决多少层楼的问题？
+         *  假设，6颗棋子扔9次，可以解决50层楼的问题
+         *  假设，7颗棋子扔9次，可以解决55层楼的问题
+         *  那么，7颗棋子，扔10次，可以解决106层的问题
+         *
+         * 原因：
+         *  假设，当前有7颗棋子，扔10次，第一颗棋子仍在x层，但是碎了，还剩余6颗棋子，还能扔9次
+         *  只要保证，下方的楼层<=50层，剩余的棋子扔9次就能解决50层楼的问题
+         *
+         *  假设，当前有7颗棋子，扔10次，第一颗棋子仍在x层，但是没碎，还剩余7颗棋子，还能扔9次
+         *  只要保证，上方的楼层<=55层，剩余的棋子扔9次就能解决55层楼的问题
+         *
+         *  所以，总共能解决50+55+当前x层=106层
+         */
+        if (nLevel < 1 || kChess < 1) {
+            return 0;
+        }
+        int[] dp = new int[kChess];
+        int res = 0;
+        while (true) {
+            res++;
+            int previous = 0;
+            for (int i = 0; i < dp.length; i++) {
+                int tmp = dp[i];
+                dp[i] = dp[i] + previous + 1;
+                previous = tmp;
+                if (dp[i] >= nLevel) {
+                    return res;
+                }
+            }
+        }
     }
 }

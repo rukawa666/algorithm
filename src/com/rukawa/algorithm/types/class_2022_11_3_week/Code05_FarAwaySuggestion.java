@@ -51,7 +51,7 @@ public class Code05_FarAwaySuggestion {
 		// X 2 3 4 5 X
 		// 2是开头，5是结尾，提供2的距离，因为3、4位置离X位置最远
 		// 根据start、end的具体情况，可以算出far，也可以算出该分配那个座位
-		public static class FreeSpace {
+		public class FreeSpace {
 			public int start;
 			public int end;
 			public int far;

@@ -1,10 +1,5 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
-import com.sun.deploy.panel.ITreeNode;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created with Intellij IDEA
  *

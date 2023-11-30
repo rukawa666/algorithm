@@ -86,8 +86,8 @@ public class Code02_CowQuestion {
     }
 
     public static void main(String[] args) {
-        System.out.println(cowCount1(6));
-        System.out.println(cowCount2(6));
+        System.out.println(cowCount1(8));
+        System.out.println(cowCount2(8));
     }
 
 }

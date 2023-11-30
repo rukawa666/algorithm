@@ -1,7 +1,5 @@
 package com.rukawa.algorithm.leetcode.top100likedquestions;
 
-import com.sun.org.apache.bcel.internal.generic.SWAP;
-
 /**
  * Created with Intellij IDEA
  *
